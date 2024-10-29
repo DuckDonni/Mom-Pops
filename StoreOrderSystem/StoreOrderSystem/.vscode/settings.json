@@ -1,0 +1,9 @@
+{
+    "java.project.sourcePaths": [
+        "src"
+    ],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "C:\\Users\\jonah\\OneDrive\\Documents\\GitHub\\Mom-Pops\\StoreOrderSystem\\StoreOrderSystem\\lib\\miglayout-4.0.jar",
+    ]
+}
