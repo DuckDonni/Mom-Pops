@@ -1,33 +1,61 @@
 import javax.swing.*;
 import net.miginfocom.swing.MigLayout;
 import java.awt.*;
+
 public class View {
 
     public static void main(String[] args) {
 
         JFrame frame = new JFrame("Homepage Example");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.setSize(400, 300);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setSize(screenSize.width, screenSize.height); // Set frame size to the screen's resolution
+
+        // Establishes layout for miglayout
         frame.setLayout(new MigLayout("fill", "[grow][right]", "[]20[grow]"));
 
-        NavBar navbar = new NavBar(0);
+        // Creates a panel to swap pages with Cardlayout
+        JPanel contentPanel = new JPanel(new CardLayout());
+
+        // Creates the navbar and passes the contentPanel to allow for page swapping
+        NavBar navbar = new NavBar(contentPanel);
         frame.add(navbar.displayNavBar(), "cell 1 0, align right, growx");
-        frame.add(getHomePage(), "cell 0 1, span, center"); // Makes elements automatically span across all columns
+
+        // Creates each instance for pages in the contentPanel
+        contentPanel.add(buildHomePage(), "HomePage");
+        contentPanel.add(buildMenuPage(), "MenuPage");
+        contentPanel.add(buildLoginPage(), "LoginPage");
+
+        // Displays the panel in the main frame
+        frame.add(contentPanel, "cell 0 1, span, grow");
 
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setVisible(true);
     }
 
 
-    public static JPanel getHomePage() {
+    public static JPanel buildHomePage() {
         JPanel panel = new JPanel();
         panel.setLayout(new MigLayout());
-
         panel.add(new JButton("Delivery"), "cell 0 0, growx");
         panel.add(new JButton("Carryout"), "cell 1 0, growx");
+        return panel;
+    }
 
+
+    public static JPanel buildMenuPage() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new MigLayout());
+        panel.add(new JButton("Build Pizza"), "cell 0 0, growx");
+        panel.add(new JButton("Drinks"), "cell 1 0, growx");
+        panel.add(new JButton("Sides"), "cell 2 0, growx");
+        return panel;
+    }
+
+    public static JPanel buildLoginPage(){
+        JPanel panel = new JPanel();
+        panel.setLayout(new MigLayout());
+        panel.add(new JTextField());
         return panel;
     }
 }
