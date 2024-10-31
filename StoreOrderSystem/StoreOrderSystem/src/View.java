@@ -1,61 +1,26 @@
-import javax.swing.*;
-import net.miginfocom.swing.MigLayout;
-import java.awt.*;
-
 public class View {
+    private CustomerView customerView;
+    private StaffView staffView;
+
+    public View() {
+        customerView = new CustomerView(this);
+        staffView = new StaffView(this);
+    }
+
+    // Method to swap views based on an integer
+    public void swapView(int num) {
+
+        if (num == 0) {
+            staffView.getFrame().setVisible(false); // Hide staff view
+            customerView.getFrame().setVisible(true); // Show customer view
+        } else if (num == 1) {
+            customerView.getFrame().setVisible(false); // Hide customer view
+            staffView.getFrame().setVisible(true); // Show staff view
+        }
+    }
 
     public static void main(String[] args) {
-
-        JFrame frame = new JFrame("Homepage Example");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setSize(screenSize.width, screenSize.height); // Set frame size to the screen's resolution
-
-        // Establishes layout for miglayout
-        frame.setLayout(new MigLayout("fill", "[grow][right]", "[]20[grow]"));
-
-        // Creates a panel to swap pages with Cardlayout
-        JPanel contentPanel = new JPanel(new CardLayout());
-
-        // Creates the navbar and passes the contentPanel to allow for page swapping
-        NavBar navbar = new NavBar(contentPanel);
-        frame.add(navbar.displayNavBar(), "cell 1 0, align right, growx");
-
-        // Creates each instance for pages in the contentPanel
-        contentPanel.add(buildHomePage(), "HomePage");
-        contentPanel.add(buildMenuPage(), "MenuPage");
-        contentPanel.add(buildLoginPage(), "LoginPage");
-
-        // Displays the panel in the main frame
-        frame.add(contentPanel, "cell 0 1, span, grow");
-
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frame.setVisible(true);
-    }
-
-
-    public static JPanel buildHomePage() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new MigLayout());
-        panel.add(new JButton("Delivery"), "cell 0 0, growx");
-        panel.add(new JButton("Carryout"), "cell 1 0, growx");
-        return panel;
-    }
-
-
-    public static JPanel buildMenuPage() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new MigLayout());
-        panel.add(new JButton("Build Pizza"), "cell 0 0, growx");
-        panel.add(new JButton("Drinks"), "cell 1 0, growx");
-        panel.add(new JButton("Sides"), "cell 2 0, growx");
-        return panel;
-    }
-
-    public static JPanel buildLoginPage(){
-        JPanel panel = new JPanel();
-        panel.setLayout(new MigLayout());
-        panel.add(new JTextField());
-        return panel;
+        View view = new View();
+        view.swapView(0); // Initially shows CustomerView (you can toggle this)
     }
 }
