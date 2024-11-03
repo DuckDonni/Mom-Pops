@@ -59,10 +59,16 @@ public class CustomerView {
     public static JPanel buildLoginPage(){
         JPanel panel = new JPanel();
         panel.setLayout(new MigLayout());
-
+        JLabel phonenumber_ID = new JLabel("Enter Phone Number or Employee ID");
         JTextField phoneNumberField = new JTextField();
+        JLabel passwordLabel = new JLabel("Enter Phone Number");
+        JTextField passwordField = new JTextField();
         phoneNumberField.setPreferredSize(new Dimension((int)(screenSize.width*0.1), (int)(screenSize.height*0.02)));
-        panel.add(phoneNumberField , "cell 0 0, growx");
+        passwordField.setPreferredSize(new Dimension((int)(screenSize.width*0.1), (int)(screenSize.height*0.02)));
+        panel.add(phoneNumberField , "cell 0 1, growx");
+        panel.add(phonenumber_ID, "cell 0 0, growx");
+        panel.add(passwordLabel , "cell 0 2, growx");
+        panel.add(passwordField, "cell 0 3, growx");
         return panel;
     }
 
