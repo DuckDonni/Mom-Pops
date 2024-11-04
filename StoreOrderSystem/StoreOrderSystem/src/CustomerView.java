@@ -2,12 +2,15 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class CustomerView {
     private JFrame frame;
     private View view;
     private static Dimension screenSize;
     public CustomerView(View view) {
+
         view = this.view;
         frame = new JFrame("Homepage Example");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,7 +31,7 @@ public class CustomerView {
         contentPanel.add(buildHomePage(), "HomePage");
         contentPanel.add(buildMenuPage(), "MenuPage");
         contentPanel.add(buildLoginPage(), "LoginPage");
-
+        contentPanel.add(buildCartPage(), "CartPage");
         // Displays the panel in the main frame
         frame.add(contentPanel, "cell 0 1, span, grow");
 
@@ -53,6 +56,25 @@ public class CustomerView {
         panel.add(new JButton("Build Pizza"), "cell 0 0, growx");
         panel.add(new JButton("Drinks"), "cell 1 0, growx");
         panel.add(new JButton("Sides"), "cell 2 0, growx");
+        return panel;
+    }
+
+    public static JPanel buildCartPage(){
+        PopupManager popupManager = new PopupManager();
+        JPanel panel = new JPanel();
+        panel.setLayout(new MigLayout());
+
+        JButton editCustBtn = new JButton("CEdit");
+
+        editCustBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                popupManager.buildEditCustInfo();
+            }
+
+        });
+
+        panel.add(editCustBtn);
         return panel;
     }
 

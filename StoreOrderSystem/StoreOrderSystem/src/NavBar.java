@@ -51,6 +51,13 @@ public class NavBar {
                cl.show(contentPanel, "LoginPage");
            }
         });
+        cartButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CardLayout cl = (CardLayout) contentPanel.getLayout();
+                cl.show(contentPanel, "CartPage");
+            }
+        });
         return guestPanel;
     }
 
@@ -83,7 +90,13 @@ public class NavBar {
                 cl.show(contentPanel, "MenuPage");
             }
         });
-
+        cartButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CardLayout cl = (CardLayout) contentPanel.getLayout();
+                cl.show(contentPanel, "CartPage");
+            }
+        });
         return customerPanel;
     }
 
