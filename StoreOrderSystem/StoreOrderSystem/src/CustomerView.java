@@ -82,8 +82,10 @@ public class CustomerView {
             }
         });
 
-        panel.add(editCustBtn);
-        panel.add(editOrderTimeBtn);
+
+        panel.add(editCustBtn, "cell 3 0");
+        panel.add(editOrderTimeBtn, "cell 3 1");
+
         return panel;
     }
 
