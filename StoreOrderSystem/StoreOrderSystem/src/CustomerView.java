@@ -59,13 +59,33 @@ public class CustomerView {
         return panel;
     }
 
-    public static JPanel buildCartPage(){
+    public static JPanel buildCartPage() {
         PopupManager popupManager = new PopupManager();
         JPanel panel = new JPanel();
         panel.setLayout(new MigLayout());
 
+        // Create the content panel to scroll
+        JPanel scrollBarPanel = new JPanel();
+        scrollBarPanel.setLayout(new MigLayout("wrap 1", "[grow, fill]"));
+
+        JLabel label = new JLabel("label");
+
+        scrollBarPanel.add(label);
+
+        // Create JScrollPane for the content
+        JScrollPane scrollPane = new JScrollPane(scrollBarPanel);
+        scrollPane.setPreferredSize(new Dimension((int)(screenSize.width*.35), (int)(screenSize.height*0.7))); // Set desired size
+
+        // Customize scrollbar size
+        JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
+        verticalScrollBar.setPreferredSize(new Dimension(20, 0)); // Increase width of vertical scrollbar
+
+        JScrollBar horizontalScrollBar = scrollPane.getHorizontalScrollBar();
+        horizontalScrollBar.setPreferredSize(new Dimension(0, 20)); // Increase height of horizontal scrollbar
+
         JButton editCustBtn = new JButton("CEdit");
         JButton editOrderTimeBtn = new JButton("OTBtn");
+
         editCustBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -73,8 +93,8 @@ public class CustomerView {
                 // "Jonah","Smith","160 Paulk Rd,,AL,36301","3346181809"
                 popupManager.buildEditCustInfo();
             }
-
         });
+
         editOrderTimeBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -82,9 +102,10 @@ public class CustomerView {
             }
         });
 
-
+        // Add buttons and scroll pane to main panel
         panel.add(editCustBtn, "cell 3 0");
         panel.add(editOrderTimeBtn, "cell 3 1");
+        panel.add(scrollPane, "cell 0 0, span 3 3, grow"); // Span scroll pane across multiple cells
 
         return panel;
     }
