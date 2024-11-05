@@ -65,16 +65,25 @@ public class CustomerView {
         panel.setLayout(new MigLayout());
 
         JButton editCustBtn = new JButton("CEdit");
-
+        JButton editOrderTimeBtn = new JButton("OTBtn");
         editCustBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Sample for filled edit field
+                // "Jonah","Smith","160 Paulk Rd,,AL,36301","3346181809"
                 popupManager.buildEditCustInfo();
             }
 
         });
+        editOrderTimeBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                popupManager.buildEditOrderTime();
+            }
+        });
 
         panel.add(editCustBtn);
+        panel.add(editOrderTimeBtn);
         return panel;
     }
 
