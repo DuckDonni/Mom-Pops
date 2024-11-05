@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.*;
 
 public class CustomerView {
     private JFrame frame;
@@ -98,6 +99,11 @@ public class CustomerView {
         editOrderTimeBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+//                Test for preset time
+//                Date t = new Date();
+//                t.setHours(20);
+//                t.setMinutes(21);
+//                popupManager.buildEditOrderTime(true,t);
                 popupManager.buildEditOrderTime();
             }
         });
