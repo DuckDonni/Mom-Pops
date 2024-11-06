@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.*;
 
 public class CustomerView {
@@ -13,7 +15,7 @@ public class CustomerView {
     private static JPanel contentPanel;
     public CustomerView(View view) {
 
-        view = this.view;
+        this.view = view;
         frame = new JFrame("Homepage Example");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -21,20 +23,19 @@ public class CustomerView {
 
         // Establishes layout for miglayout
         frame.setLayout(new MigLayout("fill", "[grow][right]", "[]20[grow]"));
-
-        // Creates a panel to swap pages with Cardlayout
         contentPanel = new JPanel(new CardLayout());
-
+        contentPanel.add(buildHomePage(), "HomePage");
+        contentPanel.add(buildMenuPage(), "MenuPage");
+        contentPanel.add(buildPizzaPage(), "PizzaPage");
+        contentPanel.add(buildDrinksPage(), "DrinksPage");
+        contentPanel.add(buildCartPage(), "CartPage");
+        contentPanel.add(buildLoginPage(), "LoginPage");
+        switchPage("HomePage");
         // Creates the navbar and passes the contentPanel to allow for page swapping
         NavBar navbar = new NavBar(contentPanel);
         frame.add(navbar.displayNavBar(), "cell 1 0, align right, growx");
 
-        // Creates each instance for pages in the contentPanel
-        contentPanel.add(buildHomePage(), "HomePage");
-        contentPanel.add(buildMenuPage(), "MenuPage");
-        contentPanel.add(buildLoginPage(), "LoginPage");
-        contentPanel.add(buildCartPage(), "CartPage");
-        contentPanel.add(buildPizzaPage(), "PizzaPage");
+
         // Displays the panel in the main frame
         frame.add(contentPanel, "cell 0 1, span, grow");
 
@@ -66,8 +67,13 @@ public class CustomerView {
         pizzaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CardLayout cardLayout = (CardLayout) contentPanel.getLayout();
-                cardLayout.show(contentPanel, "PizzaPage");
+                switchPage("PizzaPage");
+            }
+        });
+        drinksButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                switchPage("DrinksPage");
             }
         });
         return panel;
@@ -223,29 +229,19 @@ public class CustomerView {
         JLabel toppingsLabel = new JLabel("Toppings:");
 
         JLabel meatLabel = new JLabel("Choose Meats");
-        JRadioButton pepperoniBox = new JRadioButton("Pepperoni");
-        JRadioButton sausageBox = new JRadioButton("Sausage");
-        JRadioButton hamBox = new JRadioButton("Ham");
+        JCheckBox pepperoniBox = new JCheckBox("Pepperoni");
+        JCheckBox sausageBox = new JCheckBox("Sausage");
+        JCheckBox hamBox = new JCheckBox("Ham");
 
-        ButtonGroup meatBtnGroup = new ButtonGroup();
-        meatBtnGroup.add(pepperoniBox);
-        meatBtnGroup.add(sausageBox);
-        meatBtnGroup.add(hamBox);
 
 
         JLabel nonMeatLabel = new JLabel("Choose Non-Meats");
-        JRadioButton gPepperBox = new JRadioButton("Green Pepper");
-        JRadioButton onionBox = new JRadioButton("Onion");
-        JRadioButton tomatoBox = new JRadioButton("Tomato");
-        JRadioButton mushroomBox = new JRadioButton("Mushroom");
-        JRadioButton pineappleBox = new JRadioButton("Pineapple");
+        JCheckBox gPepperBox = new JCheckBox("Green Pepper");
+        JCheckBox onionBox = new JCheckBox("Onion");
+        JCheckBox tomatoBox = new JCheckBox("Tomato");
+        JCheckBox mushroomBox = new JCheckBox("Mushroom");
+        JCheckBox pineappleBox = new JCheckBox("Pineapple");
 
-        ButtonGroup nonMeatBtnGroup = new ButtonGroup();
-        nonMeatBtnGroup.add(gPepperBox);
-        nonMeatBtnGroup.add(onionBox);
-        nonMeatBtnGroup.add(tomatoBox);
-        nonMeatBtnGroup.add(mushroomBox);
-        nonMeatBtnGroup.add(pineappleBox);
 
 
 
@@ -263,16 +259,229 @@ public class CustomerView {
 
         panel.add(leftPanel, "cell 0 0, growx");
         panel.add(rightPanel, "cell 2 0, growx");
+
+        JButton submitBtn = new JButton("Submit");
+        JButton cancelBtn = new JButton("Cancel");
+        panel.add(submitBtn, "cell 0 1");
+        panel.add(cancelBtn, "cell 1 1");
+        cancelBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CardLayout cardLayout = (CardLayout) contentPanel.getLayout();
+                cardLayout.show(contentPanel, "MenuPage");
+            }
+        });
+
         return panel;
     }
 
     public static JPanel buildDrinksPage(){
         JPanel panel = new JPanel(new MigLayout());
+
+        JLabel drinksLabel = new JLabel("Drinks:");
+
+
+        JCheckBox pepsiBox = new JCheckBox("Pepsi");
+        ButtonFactory pepsiBF = new ButtonFactory();
+        ButtonFactory pepsiSize = new ButtonFactory();
+
+
+        JCheckBox dPepsiBox = new JCheckBox("Diet Pepsi");
+        ButtonFactory dPepsiBF = new ButtonFactory();
+        ButtonFactory dPepsiSize = new ButtonFactory();
+
+        JCheckBox orangeBox = new JCheckBox("Orange");
+        ButtonFactory orangeBF = new ButtonFactory();
+        ButtonFactory orangeSize = new ButtonFactory();
+
+
+        JCheckBox dOrangeBox = new JCheckBox("Diet Orange");
+        ButtonFactory dOrangeBF = new ButtonFactory();
+        ButtonFactory dOrangeSize = new ButtonFactory();
+
+        JCheckBox rBeerBox = new JCheckBox("Root Beer");
+        ButtonFactory rBeerBF = new ButtonFactory();
+        ButtonFactory rBeerSize = new ButtonFactory();
+
+        JCheckBox dRBeerBox = new JCheckBox("Diet Root Beer");
+        ButtonFactory dRBeerBF = new ButtonFactory();
+        ButtonFactory dRBeerSize = new ButtonFactory();
+
+        JCheckBox starryBox = new JCheckBox("Starry");
+        ButtonFactory starryBF = new ButtonFactory();
+        ButtonFactory starrySize = new ButtonFactory();
+
+        JCheckBox lemonadeBox = new JCheckBox("Lemonade");
+        ButtonFactory lemonadeBF = new ButtonFactory();
+        ButtonFactory lemonadeSize = new ButtonFactory();
+
+
+
+        panel.add(drinksLabel, "cell 0 0");
+
+        JPanel pepsiPanel = pepsiBF.buildIncrementButton();
+        JPanel pepsiSizePanel = pepsiSize.buildSizeButton();
+        panel.add(pepsiBox, "cell 0 1");
+        panel.add(pepsiPanel, "cell 1 1");
+        panel.add(pepsiSizePanel, "cell 0 2");
+
+        JPanel dPepsiPanel = dPepsiBF.buildIncrementButton();
+        JPanel dPepsiSizePanel = dPepsiSize.buildSizeButton();
+        panel.add(dPepsiBox, "cell 0 3");
+        panel.add(dPepsiPanel, "cell 1 3");
+        panel.add(dPepsiSizePanel, "cell 0 4");
+
+
+        JPanel orangePanel = orangeBF.buildIncrementButton();
+        JPanel orangeSizePanel = dPepsiSize.buildSizeButton();
+        panel.add(orangeBox, "cell 0 5");
+        panel.add(orangePanel, "cell 1 5");
+        panel.add(orangeSizePanel, "cell 0 6");
+
+        JPanel dOrangePanel = dOrangeBF.buildIncrementButton();
+        JPanel dOrangeSizePanel = dPepsiSize.buildSizeButton();
+        panel.add(dOrangeBox, "cell 0 7");
+        panel.add(dOrangePanel, "cell 1 7");
+        panel.add(dOrangeSizePanel, "cell 0 8");
+
+
+        JPanel rBeerPanel = rBeerBF.buildIncrementButton();
+        JPanel rBeerSizePanel = dPepsiSize.buildSizeButton();
+        panel.add(rBeerBox, "cell 2 1");
+        panel.add(rBeerPanel, "cell 3 1");
+        panel.add(rBeerSizePanel, "cell 2 2");
+
+        JPanel dRBeerPanel = dRBeerBF.buildIncrementButton();
+        JPanel dRBeerSizePanel = dPepsiSize.buildSizeButton();
+        panel.add(dRBeerBox, "cell 2 3");
+        panel.add(dRBeerPanel, "cell 3 3");
+        panel.add(dRBeerSizePanel, "cell 2 4");
+
+        JPanel starryPanel = starryBF.buildIncrementButton();
+        JPanel starrySizePanel = dPepsiSize.buildSizeButton();
+        panel.add(starryBox, "cell 2 5");
+        panel.add(starryPanel, "cell 3 5");
+        panel.add(starrySizePanel, "cell 2 6");
+
+        JPanel lemonadePanel = lemonadeBF.buildIncrementButton();
+        JPanel lemonadeSizePanel = dPepsiSize.buildSizeButton();
+        panel.add(lemonadeBox, "cell 2 7");
+        panel.add(lemonadePanel, "cell 3 7");
+        panel.add(lemonadeSizePanel, "cell 2 8");
+
+        JButton submitBtn = new JButton("Submit");
+        JButton cancelBtn = new JButton("Cancel");
+
+        panel.add(submitBtn, "cell 0 9");
+        panel.add(cancelBtn, "cell 1 9");
+
+
+        //Sets inc Panels to not visible
+        pepsiPanel.setVisible(false);
+        dPepsiPanel.setVisible(false);
+        orangePanel.setVisible(false);
+        dOrangePanel.setVisible(false);
+        rBeerPanel.setVisible(false);
+        dRBeerPanel.setVisible(false);
+        starryPanel.setVisible(false);
+        lemonadePanel.setVisible(false);
+
+        pepsiSizePanel.setVisible(false);
+        dPepsiSizePanel.setVisible(false);
+        orangeSizePanel.setVisible(false);
+        dOrangeSizePanel.setVisible(false);
+        rBeerSizePanel.setVisible(false);
+        dRBeerSizePanel.setVisible(false);
+        starrySizePanel.setVisible(false);
+        lemonadeSizePanel.setVisible(false);
+
+
+
+        // Action Listeners for button elements
+        cancelBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CardLayout cardLayout = (CardLayout) contentPanel.getLayout();
+                cardLayout.show(contentPanel, "MenuPage");
+            }
+        });
+        pepsiBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pepsiPanel.setVisible(pepsiBox.isSelected());
+                pepsiSizePanel.setVisible(pepsiBox.isSelected());
+            }
+        });
+        dPepsiBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dPepsiPanel.setVisible(dPepsiBox.isSelected());
+                dPepsiSizePanel.setVisible(dPepsiBox.isSelected());
+            }
+        });
+        orangeBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                orangePanel.setVisible(orangeBox.isSelected());
+                orangeSizePanel.setVisible(orangeBox.isSelected());
+            }
+        });
+        dOrangeBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dOrangePanel.setVisible(dOrangeBox.isSelected());
+                dOrangeSizePanel.setVisible(dOrangeBox.isSelected());
+            }
+        });
+        rBeerBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rBeerPanel.setVisible(rBeerBox.isSelected());
+                rBeerSizePanel.setVisible(rBeerBox.isSelected());
+            }
+        });
+        dRBeerBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dRBeerPanel.setVisible(dRBeerBox.isSelected());
+                dRBeerSizePanel.setVisible(dRBeerBox.isSelected());
+            }
+        });
+        starryBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                starryPanel.setVisible(starryBox.isSelected());
+                starrySizePanel.setVisible(starryBox.isSelected());
+            }
+        });
+        lemonadeBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                lemonadePanel.setVisible(lemonadeBox.isSelected());
+                lemonadeSizePanel.setVisible(lemonadeBox.isSelected());
+            }
+        });
+
         return panel;
     }
 
     public static JPanel buildSidesPanel(){
         JPanel panel = new JPanel(new MigLayout());
+
         return panel;
+    }
+
+    private static void switchPage(String pageName) {
+
+        contentPanel.removeAll();
+        contentPanel.add(buildHomePage(), "HomePage");
+        contentPanel.add(buildMenuPage(), "MenuPage");
+        contentPanel.add(buildLoginPage(), "LoginPage");
+        contentPanel.add(buildCartPage(), "CartPage");
+        contentPanel.add(buildPizzaPage(), "PizzaPage");
+        contentPanel.add(buildDrinksPage(), "DrinksPage");
+
+        CardLayout cardLayout = (CardLayout) contentPanel.getLayout();
+        cardLayout.show(contentPanel, pageName);
     }
 }
