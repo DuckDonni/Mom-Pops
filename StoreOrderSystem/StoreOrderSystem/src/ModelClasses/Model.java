@@ -3,7 +3,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
-import java.io.IOError;
 import java.io.IOException;
 
 
@@ -25,7 +24,7 @@ public class Model {
 
         // writing to file example
         try {
-            objectMapper.writeValue(new File("ModelClasses/person.json"), person);
+            objectMapper.writeValue(new File("Database/Customers.json"), person);
             System.out.println("Success");
         } catch (IOException e) {
             e.printStackTrace();
