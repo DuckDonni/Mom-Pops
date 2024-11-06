@@ -84,9 +84,9 @@ public class CustomerView {
         JScrollBar horizontalScrollBar = scrollPane.getHorizontalScrollBar();
         horizontalScrollBar.setPreferredSize(new Dimension(0, 20)); // Increase height of horizontal scrollbar
 
-        JButton editCustBtn = new JButton("CEdit");
-        JButton editOrderTimeBtn = new JButton("OTBtn");
-
+        JButton editCustBtn = new JButton("Edit Cust. Info");
+        JButton editOrderTimeBtn = new JButton("Edit Order Info");
+        JButton editPayment = new JButton("Edit Payment");
         editCustBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -101,16 +101,22 @@ public class CustomerView {
             public void actionPerformed(ActionEvent e) {
 //                Test for preset time
 //                Date t = new Date();
-//                t.setHours(20);
+//                t.setHours(22);
 //                t.setMinutes(21);
 //                popupManager.buildEditOrderTime(true,t);
                 popupManager.buildEditOrderTime();
             }
         });
-
+        editPayment.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                popupManager.buildEditPayment();
+            }
+        });
         // Add buttons and scroll pane to main panel
         panel.add(editCustBtn, "cell 3 0");
         panel.add(editOrderTimeBtn, "cell 3 1");
+        panel.add(editPayment, "cell 3 2");
         panel.add(scrollPane, "cell 0 0, span 3 3, grow"); // Span scroll pane across multiple cells
 
         return panel;

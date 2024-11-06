@@ -1,5 +1,6 @@
 import net.miginfocom.swing.MigLayout;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
@@ -19,7 +20,8 @@ public class PopupManager {
         frame.setTitle("Edit Profile Information");
         JPanel panel = new JPanel();
         panel.setLayout(new MigLayout("fillx", "[grow,fill][grow,fill][grow,fill]", "[][][][][][][]"));
-
+        JLabel title = new JLabel("Customer Information");
+        panel.add(title, "cell 0 0");
         JLabel fNamePrompt = new JLabel("First Name:");
         JTextField fNameField = new JTextField(10);
 
@@ -42,26 +44,26 @@ public class PopupManager {
         JTextField phoneNumberField = new JTextField(12);
 
         // Adding components in original layout with custom sizes for text fields
-        panel.add(fNamePrompt, "cell 0 0, alignx left");
-        panel.add(fNameField, "cell 0 1, growx");
+        panel.add(fNamePrompt, "cell 0 1, alignx left");
+        panel.add(fNameField, "cell 0 2, growx");
 
-        panel.add(lNamePrompt, "cell 1 0, alignx left");
-        panel.add(lNameField, "cell 1 1, growx");
+        panel.add(lNamePrompt, "cell 1 1, alignx left");
+        panel.add(lNameField, "cell 1 2, growx");
 
-        panel.add(addressPrompt, "cell 0 2, alignx left");
-        panel.add(addressField, "cell 0 3 2 1, growx");  // Span across 2 columns
+        panel.add(addressPrompt, "cell 0 3, alignx left");
+        panel.add(addressField, "cell 0 4 2 1, growx");  // Span across 2 columns
 
-        panel.add(bldRoomPrompt, "cell 2 2, alignx left");
-        panel.add(bldRoomField, "cell 2 3, growx");
+        panel.add(bldRoomPrompt, "cell 2 3, alignx left");
+        panel.add(bldRoomField, "cell 2 4, growx");
 
-        panel.add(zipPrompt, "cell 0 4, alignx left");
-        panel.add(zipField, "cell 0 5, growx");
+        panel.add(zipPrompt, "cell 0 5, alignx left");
+        panel.add(zipField, "cell 0 6, growx");
 
-        panel.add(statePrompt, "cell 1 4, alignx left");
-        panel.add(stateField, "cell 1 5, growx");
+        panel.add(statePrompt, "cell 1 5, alignx left");
+        panel.add(stateField, "cell 1 6, growx");
 
-        panel.add(phoneNumberPrompt, "cell 2 4, alignx left");
-        panel.add(phoneNumberField, "cell 2 5, growx");
+        panel.add(phoneNumberPrompt, "cell 2 5, alignx left");
+        panel.add(phoneNumberField, "cell 2 6, growx");
 
         frame.add(panel);
         frame.setVisible(true);
@@ -71,7 +73,8 @@ public class PopupManager {
         frame.getContentPane().removeAll();
         frame.setTitle("Edit Profile Information");
         JPanel panel = new JPanel();
-
+        JLabel title = new JLabel("Customer Information");
+        panel.add(title,"cell 0 0");
         // Address will be broke up as (street address, bld number, state, zip)
         String[] addressBreakup = address.split(",");
 
@@ -99,26 +102,26 @@ public class PopupManager {
         JTextField phoneNumberField = new JTextField(phoneNumber, 12);
 
         // Adding components in original layout with custom sizes for text fields
-        panel.add(fNamePrompt, "cell 0 0, alignx left");
-        panel.add(fNameField, "cell 0 1, growx");
+        panel.add(fNamePrompt, "cell 0 1, alignx left");
+        panel.add(fNameField, "cell 0 2, growx");
 
-        panel.add(lNamePrompt, "cell 1 0, alignx left");
-        panel.add(lNameField, "cell 1 1, growx");
+        panel.add(lNamePrompt, "cell 1 1, alignx left");
+        panel.add(lNameField, "cell 1 2, growx");
 
-        panel.add(addressPrompt, "cell 0 2, alignx left");
-        panel.add(addressField, "cell 0 3 2 1, growx");  // Span across 2 columns
+        panel.add(addressPrompt, "cell 0 3, alignx left");
+        panel.add(addressField, "cell 0 4 2 1, growx");  // Span across 2 columns
 
-        panel.add(bldRoomPrompt, "cell 2 2, alignx left");
-        panel.add(bldRoomField, "cell 2 3, growx");
+        panel.add(bldRoomPrompt, "cell 2 3, alignx left");
+        panel.add(bldRoomField, "cell 2 4, growx");
 
-        panel.add(zipPrompt, "cell 0 4, alignx left");
-        panel.add(zipField, "cell 0 5, growx");
+        panel.add(zipPrompt, "cell 0 5, alignx left");
+        panel.add(zipField, "cell 0 6, growx");
 
-        panel.add(statePrompt, "cell 1 4, alignx left");
-        panel.add(stateField, "cell 1 5, growx");
+        panel.add(statePrompt, "cell 1 5, alignx left");
+        panel.add(stateField, "cell 1 6, growx");
 
-        panel.add(phoneNumberPrompt, "cell 2 4, alignx left");
-        panel.add(phoneNumberField, "cell 2 5, growx");
+        panel.add(phoneNumberPrompt, "cell 2 5, alignx left");
+        panel.add(phoneNumberField, "cell 2 6, growx");
 
         frame.add(panel);
         frame.setVisible(true);
@@ -130,7 +133,8 @@ public class PopupManager {
         frame.getContentPane().removeAll();
 
         JPanel panel = new JPanel(new MigLayout());
-
+        JLabel title = new JLabel("Order Details");
+        panel.add(title, "cell 0 0");
         JLabel pickupPrompt = new JLabel("Pickup");
         JRadioButton pickupOption = new JRadioButton();
 
@@ -141,10 +145,10 @@ public class PopupManager {
         deliveryBtnGroup.add(pickupOption);
         deliveryBtnGroup.add(deliverOption);
 
-        panel.add(pickupPrompt, "cell 0 0, alignx left");
-        panel.add(pickupOption, "cell 1 0, center");
-        panel.add(deliverPrompt, "cell 2 0, alignx left");
-        panel.add(deliverOption, "cell 3 0, center");
+        panel.add(pickupPrompt, "cell 0 1, alignx left");
+        panel.add(pickupOption, "cell 1 1, center");
+        panel.add(deliverPrompt, "cell 2 1, alignx left");
+        panel.add(deliverOption, "cell 3 1, center");
 
         JLabel asapPrompt = new JLabel("ASAP");
         JRadioButton asapOption = new JRadioButton();
@@ -155,10 +159,10 @@ public class PopupManager {
         timeBtnGroup.add(asapOption);
         timeBtnGroup.add(timeOption);
 
-        panel.add(asapPrompt, "cell 0 1, alignx left");
-        panel.add(asapOption, "cell 1 1, center");
-        panel.add(timePrompt, "cell 2 1, alignx left");
-        panel.add(timeOption, "cell 3 1, center");
+        panel.add(asapPrompt, "cell 0 2, alignx left");
+        panel.add(asapOption, "cell 1 2, center");
+        panel.add(timePrompt, "cell 2 2, alignx left");
+        panel.add(timeOption, "cell 3 2, center");
 
         // Create the timePanel with fixed width constraints
         JPanel timePanel = new JPanel(new MigLayout("insets 0, gapy 0", "[grow,fill][fill]", "[][]")); // No gap between rows
@@ -171,12 +175,15 @@ public class PopupManager {
         timePanel.add(prefTimeField, "cell 0 1, growx");
 
         // Setting up AM/PM options in a vertical panel
+
         JPanel timeBtnPanel = new JPanel(new MigLayout("insets 0, gapy 0", "[]", "[][]")); // Stack vertically with no additional gap
         JLabel amPrompt = new JLabel("AM");
         JRadioButton amOption = new JRadioButton();
         JLabel pmPrompt = new JLabel("PM");
         JRadioButton pmOption = new JRadioButton();
-
+        ButtonGroup amPmBtnGroup = new ButtonGroup();
+        amPmBtnGroup.add(amOption);
+        amPmBtnGroup.add(pmOption);
         // Stack the AM and PM radio buttons vertically in `timeBtnPanel`
         timeBtnPanel.add(amPrompt, "alignx left");
         timeBtnPanel.add(amOption, "wrap"); // Wrap to move to the next row
@@ -187,7 +194,7 @@ public class PopupManager {
         timePanel.add(timeBtnPanel, "cell 1 1, aligny top"); // Align top to the text field without affecting the prompt height
 
         timePanel.setVisible(false);
-        panel.add(timePanel, "cell 0 2, spanx"); // Add timePanel to row 2 of the main panel without affecting other rows
+        panel.add(timePanel, "cell 0 3, spanx"); // Add timePanel to row 2 of the main panel without affecting other rows
 
         asapOption.addActionListener(new ActionListener() {
             @Override
@@ -201,7 +208,6 @@ public class PopupManager {
                 timePanel.setVisible(timeOption.isSelected());
             }
         });
-
         frame.add(panel);
         frame.setVisible(true);
         return frame;
@@ -211,7 +217,8 @@ public class PopupManager {
         frame.getContentPane().removeAll();
 
         JPanel panel = new JPanel(new MigLayout());
-
+        JLabel title = new JLabel("Order Details");
+        panel.add(title,"cell 0 0");
         JLabel pickupPrompt = new JLabel("Pickup");
         JRadioButton pickupOption = new JRadioButton();
 
@@ -231,10 +238,10 @@ public class PopupManager {
             deliverOption.setSelected(false);
         }
 
-        panel.add(pickupPrompt, "cell 0 0, alignx left");
-        panel.add(pickupOption, "cell 1 0, center");
-        panel.add(deliverPrompt, "cell 2 0, alignx left");
-        panel.add(deliverOption, "cell 3 0, center");
+        panel.add(pickupPrompt, "cell 0 1, alignx left");
+        panel.add(pickupOption, "cell 1 1, center");
+        panel.add(deliverPrompt, "cell 2 1, alignx left");
+        panel.add(deliverOption, "cell 3 1, center");
 
         JLabel asapPrompt = new JLabel("ASAP");
         JRadioButton asapOption = new JRadioButton();
@@ -257,14 +264,14 @@ public class PopupManager {
             timeOption.setSelected(true);
         }
 
-        panel.add(asapPrompt, "cell 0 1, alignx left");
-        panel.add(asapOption, "cell 1 1, center");
-        panel.add(timePrompt, "cell 2 1, alignx left");
-        panel.add(timeOption, "cell 3 1, center");
+        panel.add(asapPrompt, "cell 0 2, alignx left");
+        panel.add(asapOption, "cell 1 2, center");
+        panel.add(timePrompt, "cell 2 2, alignx left");
+        panel.add(timeOption, "cell 3 2, center");
 
         // Create the timePanel with fixed width constraints
         JPanel timePanel = new JPanel(new MigLayout("insets 0, gapy 0", "[grow,fill][fill]", "[][]")); // No gap between rows
-
+        timePanel.setVisible(false);
         JLabel prefTimePrompt = new JLabel("Preferred Time:");
         JTextField prefTimeField = new JTextField(10);
 
@@ -278,9 +285,13 @@ public class PopupManager {
         JRadioButton amOption = new JRadioButton();
         JLabel pmPrompt = new JLabel("PM");
         JRadioButton pmOption = new JRadioButton();
+        ButtonGroup amPmBtnGroup = new ButtonGroup();
+        amPmBtnGroup.add(amOption);
+        amPmBtnGroup.add(pmOption);
 
         if(timeOption.isSelected()){
-            if(time.getHours()>=12){
+            timePanel.setVisible(true);
+            if(time.getHours()>=12 && time.getHours()!= 24){
                 amOption.setSelected(false);
                 pmOption.setSelected(true);
                 prefTimeField.setText((time.getHours()-12)+ ":" + time.getMinutes());
@@ -292,6 +303,8 @@ public class PopupManager {
             }
         }
 
+
+
         // Stack the AM and PM radio buttons vertically in `timeBtnPanel`
         timeBtnPanel.add(amPrompt, "alignx left");
         timeBtnPanel.add(amOption, "wrap"); // Wrap to move to the next row
@@ -301,8 +314,8 @@ public class PopupManager {
         // Place `timeBtnPanel` in alignment with the text field, in the same row as the text field
         timePanel.add(timeBtnPanel, "cell 1 1, aligny top"); // Align top to the text field without affecting the prompt height
 
-        timePanel.setVisible(false);
-        panel.add(timePanel, "cell 0 2, spanx"); // Add timePanel to row 2 of the main panel without affecting other rows
+
+        panel.add(timePanel, "cell 0 3, spanx"); // Add timePanel to row 2 of the main panel without affecting other rows
 
         asapOption.addActionListener(new ActionListener() {
             @Override
@@ -318,6 +331,44 @@ public class PopupManager {
         });
 
         frame.add(panel);
+        frame.setVisible(true);
+        return frame;
+    }
+
+    public JFrame buildEditPayment(){
+        JPanel panel = new JPanel(new MigLayout());
+        JLabel title = new JLabel("Payment");
+        panel.add(title, "cell 0 0");
+
+
+        ButtonGroup pMethodGroup = new ButtonGroup();
+
+        JLabel cardPrompt = new JLabel("Card");
+        JRadioButton cardOption = new JRadioButton();
+        JLabel cashPrompt = new JLabel("Cash/Check");
+        JRadioButton cashOption = new JRadioButton();
+
+        pMethodGroup.add(cardOption);
+        pMethodGroup.add(cashOption);
+
+        panel.add(cardPrompt, "cell 0 1");
+        panel.add(cardOption, "cell 1 1");
+        panel.add(cashPrompt, "cell 2 1");
+        panel.add(cashOption, "cell 3 1");
+
+
+        JPanel cardPanel = new JPanel(new MigLayout());
+        JLabel cardNumPrompt = new JLabel("Card Number");
+
+
+
+        frame.add(panel);
+        frame.setVisible(true);
+        return frame;
+    }
+    public JFrame buildEditPayment(String cardNum, String csv, String expDate, String cardHolderName, String cardPaymentType){
+
+
         frame.setVisible(true);
         return frame;
     }
