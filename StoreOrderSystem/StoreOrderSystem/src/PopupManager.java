@@ -335,11 +335,11 @@ public class PopupManager {
         return frame;
     }
 
-    public JFrame buildEditPayment(){
-        JPanel panel = new JPanel(new MigLayout());
+    public JFrame buildEditPayment() {
+        frame.getContentPane().removeAll();
+        JPanel panel = new JPanel(new MigLayout("wrap 4")); // wrap to 4 columns for the payment method row
         JLabel title = new JLabel("Payment");
-        panel.add(title, "cell 0 0");
-
+        panel.add(title, "span"); // title spans all columns and is centered
 
         ButtonGroup pMethodGroup = new ButtonGroup();
 
@@ -356,21 +356,48 @@ public class PopupManager {
         panel.add(cashPrompt, "cell 2 1");
         panel.add(cashOption, "cell 3 1");
 
-
-        JPanel cardPanel = new JPanel(new MigLayout());
+        JPanel cardPanel = new JPanel(new MigLayout("wrap 2, fillx")); // wrap to 2 columns within the card panel
         JLabel cardNumPrompt = new JLabel("Card Number");
+        JTextField cardNumField = new JTextField(15); // specify preferred width
 
+        JLabel csvPrompt = new JLabel("CSV");
+        JTextField csvField = new JTextField(10); // specify preferred width
 
+        JLabel expPrompt = new JLabel("Exp Date");
+        JTextField expField = new JTextField(10);
+
+        JLabel cardholderPrompt = new JLabel("Cardholder Name");
+        JTextField cardholderField = new JTextField(15);
+
+        JLabel cardTypePrompt = new JLabel("Card Type");
+        JTextField cardTypeField = new JTextField(15);
+
+        cardPanel.add(cardNumPrompt, "align right");
+        cardPanel.add(cardNumField, "growx"); // field grows to fill available space in cell
+        cardPanel.add(csvPrompt, "align right");
+        cardPanel.add(csvField, "growx");
+        cardPanel.add(expPrompt, "align right");
+        cardPanel.add(expField, "growx");
+        cardPanel.add(cardholderPrompt, "align right");
+        cardPanel.add(cardholderField, "growx");
+        cardPanel.add(cardTypePrompt, "align right");
+        cardPanel.add(cardTypeField, "growx");
+
+        panel.add(cardPanel, "cell 0 2, span 4, growx"); // make cardPanel span all columns
 
         frame.add(panel);
         frame.setVisible(true);
         return frame;
     }
-    public JFrame buildEditPayment(String cardNum, String csv, String expDate, String cardHolderName, String cardPaymentType){
 
+    public JFrame buildEditPayment(String cardNum, String csv, String expDate, String cardHolderName, String cardPaymentType){
+        frame.getContentPane().removeAll();
 
         frame.setVisible(true);
         return frame;
     }
+
+
+
 
 }
