@@ -1,43 +1,46 @@
 package ModelClasses;
-import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
+import java.io.IOError;
 import java.io.IOException;
-import java.util.List;
+
 
 public class Model {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws JsonProcessingException {
+
         // Create an ObjectMapper instance
         ObjectMapper objectMapper = new ObjectMapper();
 
+        Person person = new Person("Robert", 20);
+
+        String json = objectMapper.writeValueAsString(person);
+        System.out.println(json);
+
+        json = "{\"name\":\"Will\", \"age\":22}";
+        person = objectMapper.readValue(json, Person.class); // must have default constructor
+        System.out.println(person.getName());
+
+        // writing to file example
         try {
-            // Read the JSON array and map it to a List of Person objects
-            List<Person> people = objectMapper.readValue(new File("src/ModelClasses/Database.json"), new TypeReference<List<Person>>(){});
-
-            // Print out the people
-            for (Person person : people) {
-                System.out.println("Name: " + person.getName());
-                System.out.println("Age: " + person.getAge());
-                System.out.println("Email: " + person.getEmail());
-            }
-
+            objectMapper.writeValue(new File("ModelClasses/person.json"), person);
+            System.out.println("Success");
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 }
 
 class Person {
-    private String name;
-    private int age;
-    private String email;
+    String name;
+    int age;
 
-    // Default constructor (required for Jackson)
     public Person() {}
+    public Person(String name, int age) {this.name = name; this.age = age;}
 
-    // Getters and Setters
     public String getName() {
         return name;
     }
@@ -53,14 +56,5 @@ class Person {
     public void setAge(int age) {
         this.age = age;
     }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }
-
 
