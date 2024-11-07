@@ -139,11 +139,17 @@ public class CustomerView {
                 popupManager.buildEditPayment();
             }
         });
+        JPanel rightPanel = new JPanel(new MigLayout());
+        rightPanel.add(editCustBtn, "cell 3 1,wrap, align right");
+        rightPanel.add(editOrderTimeBtn,"cell 3 2,wrap, align right");
+        rightPanel.add(editPayment, "cell 3 3,wrap, align right");
+
         // Add buttons and scroll pane to main panel
-        panel.add(editCustBtn, "cell 3 0");
-        panel.add(editOrderTimeBtn, "cell 3 1");
-        panel.add(editPayment, "cell 3 2");
-        panel.add(scrollPane, "cell 0 0, span 3 3, grow"); // Span scroll pane across multiple cells
+//        panel.add(editCustBtn, "cell 3 1,wrap, align right");
+//        panel.add(editOrderTimeBtn, "cell 3 2, wrap, align right");
+//        panel.add(editPayment, "cell 3 3, wrap, align right");
+        panel.add(rightPanel, "east");
+        panel.add(scrollPane, "west"); // Span scroll pane across multiple cells
 
         return panel;
     }
