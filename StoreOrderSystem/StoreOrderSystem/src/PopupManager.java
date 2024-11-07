@@ -372,16 +372,16 @@ public class PopupManager {
         JLabel cardTypePrompt = new JLabel("Card Type");
         JTextField cardTypeField = new JTextField(15);
 
-        cardPanel.add(cardNumPrompt, "align right");
-        cardPanel.add(cardNumField, "growx"); // field grows to fill available space in cell
-        cardPanel.add(csvPrompt, "align right");
-        cardPanel.add(csvField, "growx");
-        cardPanel.add(expPrompt, "align right");
-        cardPanel.add(expField, "growx");
-        cardPanel.add(cardholderPrompt, "align right");
-        cardPanel.add(cardholderField, "growx");
-        cardPanel.add(cardTypePrompt, "align right");
-        cardPanel.add(cardTypeField, "growx");
+        cardPanel.add(cardNumPrompt, "cell 0 0, align left");
+        cardPanel.add(cardNumField, "cell 0 1,growx"); // field grows to fill available space in cell
+        cardPanel.add(csvPrompt, "cell 0 2,align left");
+        cardPanel.add(csvField, "cell 0 3,growx");
+        cardPanel.add(expPrompt, "cell 1 2,align left");
+        cardPanel.add(expField, "cell 1 3,growx");
+        cardPanel.add(cardholderPrompt, "cell 2 2, align left");
+        cardPanel.add(cardholderField, "cell 2 3, growx");
+        cardPanel.add(cardTypePrompt, "cell 1 0, align left");
+        cardPanel.add(cardTypeField, "cell 1 1,growx");
 
         panel.add(cardPanel, "cell 0 2, span 4, growx"); // make cardPanel span all columns
 

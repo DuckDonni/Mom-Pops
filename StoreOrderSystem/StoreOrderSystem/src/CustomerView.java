@@ -28,6 +28,7 @@ public class CustomerView {
         contentPanel.add(buildMenuPage(), "MenuPage");
         contentPanel.add(buildPizzaPage(), "PizzaPage");
         contentPanel.add(buildDrinksPage(), "DrinksPage");
+        contentPanel.add(buildSidesPanel(), "SidesPage");
         contentPanel.add(buildCartPage(), "CartPage");
         contentPanel.add(buildLoginPage(), "LoginPage");
         switchPage("HomePage");
@@ -74,6 +75,12 @@ public class CustomerView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 switchPage("DrinksPage");
+            }
+        });
+        sidesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                switchPage("SidesPage");
             }
         });
         return panel;
@@ -144,9 +151,9 @@ public class CustomerView {
     public static JPanel buildLoginPage(){
         JPanel panel = new JPanel();
         panel.setLayout(new MigLayout());
-        JLabel phonenumber_ID = new JLabel("Enter Phone Number or Employee ID");
+        JLabel phonenumber_ID = new JLabel("* Enter Phone Number or Employee ID");
         JTextField phoneNumberField = new JTextField();
-        JLabel passwordLabel = new JLabel("Enter Phone Number");
+        JLabel passwordLabel = new JLabel("* Enter Phone Number");
         JTextField passwordField = new JTextField();
         phoneNumberField.setPreferredSize(new Dimension((int)(screenSize.width*0.1), (int)(screenSize.height*0.02)));
         passwordField.setPreferredSize(new Dimension((int)(screenSize.width*0.1), (int)(screenSize.height*0.02)));
@@ -154,6 +161,19 @@ public class CustomerView {
         panel.add(phonenumber_ID, "cell 0 0, growx");
         panel.add(passwordLabel , "cell 0 2, growx");
         panel.add(passwordField, "cell 0 3, growx");
+
+        JButton submitBtn = new JButton("Submit");
+
+        panel.add(submitBtn, "cell 0 4, alignx center");
+
+        submitBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Code for login logic
+            }
+        });
+
+
         return panel;
     }
 
@@ -467,6 +487,64 @@ public class CustomerView {
 
     public static JPanel buildSidesPanel(){
         JPanel panel = new JPanel(new MigLayout());
+        JLabel title = new JLabel("Sides:");
+        JCheckBox bSticksBox = new JCheckBox("Bread Sticks");
+        ButtonFactory bSticksIncBF = new ButtonFactory();
+        JPanel bSticksIncPanel = bSticksIncBF.buildIncrementButton();
+
+        JCheckBox bSBitesBox = new JCheckBox("Bread Stick Bites");
+        ButtonFactory bSBitesIncBF = new ButtonFactory();
+        JPanel bSBitesIncPanel = bSBitesIncBF.buildIncrementButton();
+
+        JCheckBox cookieBox = new JCheckBox("Big Chocolate Chip Cookie");
+        ButtonFactory cookieIncBF = new ButtonFactory();
+        JPanel cookieIncPanel = cookieIncBF.buildIncrementButton();
+
+
+        bSticksIncPanel.setVisible(false);
+        bSBitesIncPanel.setVisible(false);
+        cookieIncPanel.setVisible(false);
+
+
+        bSticksBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                bSticksIncPanel.setVisible(bSticksBox.isSelected());
+            }
+        });
+        bSBitesBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                bSBitesIncPanel.setVisible(bSBitesBox.isSelected());
+            }
+        });
+        cookieBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cookieIncPanel.setVisible(cookieBox.isSelected());
+            }
+        });
+
+        panel.add(title, "cell 0 0");
+        panel.add(bSticksBox, "cell 0 1");
+        panel.add(bSticksIncPanel, "cell 1 1");
+        panel.add(bSBitesBox, "cell 0 2");
+        panel.add(bSBitesIncPanel, "cell 1 2");
+        panel.add(cookieBox, "cell 0 3");
+        panel.add(cookieIncPanel, "cell 1 3");
+
+        JButton submitBtn = new JButton("Submit");
+        JButton cancelBtn = new JButton("Cancel");
+
+        panel.add(submitBtn, "cell 0 4");
+        panel.add(cancelBtn, "cell 1 4");
+
+        cancelBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                switchPage("MenuPage");
+            }
+        });
 
         return panel;
     }
@@ -480,6 +558,7 @@ public class CustomerView {
         contentPanel.add(buildCartPage(), "CartPage");
         contentPanel.add(buildPizzaPage(), "PizzaPage");
         contentPanel.add(buildDrinksPage(), "DrinksPage");
+        contentPanel.add(buildSidesPanel(), "SidesPage");
 
         CardLayout cardLayout = (CardLayout) contentPanel.getLayout();
         cardLayout.show(contentPanel, pageName);
