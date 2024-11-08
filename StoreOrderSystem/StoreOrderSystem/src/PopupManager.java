@@ -213,7 +213,7 @@ public class PopupManager {
         return frame;
     }
 
-    public JFrame buildEditOrderTime(Boolean isDelivery, Date time){
+    public JFrame buildEditOrderTime(boolean isDelivery, Date time){
         frame.getContentPane().removeAll();
 
         JPanel panel = new JPanel(new MigLayout());

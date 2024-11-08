@@ -12,10 +12,6 @@ public class ButtonFactory {
     private JRadioButton mediumBtn;
     private JRadioButton largeBtn;
 
-    public ButtonFactory(){
-
-    }
-
     public JPanel buildIncrementButton(){
         panel = new JPanel(new MigLayout());
         amount = 1;

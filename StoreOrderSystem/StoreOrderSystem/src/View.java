@@ -3,17 +3,17 @@ public class View {
     private StaffView staffView;
 
     public View() {
-        customerView = new CustomerView(this);
-        staffView = new StaffView(this);
+        customerView = new CustomerView();
+        staffView = new StaffView();
     }
 
     // Method to swap views based on an integer
-    public void swapView(int num) {
+    public void swapView(int option) {
 
-        if (num == 0) {
+        if (option == 0) {
             staffView.getFrame().setVisible(false); // Hide staff view
             customerView.getFrame().setVisible(true); // Show customer view
-        } else if (num == 1) {
+        } else if (option == 1) {
             customerView.getFrame().setVisible(false); // Hide customer view
             staffView.getFrame().setVisible(true); // Show staff view
         }

@@ -4,9 +4,8 @@ import java.awt.*;
 
 public class StaffView {
     private JFrame frame;
-    View view;
-    public StaffView(View view) {
-        view = this.view;
+    public StaffView() {
+
         frame = new JFrame("Staff View");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

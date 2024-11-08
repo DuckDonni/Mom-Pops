@@ -4,18 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.util.*;
 
 public class CustomerView {
     private static JFrame frame;
-    private View view;
     private static Dimension screenSize;
     private static JPanel contentPanel;
-    public CustomerView(View view) {
+    public CustomerView() {
 
-        this.view = view;
         frame = new JFrame("Homepage Example");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -28,7 +23,7 @@ public class CustomerView {
         contentPanel.add(buildMenuPage(), "MenuPage");
         contentPanel.add(buildPizzaPage(), "PizzaPage");
         contentPanel.add(buildDrinksPage(), "DrinksPage");
-        contentPanel.add(buildSidesPanel(), "SidesPage");
+        contentPanel.add(buildSidesPage(), "SidesPage");
         contentPanel.add(buildCartPage(), "CartPage");
         contentPanel.add(buildLoginPage(), "LoginPage");
         switchPage("HomePage");
@@ -491,7 +486,7 @@ public class CustomerView {
         return panel;
     }
 
-    public static JPanel buildSidesPanel(){
+    public static JPanel buildSidesPage(){
         JPanel panel = new JPanel(new MigLayout());
         JLabel title = new JLabel("Sides:");
         JCheckBox bSticksBox = new JCheckBox("Bread Sticks");
@@ -564,7 +559,7 @@ public class CustomerView {
         contentPanel.add(buildCartPage(), "CartPage");
         contentPanel.add(buildPizzaPage(), "PizzaPage");
         contentPanel.add(buildDrinksPage(), "DrinksPage");
-        contentPanel.add(buildSidesPanel(), "SidesPage");
+        contentPanel.add(buildSidesPage(), "SidesPage");
 
         CardLayout cardLayout = (CardLayout) contentPanel.getLayout();
         cardLayout.show(contentPanel, pageName);
