@@ -1,4 +1,6 @@
 {
-  "name":"Will",
-  "age":22
+  "phone":"(111) 111 1111",
+  "password": "password",
+  "name": "John Smith",
+  "address": "42069 Example Way"
 }
