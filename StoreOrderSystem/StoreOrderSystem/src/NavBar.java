@@ -13,7 +13,7 @@ public class NavBar {
     }
 
     // Build Guest Navbar with action listeners for navigation
-    public JPanel buildGuestBar(JPanel contentPanel) {
+    private JPanel buildGuestBar(JPanel contentPanel) {
         JPanel guestPanel = new JPanel();
         guestPanel.setLayout(new MigLayout());
 
@@ -61,7 +61,7 @@ public class NavBar {
         return guestPanel;
     }
 
-    public JPanel buildCustomerBar(JPanel contentPanel) {
+    private JPanel buildCustomerBar(JPanel contentPanel) {
         JPanel customerPanel = new JPanel();
         customerPanel.setLayout(new MigLayout());
 
