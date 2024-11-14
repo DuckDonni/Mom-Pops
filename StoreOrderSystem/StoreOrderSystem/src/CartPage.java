@@ -8,10 +8,11 @@ import java.awt.event.ActionListener;
 public class CartPage {
     private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();;
 
-    public CartPage() {
+    public CartPage(Object pView) {
+        Object pviews = pView;
     }
 
-    public static JPanel buildCartPage() {
+    public static JPanel returnPage() {
         PopupManager popupManager = new PopupManager();
         JPanel panel = new JPanel();
         panel.setLayout(new MigLayout());

@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 public class CustomerView {
     private static JFrame frame;
     private static Dimension screenSize;
-    private static JPanel contentPanel;
+    public static JPanel contentPanel;
     public CustomerView() {
 
         frame = new JFrame("Homepage Example");
@@ -19,14 +19,14 @@ public class CustomerView {
         // Establishes layout for miglayout
         frame.setLayout(new MigLayout("fill", "[grow][right]", "[]20[grow]"));
         contentPanel = new JPanel(new CardLayout());
-        contentPanel.add(buildHomePage(), "HomePage");
-        contentPanel.add(buildMenuPage(), "MenuPage");
-        contentPanel.add(buildPizzaPage(), "PizzaPage");
-        contentPanel.add(buildDrinksPage(), "DrinksPage");
-        contentPanel.add(buildSidesPage(), "SidesPage");
-        contentPanel.add(buildCartPage(), "CartPage");
-        contentPanel.add(buildLoginPage(), "LoginPage");
-        switchPage("HomePage");
+        contentPanel.add(buildHomePage(this), "HomePage");
+        contentPanel.add(buildMenuPage(this), "MenuPage");
+        contentPanel.add(buildPizzaPage(this), "PizzaPage");
+        contentPanel.add(buildDrinksPage(this), "DrinksPage");
+        contentPanel.add(buildSidesPage(this), "SidesPage");
+        contentPanel.add(buildCartPage(this), "CartPage");
+        contentPanel.add(buildLoginPage(this), "LoginPage");
+        switchPage("HomePage", this);
         // Creates the navbar and passes the contentPanel to allow for page swapping
         NavBar navbar = new NavBar(contentPanel);
         frame.add(navbar.displayNavBar(), "cell 1 0, align right, growx");
@@ -41,7 +41,7 @@ public class CustomerView {
     public JFrame getFrame() {
         return frame;
     }
-    public static JPanel buildHomePage() {
+    public static JPanel buildHomePage(CustomerView cView) {
         JPanel panel = new JPanel();
         panel.setLayout(new MigLayout());
         panel.add(new JButton("Delivery"), "cell 0 0, growx");
@@ -50,7 +50,7 @@ public class CustomerView {
     }
 
 
-    public static JPanel buildMenuPage() {
+    public static JPanel buildMenuPage(CustomerView cView){
         JPanel panel = new JPanel();
         panel.setLayout(new MigLayout());
         JButton pizzaButton = new JButton("Build Pizza");
@@ -63,25 +63,26 @@ public class CustomerView {
         pizzaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                switchPage("PizzaPage");
+                switchPage("PizzaPage", cView);
             }
         });
         drinksButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                switchPage("DrinksPage");
+                switchPage("DrinksPage", cView);
             }
         });
         sidesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                switchPage("SidesPage");
+                switchPage("SidesPage", cView);
             }
         });
         return panel;
     }
 
-    public static JPanel buildCartPage() {
+    public static JPanel buildCartPage(CustomerView cView) {
+
         PopupManager popupManager = new PopupManager();
         JPanel panel = new JPanel();
         panel.setLayout(new MigLayout());
@@ -149,7 +150,7 @@ public class CustomerView {
         return panel;
     }
 
-    public static JPanel buildLoginPage(){
+    public static JPanel buildLoginPage(CustomerView cView){
         JPanel panel = new JPanel();
         panel.setLayout(new MigLayout());
         JLabel phonenumber_ID = new JLabel("* Enter Phone Number or Employee ID");
@@ -178,7 +179,7 @@ public class CustomerView {
         return panel;
     }
 
-    public static JPanel buildPizzaPage(){
+    public static JPanel buildPizzaPage(CustomerView cView){
         JPanel panel = new JPanel(new MigLayout());
 
         JPanel leftPanel = new JPanel(new MigLayout());
@@ -296,7 +297,7 @@ public class CustomerView {
         return panel;
     }
 
-    public static JPanel buildDrinksPage(){
+    public static JPanel buildDrinksPage(CustomerView cView){
         JPanel panel = new JPanel(new MigLayout());
 
         JLabel drinksLabel = new JLabel("Drinks:");
@@ -486,7 +487,7 @@ public class CustomerView {
         return panel;
     }
 
-    public static JPanel buildSidesPage(){
+    public static JPanel buildSidesPage(CustomerView cView){
         JPanel panel = new JPanel(new MigLayout());
         JLabel title = new JLabel("Sides:");
         JCheckBox bSticksBox = new JCheckBox("Bread Sticks");
@@ -543,23 +544,23 @@ public class CustomerView {
         cancelBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                switchPage("MenuPage");
+                switchPage("MenuPage", cView);
             }
         });
 
         return panel;
     }
 
-    private static void switchPage(String pageName) {
+    public static void switchPage(String pageName, CustomerView cView) {
 
         contentPanel.removeAll();
-        contentPanel.add(buildHomePage(), "HomePage");
-        contentPanel.add(buildMenuPage(), "MenuPage");
-        contentPanel.add(buildLoginPage(), "LoginPage");
-        contentPanel.add(buildCartPage(), "CartPage");
-        contentPanel.add(buildPizzaPage(), "PizzaPage");
-        contentPanel.add(buildDrinksPage(), "DrinksPage");
-        contentPanel.add(buildSidesPage(), "SidesPage");
+        contentPanel.add(buildHomePage(cView), "HomePage");
+        contentPanel.add(buildMenuPage(cView), "MenuPage");
+        contentPanel.add(buildLoginPage(cView), "LoginPage");
+        contentPanel.add(buildCartPage(cView), "CartPage");
+        contentPanel.add(buildPizzaPage(cView), "PizzaPage");
+        contentPanel.add(buildDrinksPage(cView), "DrinksPage");
+        contentPanel.add(buildSidesPage(cView), "SidesPage");
 
         CardLayout cardLayout = (CardLayout) contentPanel.getLayout();
         cardLayout.show(contentPanel, pageName);
