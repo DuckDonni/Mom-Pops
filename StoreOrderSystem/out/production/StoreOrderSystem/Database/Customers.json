@@ -3,4 +3,9 @@
   "phone" : "(111) 111 1111",
   "password" : "password",
   "name" : "Blorbo McSnorfle"
-}]
+}, {
+  "address" : "toot toot way",
+  "phone" : "(904) 548 8186",
+  "password" : "1472",
+  "name" : "Robert Cooke"
+} ]

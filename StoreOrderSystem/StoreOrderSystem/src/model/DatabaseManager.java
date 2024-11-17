@@ -37,7 +37,7 @@ public class DatabaseManager {
     }
 
     // employees never need to change their employee id
-    public void updateEmployeeAccount(String employeeID, String password) throws IOException {
+    public boolean updateEmployeeAccount(String employeeID, String password, boolean update) throws IOException {
         File file = new File("Database/Employees.json");
 
         List<Employee> employees;
@@ -47,21 +47,33 @@ public class DatabaseManager {
         employee.setUsername(employeeID);
         employee.setPassword(password);
 
+        Employee objective = null;
         for(Employee emp : employees) { // search employees for an account with this username
             if(emp.getUsername().equals(employeeID)) {
-                emp.setPassword(password);
-                objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, employees);
-                return;
+                objective = emp;
             }
         }
 
-        employees.add(employee);
-        objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, employees);
+        // if update false and account exists return false
+        // append account make changes if exists
+
+        if(!update && objective != null) {
+            return false;
+        } else if (update && objective != null) {
+            objective.setPassword(password);
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, employees);
+            return true;
+        } else {
+            employees.add(employee);
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, employees);
+            return true;
+        }
     }
 
 
     // changed from documentation in order to allow customer to change their phone number
-    public void updateCustomerAccount(String first, String last, String oldPhone, String newPhone, String address, String password) throws IOException {
+    public boolean updateCustomerAccount(String first, String last, String oldPhone, String newPhone, String address,
+                                      String password, boolean update) throws IOException {
         File file = new File("Database/Customers.json");
 
         List<Customer> customers;
@@ -73,18 +85,29 @@ public class DatabaseManager {
         customer.setAddress(address);
         customer.setPassword(password);
 
+        Customer objective = null;
         for(Customer cust : customers) { // search employees for an account with this username
             if(cust.getPhone().equals(oldPhone)) {
-                cust.setPhone(newPhone);
-                cust.setName(first + " " + last);
-                cust.setAddress(address);
-                cust.setPassword(password);
-                objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, customers);
-                return;
+                objective = cust;
             }
         }
 
-        customers.add(customer);
-        objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, customers);
+        // if update false and account exists return false
+        // append account make changes if exists
+
+        if(!update && objective != null) {
+            return false;
+        } else if (update && objective != null) {
+            objective.setPhone(newPhone);
+            objective.setName(first + " " + last);
+            objective.setAddress(address);
+            objective.setPassword(password);
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, customers);
+            return true;
+        } else {
+            customers.add(customer);
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, customers);
+            return true;
+        }
     }
 }

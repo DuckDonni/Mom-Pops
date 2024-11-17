@@ -16,10 +16,11 @@ public class Controller {
         //view = new View();
         currentUser = null;
 
-        updateEmployeeAccount("Test", "test Password 2 electric boogaloo");
-        updateCustomerAccount("Robert", "Cooke", "(904) 548 8186",
-                "(904) 548 8186", "toot toot way", "1472");
 
+        System.out.println(updateEmployeeAccount("Test", "BOOOOOOOOOOOG", true));
+
+        System.out.println(updateCustomerAccount("Robert", "Cooke", "(904) 548 8186",
+                "(904) 548 8186", "toot toot way", "1472", true));
     }
 
     public String getOverrideCode() {
@@ -33,16 +34,14 @@ public class Controller {
     }
 
     //updateCustomerAccount
-    public static boolean updateEmployeeAccount(String username, String password) throws IOException {
-        model.getDatabaseManager().updateEmployeeAccount(username, password);
-
-        return true; // !! <-
+    public static boolean updateEmployeeAccount(String username, String password, boolean update) throws IOException {
+        return model.getDatabaseManager().updateEmployeeAccount(username, password, update);
     }
 
-    public static boolean updateCustomerAccount(String first, String last, String oldPhone, String newPhone, String address, String password) throws IOException {
-        model.getDatabaseManager().updateCustomerAccount(first, last, oldPhone, newPhone, address, password);
-
-        return true; // !! <-
+    public static boolean updateCustomerAccount(String first, String last, String oldPhone, String newPhone,
+                                                String address, String password, boolean update) throws IOException {
+        return model.getDatabaseManager().updateCustomerAccount(first, last, oldPhone, newPhone,
+                address, password, update);
     }
 
 }
