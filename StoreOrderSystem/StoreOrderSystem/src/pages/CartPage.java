@@ -1,15 +1,16 @@
+package pages;
+
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import view.*;
 public class CartPage {
     private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();;
 
-    public CartPage(Object pView) {
-        Object pviews = pView;
+    public CartPage() {
     }
 
     public static JPanel returnPage() {

@@ -1,3 +1,5 @@
+package view;
+
 import javax.swing.*;
 import net.miginfocom.swing.MigLayout;
 import java.awt.*;
@@ -55,7 +57,7 @@ public class NavBar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 CardLayout cl = (CardLayout) contentPanel.getLayout();
-                cl.show(contentPanel, "CartPage");
+                cl.show(contentPanel, "pages.CartPage");
             }
         });
         return guestPanel;
@@ -94,7 +96,7 @@ public class NavBar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 CardLayout cl = (CardLayout) contentPanel.getLayout();
-                cl.show(contentPanel, "CartPage");
+                cl.show(contentPanel, "pages.CartPage");
             }
         });
         return customerPanel;

@@ -1,3 +1,5 @@
+package view;
+
 import net.miginfocom.swing.MigLayout;
 import javax.swing.*;
 import java.awt.*;
@@ -6,7 +8,7 @@ public class StaffView {
     private JFrame frame;
     public StaffView() {
 
-        frame = new JFrame("Staff View");
+        frame = new JFrame("Staff view.View");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setSize(screenSize.width, screenSize.height); // Set frame size to the screen's resolution

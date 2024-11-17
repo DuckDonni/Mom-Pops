@@ -1,3 +1,5 @@
+package view;
+
 public class View {
     private CustomerView customerView;
     private StaffView staffView;
@@ -21,6 +23,6 @@ public class View {
 
     public static void main(String[] args) {
         View view = new View();
-        view.swapView(0); // Initially shows CustomerView (you can toggle this)
+        view.swapView(0); // Initially shows view.CustomerView (you can toggle this)
     }
 }
