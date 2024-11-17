@@ -1,18 +1,48 @@
 package controller;
 
-import model.Model;
+import model.*;
+import view.*;
+
+import java.io.IOException;
 
 public class Controller {
+
     private static Model model;
-    public static void main(String [] args) {
+    private static View view;
+    private static Account currentUser;
+
+    public static void main(String [] args) throws IOException {
         model = new Model();
-        System.out.println(verifyLogin("0001", "password"));
+        //view = new View();
+        currentUser = null;
+
+        updateEmployeeAccount("Test", "test Password 2 electric boogaloo");
+        updateCustomerAccount("Robert", "Cooke", "(904) 548 8186",
+                "(904) 548 8186", "toot toot way", "1472");
+
     }
 
-    // !! wrong return type
-    static public boolean verifyLogin(String username, String password) {
-        // !! needs to diferentiate between customers and Employees by itself
-        // return model.getDatabaseManager().validateCustomerAccount(username, password); // customer test
-        return model.getDatabaseManager().validateEmployeeAccount(username, password); // Employee test
+    public String getOverrideCode() {
+        return model.getOverrideCode();
     }
+
+    //verifyLogin
+
+    public void logout() {
+        currentUser = null;
+    }
+
+    //updateCustomerAccount
+    public static boolean updateEmployeeAccount(String username, String password) throws IOException {
+        model.getDatabaseManager().updateEmployeeAccount(username, password);
+
+        return true; // !! <-
+    }
+
+    public static boolean updateCustomerAccount(String first, String last, String oldPhone, String newPhone, String address, String password) throws IOException {
+        model.getDatabaseManager().updateCustomerAccount(first, last, oldPhone, newPhone, address, password);
+
+        return true; // !! <-
+    }
+
 }
