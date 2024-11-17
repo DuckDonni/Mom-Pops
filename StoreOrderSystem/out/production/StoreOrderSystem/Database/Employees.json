@@ -2,9 +2,6 @@
   "username" : "000-000",
   "password" : "password"
 }, {
-  "username" : "Test",
-  "password" : "test Password 2 electric boogaloo"
-}, {
-  "username" : "Test1",
-  "password" : "test Password 2 electric boogaloo"
-} ]
+  "username" : "test",
+  "password" : "test"
+}]

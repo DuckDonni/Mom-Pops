@@ -17,17 +17,14 @@ public class Controller {
         currentUser = null;
 
 
-        System.out.println(updateEmployeeAccount("Test", "BOOOOOOOOOOOG", true));
+        System.out.println(verifyLogin("(904) 548 8186", "147"));
 
-        System.out.println(updateCustomerAccount("Robert", "Cooke", "(904) 548 8186",
-                "(904) 548 8186", "toot toot way", "1472", true));
+        System.out.println(currentUser.getClass());
     }
 
     public String getOverrideCode() {
         return model.getOverrideCode();
     }
-
-    //verifyLogin
 
     public void logout() {
         currentUser = null;
@@ -44,4 +41,24 @@ public class Controller {
                 address, password, update);
     }
 
+   public static int verifyLogin (String username, String password) {
+        // check to see if emp or cust
+       Account account;
+       if(username.contains("(")) {
+           account = model.getDatabaseManager().validateCustomerAccount(username, password);
+       } else {
+           account = model.getDatabaseManager().validateEmployeeAccount(username, password);
+       }
+
+       if(account == null) {
+           return -1;
+       } else if(account instanceof Employee) {
+           currentUser = account;
+           return 1;
+       } else {
+           currentUser = account;
+           return 0;
+       }
+   }
+   
 }

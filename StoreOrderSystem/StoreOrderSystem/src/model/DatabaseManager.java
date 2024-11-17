@@ -12,30 +12,6 @@ public class DatabaseManager {
     ObjectMapper objectMapper = new ObjectMapper();
 
 
-    public boolean validateCustomerAccount(String phone, String password) {
-        Customer customer = new Customer();
-        try {
-
-            customer = objectMapper.readValue(new File("Database/Customers.json"), Customer.class);
-
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-        return customer.getPhone().equals(phone) && customer.getPassword().equals(password);
-    }
-
-    public boolean validateEmployeeAccount(String employeeID, String password) {
-        Employee employee = new Employee();
-        try {
-
-            employee = objectMapper.readValue(new File("Database/Employees.json"), Employee.class);
-
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-        return employee.getUsername().equals(employeeID) && employee.getPassword().equals(password);
-    }
-
     // employees never need to change their employee id
     public boolean updateEmployeeAccount(String employeeID, String password, boolean update) throws IOException {
         File file = new File("Database/Employees.json");
@@ -110,4 +86,44 @@ public class DatabaseManager {
             return true;
         }
     }
+
+
+    public Account validateEmployeeAccount(String employeeID, String password) {
+        File file = new File("Database/Employees.json");
+        Employee employee = null;
+        try {
+            List<Employee> employees;
+            employees = objectMapper.readValue(file, new TypeReference<ArrayList<Employee>>() {});
+
+            for(Employee emp : employees) {
+                if(emp.getUsername().equals(employeeID) && emp.getPassword().equals(password)) {
+                    employee = emp;
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return employee;
+    }
+
+    public Account validateCustomerAccount(String phone, String password) {
+        File file = new File("Database/Customers.json");
+        Customer customer = null;
+        try {
+            List<Customer> customers;
+            customers = objectMapper.readValue(file, new TypeReference<ArrayList<Customer>>() {});
+
+            for(Customer cust : customers) {
+                if(cust.getPhone().equals(phone) && cust.getPassword().equals(password)) {
+                    customer = cust;
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return customer;
+    }
+
 }
