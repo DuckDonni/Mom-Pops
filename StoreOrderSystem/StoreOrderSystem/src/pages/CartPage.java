@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import view.*;
+import model.*;
 public class CartPage {
     private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();;
 
@@ -77,6 +78,23 @@ public class CartPage {
 //        panel.add(editPayment, "cell 3 3, wrap, align right");
         panel.add(rightPanel, "east");
         panel.add(scrollPane, "west"); // Span scroll pane across multiple cells
+
+        return panel;
+    }
+
+
+
+    public JPanel makeCard(){
+        JPanel panel = new JPanel(new MigLayout());
+        Receipt receipt = new Receipt();
+        JLabel sizeLabel = new JLabel();
+        JLabel crustLabel = new JLabel();
+        JLabel sauceLabel = new JLabel();
+        JLabel toppings = new JLabel();
+        JLabel price = new JLabel();
+
+        panel.add(sizeLabel);
+
 
         return panel;
     }
