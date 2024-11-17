@@ -22,6 +22,10 @@ public class Controller {
         System.out.println(currentUser.getClass());
     }
 
+    public static Account getCurrentUser() {
+        return currentUser;
+    }
+
     public String getOverrideCode() {
         return model.getOverrideCode();
     }
