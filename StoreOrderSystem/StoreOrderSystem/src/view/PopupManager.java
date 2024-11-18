@@ -66,6 +66,8 @@ public class PopupManager {
         panel.add(phoneNumberPrompt, "cell 2 5, alignx left");
         panel.add(phoneNumberField, "cell 2 6, growx");
 
+        JButton submitBtn = new JButton("Submit");
+        panel.add(submitBtn, "cell 1 7, center");
         frame.add(panel);
         frame.setVisible(true);
         return frame;
@@ -123,6 +125,9 @@ public class PopupManager {
 
         panel.add(phoneNumberPrompt, "cell 2 5, alignx left");
         panel.add(phoneNumberField, "cell 2 6, growx");
+
+        JButton submitBtn = new JButton("Submit");
+        panel.add(submitBtn, "cell 1 7, center");
 
         frame.add(panel);
         frame.setVisible(true);
@@ -196,6 +201,11 @@ public class PopupManager {
 
         timePanel.setVisible(false);
         panel.add(timePanel, "cell 0 3, spanx"); // Add timePanel to row 2 of the main panel without affecting other rows
+
+
+        JButton submitBtn = new JButton("Submit");
+        panel.add(submitBtn, "cell 1 4, span 2, center");
+
 
         asapOption.addActionListener(new ActionListener() {
             @Override
@@ -318,6 +328,10 @@ public class PopupManager {
 
         panel.add(timePanel, "cell 0 3, spanx"); // Add timePanel to row 2 of the main panel without affecting other rows
 
+        JButton submitBtn = new JButton("Submit");
+        panel.add(submitBtn, "cell 1 4, span 2, center");
+
+
         asapOption.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -383,17 +397,110 @@ public class PopupManager {
         cardPanel.add(cardholderField, "cell 2 3, growx");
         cardPanel.add(cardTypePrompt, "cell 1 0, align left");
         cardPanel.add(cardTypeField, "cell 1 1,growx");
-
+        cardPanel.setVisible(false);
         panel.add(cardPanel, "cell 0 2, span 4, growx"); // make cardPanel span all columns
+
+        JButton submitBtn = new JButton("Submit");
+        panel.add(submitBtn, "cell 0 3, span 4, center");
+
+        cardOption.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardPanel.setVisible(true);
+            }
+        });
+        cashOption.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardPanel.setVisible(false);
+            }
+        });
+
 
         frame.add(panel);
         frame.setVisible(true);
         return frame;
     }
 
-    public JFrame buildEditPayment(String cardNum, String csv, String expDate, String cardHolderName, String cardPaymentType){
+    public JFrame buildEditPayment(String cardNum, String csv, String expDate, String cardHolderName, String cardPaymentType, boolean isCard){
         frame.getContentPane().removeAll();
+        JPanel panel = new JPanel(new MigLayout("wrap 4")); // wrap to 4 columns for the payment method row
+        JLabel title = new JLabel("Payment");
+        panel.add(title, "span"); // title spans all columns and is centered
 
+        ButtonGroup pMethodGroup = new ButtonGroup();
+
+        JLabel cardPrompt = new JLabel("Card");
+        JRadioButton cardOption = new JRadioButton();
+        JLabel cashPrompt = new JLabel("Cash/Check");
+        JRadioButton cashOption = new JRadioButton();
+
+        pMethodGroup.add(cardOption);
+        pMethodGroup.add(cashOption);
+
+        panel.add(cardPrompt, "cell 0 1");
+        panel.add(cardOption, "cell 1 1");
+        panel.add(cashPrompt, "cell 2 1");
+        panel.add(cashOption, "cell 3 1");
+
+        JPanel cardPanel = new JPanel(new MigLayout("wrap 2, fillx")); // wrap to 2 columns within the card panel
+        JLabel cardNumPrompt = new JLabel("Card Number");
+        JTextField cardNumField = new JTextField(cardNum,15); // specify preferred width
+
+        JLabel csvPrompt = new JLabel("CSV");
+        JTextField csvField = new JTextField(csv, 10); // specify preferred width
+
+        JLabel expPrompt = new JLabel("Exp Date");
+        JTextField expField = new JTextField(expDate,10);
+
+        JLabel cardholderPrompt = new JLabel("Cardholder Name");
+        JTextField cardholderField = new JTextField(cardHolderName, 15);
+
+        JLabel cardTypePrompt = new JLabel("Card Type");
+        JTextField cardTypeField = new JTextField(cardPaymentType, 15);
+
+        cardPanel.add(cardNumPrompt, "cell 0 0, align left");
+        cardPanel.add(cardNumField, "cell 0 1,growx"); // field grows to fill available space in cell
+        cardPanel.add(csvPrompt, "cell 0 2,align left");
+        cardPanel.add(csvField, "cell 0 3,growx");
+        cardPanel.add(expPrompt, "cell 1 2,align left");
+        cardPanel.add(expField, "cell 1 3,growx");
+        cardPanel.add(cardholderPrompt, "cell 2 2, align left");
+        cardPanel.add(cardholderField, "cell 2 3, growx");
+        cardPanel.add(cardTypePrompt, "cell 1 0, align left");
+        cardPanel.add(cardTypeField, "cell 1 1,growx");
+        cardPanel.setVisible(false);
+        panel.add(cardPanel, "cell 0 2, span 4, growx"); // make cardPanel span all columns
+
+        JButton submitBtn = new JButton("Submit");
+        panel.add(submitBtn, "cell 0 3, span 4, center");
+
+        if(isCard){
+            cardPanel.setVisible(true);
+            cardOption.setSelected(true);
+            cashOption.setSelected(false);
+        }
+        else{
+            cardPanel.setVisible(false);
+            cardOption.setSelected(false);
+            cashOption.setSelected(true);
+        }
+
+        cardOption.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardPanel.setVisible(true);
+            }
+        });
+        cashOption.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardPanel.setVisible(false);
+            }
+        });
+
+
+        frame.add(panel);
         frame.setVisible(true);
         return frame;
     }
