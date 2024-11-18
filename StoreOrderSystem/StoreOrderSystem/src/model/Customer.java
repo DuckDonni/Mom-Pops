@@ -1,6 +1,6 @@
 package model;
 
-public class Customer {
+public class Customer extends Account {
     private String address;
     private String phone;
     private String password;
