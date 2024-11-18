@@ -43,7 +43,7 @@ public class Pizza{
                     mult = 1.5;
                     break;
             }
-            calcPrice += (toppingAr.size()-1) * mult;
+            calcPrice += (toppingAr.size()-2) * mult;
             setPrice(calcPrice);
         }
     }

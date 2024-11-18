@@ -8,18 +8,24 @@ import java.io.IOException;
 public class Controller {
 
     private static Model model;
-    private static View view;
+    private View view;
     private static Account currentUser;
-
+    private static Receipt receipt;
     public static void main(String [] args) throws IOException {
+        Controller controller = new Controller();
         model = new Model();
-        //view = new View();
+        receipt = new Receipt();
         currentUser = null;
+        controller.buildView();
 
 
-        System.out.println(verifyLogin("(904) 548 8186", "147"));
+        //System.out.println(verifyLogin("(904) 548 8186", "1472"));
 
-        System.out.println(currentUser.getClass());
+        //System.out.println(currentUser.getClass());
+    }
+    public void buildView(){
+        this.view = new View(this);
+        view.swapView(0);
     }
 
     public static Account getCurrentUser() {
@@ -32,6 +38,13 @@ public class Controller {
 
     public void logout() {
         currentUser = null;
+    }
+
+    public Receipt getReceipt() {
+        return receipt;
+    }
+    public void setReceipt(Receipt receipt) {
+        this.receipt = receipt;
     }
 
     //updateCustomerAccount

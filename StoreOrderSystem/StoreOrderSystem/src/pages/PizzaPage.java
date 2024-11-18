@@ -1,5 +1,6 @@
 package pages;
 
+import model.*;
 import net.miginfocom.swing.MigLayout;
 import view.ButtonFactory;
 import view.CustomerView;
@@ -8,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class PizzaPage {
     private JPanel contentPanel;
@@ -24,12 +26,12 @@ public class PizzaPage {
         JLabel sizeLabel = new JLabel("Size:");
         ButtonGroup sizeBtnGroup = new ButtonGroup();
         JRadioButton smallBox = new JRadioButton("Small");
-        JRadioButton MediumBox = new JRadioButton("Medium");
+        JRadioButton mediumBox = new JRadioButton("Medium");
         JRadioButton largeBox = new JRadioButton("Large");
         JRadioButton extraLargeBox = new JRadioButton("Extra Large");
 
         sizeBtnGroup.add(smallBox);
-        sizeBtnGroup.add(MediumBox);
+        sizeBtnGroup.add(mediumBox);
         sizeBtnGroup.add(largeBox);
         sizeBtnGroup.add(extraLargeBox);
 
@@ -47,26 +49,26 @@ public class PizzaPage {
         ButtonGroup sauceBtnGroup = new ButtonGroup();
         JLabel sauceLabel = new JLabel("Sauce");
         JRadioButton tomatoSauceBox = new JRadioButton("Tomato Based Marinara");
-        JRadioButton noSauceBox = new JRadioButton("None");
-
+        JRadioButton noTomatoSauceBox = new JRadioButton("None");
         sauceBtnGroup.add(tomatoSauceBox);
-        sauceBtnGroup.add(noSauceBox);
+        sauceBtnGroup.add(noTomatoSauceBox);
 
-        ButtonGroup cheeseBtnGroup = new ButtonGroup();
+
+
         JLabel cheeseLabel = new JLabel("Cheese");
         JCheckBox cheeseBox = new JCheckBox("Cheese");
-
         ButtonFactory cheeseSideBF = new ButtonFactory();
         JPanel cheeseSideBtn = cheeseSideBF.buildSideButton();
 
 
+        JPanel sizePanel = new JPanel(new MigLayout());
+        sizePanel.add(sizeLabel, "cell 0 0, growx");
+        sizePanel.add(smallBox, "cell 0 1, growx");
+        sizePanel.add(mediumBox, "cell 1 1, growx");
+        sizePanel.add(largeBox, "cell 2 1, growx");
+        sizePanel.add(extraLargeBox, "cell 3 1, growx");
 
-        leftPanel.add(sizeLabel, "cell 0 0, growx");
-        leftPanel.add(smallBox, "cell 0 1, growx");
-        leftPanel.add(MediumBox, "cell 1 1, growx");
-        leftPanel.add(largeBox, "cell 2 1, growx");
-        leftPanel.add(extraLargeBox, "cell 3 1, growx");
-
+        leftPanel.add(sizePanel,"cell 0 0, span 4");
         leftPanel.add(crustLabel, "cell 0 2, growx");
         leftPanel.add(crustBox, "cell 0 3, growx");
         leftPanel.add(thinBox, "cell 0 4, growx");
@@ -74,7 +76,7 @@ public class PizzaPage {
 
         leftPanel.add(sauceLabel, "cell 1 2, growx");
         leftPanel.add(tomatoSauceBox, "cell 1 3, growx");
-        leftPanel.add(noSauceBox, "cell 1 4, growx");
+        leftPanel.add(noTomatoSauceBox, "cell 1 4, growx");
 
         leftPanel.add(cheeseLabel, "cell 0 6, growx");
         leftPanel.add(cheeseBox, "cell 0 7, growx");
@@ -172,6 +174,71 @@ public class PizzaPage {
         JButton cancelBtn = new JButton("Cancel");
         panel.add(submitBtn, "cell 0 1");
         panel.add(cancelBtn, "cell 1 1");
+
+        submitBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Pizza pizza = new Pizza();
+                boolean validPizza = true;
+                ButtonModel sizeModel = sizeBtnGroup.getSelection();
+                if(sizeModel == smallBox.getModel()){
+                    pizza.setCrustSize("small");
+                }
+                else if(sizeModel == mediumBox.getModel()){
+                    pizza.setCrustSize("medium");
+                }
+                else if(sizeModel == largeBox.getModel()){
+                    pizza.setCrustSize("large");
+                }
+                else if(sizeModel == extraLargeBox.getModel()){
+                    pizza.setCrustSize("extra");
+                }
+                else{
+                    validPizza = false;
+                    System.out.println("enter size");
+                }
+
+                ButtonModel cTypeModel = crustBtnGroup.getSelection();
+                if(cTypeModel == crustBox.getModel()){
+                    pizza.setCrustType("regular");
+                }
+                else if(cTypeModel == thinBox.getModel()){
+                    pizza.setCrustType("thin");
+                }
+                else if(cTypeModel == panBox.getModel()){
+                    pizza.setCrustType("pan");
+                }
+                else{
+                    validPizza = false;
+                    System.out.println("enter crust type");
+                }
+
+                ButtonModel sauceModel = sauceBtnGroup.getSelection();
+                if(sauceModel == tomatoBox.getModel()){
+                    pizza.setIsSauce(true);
+                }
+                else if(sauceModel == noTomatoSauceBox.getModel()){
+                    pizza.setIsSauce(false);
+                }
+                else{
+                    validPizza = false;
+                    System.out.println("enter sauce type");
+                }
+
+                if(cheeseBox.isSelected()){
+                    ArrayList<Topping> toppingAr = pizza.getToppingAr();
+                    String side = cheeseSideBF.getSelectedSide();
+                    Topping cheese = new Topping("Cheese", side);
+                    toppingAr.add(cheese);
+                    pizza.setToppingAr(toppingAr);
+                }
+
+
+
+                Receipt receipt = cView.view.controller.getReceipt();
+
+            }
+        });
         cancelBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -179,7 +246,6 @@ public class PizzaPage {
                 cardLayout.show(contentPanel, "MenuPage");
             }
         });
-
         cheeseBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

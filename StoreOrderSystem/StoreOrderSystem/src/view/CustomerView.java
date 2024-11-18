@@ -13,8 +13,9 @@ public class CustomerView {
     private static JFrame frame;
     private static Dimension screenSize;
     public static JPanel contentPanel;
-    public CustomerView() {
-
+    public static View view;
+    public CustomerView(View view) {
+        this.view = view;
         frame = new JFrame("Homepage Example");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
