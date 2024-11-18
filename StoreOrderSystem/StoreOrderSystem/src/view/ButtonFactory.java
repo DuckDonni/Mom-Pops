@@ -95,7 +95,7 @@ public class ButtonFactory {
         JPanel panel = new JPanel(new MigLayout());
         leftBtn = new JRadioButton("Left");
         rightBtn = new JRadioButton("Right");
-        midBtn = new JRadioButton("Middle");
+        midBtn = new JRadioButton("Whole");
 
         sideBtnGroup = new ButtonGroup();
         sideBtnGroup.add(leftBtn);

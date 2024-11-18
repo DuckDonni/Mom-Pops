@@ -214,7 +214,7 @@ public class PizzaPage {
                 }
 
                 ButtonModel sauceModel = sauceBtnGroup.getSelection();
-                if(sauceModel == tomatoBox.getModel()){
+                if(sauceModel == tomatoSauceBox.getModel()){
                     pizza.setIsSauce(true);
                 }
                 else if(sauceModel == noTomatoSauceBox.getModel()){
@@ -225,17 +225,25 @@ public class PizzaPage {
                     System.out.println("enter sauce type");
                 }
 
-                if(cheeseBox.isSelected()){
-                    ArrayList<Topping> toppingAr = pizza.getToppingAr();
-                    String side = cheeseSideBF.getSelectedSide();
-                    Topping cheese = new Topping("Cheese", side);
-                    toppingAr.add(cheese);
-                    pizza.setToppingAr(toppingAr);
+                processChecked(cheeseBox, cheeseSideBF, pizza);
+                processChecked(pepperoniBox, pepperoniSideBF, pizza);
+                processChecked(sausageBox, sausageSideBF, pizza);
+                processChecked(hamBox, hamSideBF, pizza);
+                processChecked(gPepperBox, gPepperSideBF, pizza);
+                processChecked(onionBox, onionSideBF, pizza);
+                processChecked(tomatoBox, tomatoSideBF, pizza);
+                processChecked(mushroomBox, mushroomSideBF, pizza);
+                processChecked(pineappleBox, pineappleSideBF, pizza);
+
+                if(validPizza){
+                    Receipt receipt = cView.view.controller.getReceipt();
+                    ArrayList<Pizza> pizzaAr = receipt.getPizzaAr();
+                    pizzaAr.add(pizza);
+                    receipt.setPizzaAr(pizzaAr);
+                    cView.view.controller.setReceipt(receipt);
                 }
 
 
-
-                Receipt receipt = cView.view.controller.getReceipt();
 
             }
         });
@@ -307,5 +315,14 @@ public class PizzaPage {
             }
         });
         return panel;
+    }
+    public void processChecked(JCheckBox checkBox, ButtonFactory bF, Pizza pizza){
+        if(checkBox.isSelected()){
+            ArrayList<Topping> toppingAr = pizza.getToppingAr();
+            String side = bF.getSelectedSide();
+            Topping topping = new Topping(checkBox.getText(), side);
+            toppingAr.add(topping);
+            pizza.setToppingAr(toppingAr);
+        }
     }
 }

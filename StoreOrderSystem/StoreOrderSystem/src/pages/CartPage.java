@@ -6,75 +6,61 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.*;
 import view.*;
 import model.*;
 public class CartPage {
-    private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();;
-
-    public CartPage() {
+    private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private CustomerView cView;
+    private static Receipt receipt;
+    public CartPage(CustomerView custView) {
+        this.cView = custView;
+        receipt = cView.view.controller.getReceipt();
     }
 
-    public static JPanel returnPage() {
+    public JPanel returnPage() {
         PopupManager popupManager = new PopupManager();
         JPanel panel = new JPanel();
         panel.setLayout(new MigLayout());
 
+        // Update receipt from the controller
+        receipt = cView.view.controller.getReceipt();
+
         // Create the content panel to scroll
         JPanel scrollBarPanel = new JPanel();
         scrollBarPanel.setLayout(new MigLayout("wrap 1", "[grow, fill]"));
-
-
-        scrollBarPanel.add(makeCard(), "growx");
-
+        ArrayList<Pizza> pizzaAr = receipt.getPizzaAr();
+        for (Pizza p : pizzaAr) {
+            System.out.println(pizzaAr.size());
+            scrollBarPanel.add(makeCard(p), "growx");
+        }
 
         // Create JScrollPane for the content
         JScrollPane scrollPane = new JScrollPane(scrollBarPanel);
-        scrollPane.setPreferredSize(new Dimension((int) (screenSize.width * .35), (int) (screenSize.height * 0.7))); // Set desired size
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // Disable horizontal scroll
+        scrollPane.setPreferredSize(new Dimension((int) (screenSize.width * .35), (int) (screenSize.height * 0.7)));
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-        // Customize vertical scrollbar size
         JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
-        verticalScrollBar.setPreferredSize(new Dimension(20, 0)); // Increase width of vertical scrollbar
+        verticalScrollBar.setPreferredSize(new Dimension(20, 0));
 
         JButton editCustBtn = new JButton("Edit Cust. Info");
         JButton editOrderTimeBtn = new JButton("Edit Order Info");
         JButton editPayment = new JButton("Edit Payment");
 
-        editCustBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                popupManager.buildEditCustInfo();
-            }
-        });
-
-        editOrderTimeBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                popupManager.buildEditOrderTime();
-            }
-        });
-
-        editPayment.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                popupManager.buildEditPayment();
-            }
-        });
+        editCustBtn.addActionListener(e -> popupManager.buildEditCustInfo());
+        editOrderTimeBtn.addActionListener(e -> popupManager.buildEditOrderTime());
+        editPayment.addActionListener(e -> popupManager.buildEditPayment());
 
         JPanel rightPanel = new JPanel(new MigLayout());
 
         JPanel customerPanel = new JPanel(new MigLayout());
         customerPanel.add(editCustBtn);
-        //Logic for displaying customer info from account
 
         JPanel orderPanel = new JPanel(new MigLayout());
         orderPanel.add(editOrderTimeBtn);
-        //Logic for displaying order info from receipt
 
         JPanel paymentPanel = new JPanel(new MigLayout());
         paymentPanel.add(editPayment);
-        //Logic for displaying payment info from receipt
-
 
         rightPanel.add(customerPanel, "wrap, align right");
         rightPanel.add(orderPanel, "wrap, align right");
@@ -82,21 +68,39 @@ public class CartPage {
 
         // Add buttons and scroll pane to main panel
         panel.add(rightPanel, "east");
-        panel.add(scrollPane, "west"); // Keep scroll pane constrained to the desired width
+        panel.add(scrollPane, "west");
 
         return panel;
     }
 
-    public static JPanel makeCard() {
+
+    public static JPanel makeCard(Pizza p) {
         JPanel panel = new JPanel(new MigLayout("insets 10, wrap 4", "[grow][grow][grow][60px]", "[]10[]"));
         panel.setBorder(BorderFactory.createLineBorder(Color.black));
 
-        JLabel sizeLabel = new JLabel("Size: ");
-        JLabel crustLabel = new JLabel("Crust: ");
-        JLabel sauceLabel = new JLabel("Sauce: ");
+        JLabel sizeLabel = new JLabel("Size: " + p.getCrustSize());
+        JLabel crustLabel = new JLabel("Crust: " + p.getCrustSize());
+        JLabel sauceLabel;
+        if(p.getIsSauce()) {
+            sauceLabel = new JLabel("Sauce: Tomato Based Marinara");
+        }
+        else{
+            sauceLabel = new JLabel("Sauce: None");
+        }
 
         // Use JTextArea for word-wrapped toppings
-        JTextArea toppings = new JTextArea("Toppings: ");
+        String toppingString = "";
+        ArrayList<Topping> toppingAr = p.getToppingAr();
+        for(Topping t: toppingAr){
+            if(!t.getLocation().equals("Whole")) {
+                toppingString += t.getName() + "(" + t.getLocation() + "), ";
+            }
+            else{
+                toppingString += t.getName() + ", ";
+            }
+        }
+        toppingString = toppingString.substring(0, toppingString.length()-2);
+        JTextArea toppings = new JTextArea("Toppings: " + toppingString);
         toppings.setLineWrap(true);
         toppings.setWrapStyleWord(true);
         toppings.setEditable(false); // Make it behave like a label
@@ -113,6 +117,7 @@ public class CartPage {
 
         return panel;
     }
+
 
 
 }

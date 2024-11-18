@@ -57,7 +57,7 @@ public class CustomerView {
 
     public static JPanel buildCartPage(CustomerView cView) {
 
-        return new CartPage().returnPage();
+        return new CartPage(cView).returnPage();
     }
 
     public static JPanel buildLoginPage(CustomerView cView){
