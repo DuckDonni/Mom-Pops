@@ -4,6 +4,8 @@ import model.*;
 import view.*;
 
 import java.io.IOException;
+import java.io.File;
+import java.net.URISyntaxException;
 
 public class Controller {
 
@@ -11,15 +13,14 @@ public class Controller {
     private static View view;
     private static Account currentUser;
 
-    public static void main(String [] args) throws IOException {
+    public static void main(String [] args) throws IOException, URISyntaxException {
         model = new Model();
         //view = new View();
         currentUser = null;
 
-
         System.out.println(verifyLogin("(904) 548 8186", "147"));
 
-        System.out.println(currentUser.getClass());
+        //System.out.println(currentUser.getClass());
     }
 
     public static Account getCurrentUser() {

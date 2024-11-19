@@ -90,6 +90,7 @@ public class DatabaseManager {
 
     public Account validateEmployeeAccount(String employeeID, String password) {
         File file = new File("Database/Employees.json");
+        System.out.println("File Found");
         Employee employee = null;
         try {
             List<Employee> employees;
@@ -108,7 +109,9 @@ public class DatabaseManager {
     }
 
     public Account validateCustomerAccount(String phone, String password) {
+
         File file = new File("Database/Customers.json");
+        System.out.println("File Found");
         Customer customer = null;
         try {
             List<Customer> customers;
@@ -124,6 +127,7 @@ public class DatabaseManager {
             System.out.println(e.getMessage());
         }
         return customer;
+
     }
 
 }
