@@ -16,11 +16,13 @@ import java.util.ArrayList;
 public class DrinksPage {
     private JPanel contentPanel;
     private CustomerView cView;
+
     public DrinksPage(CustomerView cView) {
         this.cView = cView;
         contentPanel = cView.contentPanel;
     }
-    public JPanel returnPage(){
+
+    public JPanel returnPage() {
         JPanel panel = new JPanel(new MigLayout());
 
         JLabel drinksLabel = new JLabel("Drinks:");
@@ -59,7 +61,6 @@ public class DrinksPage {
         JCheckBox lemonadeBox = new JCheckBox("Lemonade");
         ButtonFactory lemonadeBF = new ButtonFactory();
         ButtonFactory lemonadeSize = new ButtonFactory();
-
 
 
         panel.add(drinksLabel, "cell 0 0");
@@ -148,86 +149,76 @@ public class DrinksPage {
                 Receipt receipt = cView.view.controller.getReceipt();
                 ArrayList<MenuItem> menuItemAr = receipt.getMenuItemAr();
 
-                if(pepsiBox.isSelected()){
-                    if(pepsiSize.getSelectedSize().equals("none")){
+                if (pepsiBox.isSelected()) {
+                    if (pepsiSize.getSelectedSize().equals("none")) {
                         validItem = false;
-                    }
-                    else{
-                        MenuItem item = new MenuItem(pepsiBF.getIncAmount(),pepsiBox.getText(),1.75);
+                    } else {
+                        MenuItem item = new MenuItem(pepsiBF.getIncAmount(), pepsiBox.getText() + "," + pepsiSize.getSelectedSize() + "," + pepsiSize.getSelectedSize(), 1.75);
                         menuItemAr.add(item);
                     }
                 }
-                if(dPepsiBox.isSelected()){
-                    if(dPepsiSize.getSelectedSize().equals("none")){
+                if (dPepsiBox.isSelected()) {
+                    if (dPepsiSize.getSelectedSize().equals("none")) {
                         validItem = false;
-                    }
-                    else{
-                        MenuItem item = new MenuItem(dPepsiBF.getIncAmount(),dPepsiBox.getText(),1.75);
+                    } else {
+                        MenuItem item = new MenuItem(dPepsiBF.getIncAmount(), dPepsiBox.getText() + "," + dPepsiSize.getSelectedSize(), 1.75);
                         menuItemAr.add(item);
                     }
                 }
-                if(orangeBox.isSelected()){
-                    if(orangeSize.getSelectedSize().equals("none")){
+                if (orangeBox.isSelected()) {
+                    if (orangeSize.getSelectedSize().equals("none")) {
                         validItem = false;
-                    }
-                    else{
-                        MenuItem item = new MenuItem(orangeBF.getIncAmount(),orangeBox.getText(),1.75);
+                    } else {
+                        MenuItem item = new MenuItem(orangeBF.getIncAmount(), orangeBox.getText() + "," + orangeSize.getSelectedSize(), 1.75);
                         menuItemAr.add(item);
                     }
                 }
-                if(dOrangeBox.isSelected()){
-                    if(dOrangeSize.getSelectedSize().equals("none")){
+                if (dOrangeBox.isSelected()) {
+                    if (dOrangeSize.getSelectedSize().equals("none")) {
                         validItem = false;
-                    }
-                    else{
-                        MenuItem item = new MenuItem(dOrangeBF.getIncAmount(),dOrangeBox.getText(),1.75);
+                    } else {
+                        MenuItem item = new MenuItem(dOrangeBF.getIncAmount(), dOrangeBox.getText() + "," + dOrangeSize.getSelectedSize(), 1.75);
                         menuItemAr.add(item);
                     }
                 }
-                if(rBeerBox.isSelected()){
-                    if(rBeerSize.getSelectedSize().equals("none")){
+                if (rBeerBox.isSelected()) {
+                    if (rBeerSize.getSelectedSize().equals("none")) {
                         validItem = false;
                         System.out.println("test2");
-                    }
-                    else{
+                    } else {
                         System.out.println("test");
-                        MenuItem item = new MenuItem(rBeerBF.getIncAmount(),rBeerBox.getText(),1.75);
+                        MenuItem item = new MenuItem(rBeerBF.getIncAmount(), rBeerBox.getText() + "," + rBeerSize.getSelectedSize(), 1.75);
                         menuItemAr.add(item);
                     }
                 }
-                if(dRBeerBox.isSelected()){
-                    if(dRBeerSize.getSelectedSize().equals("none")){
+                if (dRBeerBox.isSelected()) {
+                    if (dRBeerSize.getSelectedSize().equals("none")) {
                         validItem = false;
-                    }
-                    else{
-                        MenuItem item = new MenuItem(dRBeerBF.getIncAmount(),dRBeerBox.getText(),1.75);
+                    } else {
+                        MenuItem item = new MenuItem(dRBeerBF.getIncAmount(), dRBeerBox.getText() + "," + pepsiSize.getSelectedSize(), 1.75);
                         menuItemAr.add(item);
                     }
                 }
-                if(starryBox.isSelected()){
-                    if(starrySize.getSelectedSize().equals("none")){
+                if (starryBox.isSelected()) {
+                    if (starrySize.getSelectedSize().equals("none")) {
                         validItem = false;
-                    }
-                    else{
-                        MenuItem item = new MenuItem(starryBF.getIncAmount(),starryBox.getText(),1.75);
+                    } else {
+                        MenuItem item = new MenuItem(starryBF.getIncAmount(), starryBox.getText() + "," + starrySize.getSelectedSize(), 1.75);
                         menuItemAr.add(item);
                     }
                 }
-                if(lemonadeBox.isSelected()){
-                    if(lemonadeSize.getSelectedSize().equals("none")){
+                if (lemonadeBox.isSelected()) {
+                    if (lemonadeSize.getSelectedSize().equals("none")) {
                         validItem = false;
-                    }
-                    else{
-                        MenuItem item = new MenuItem(lemonadeBF.getIncAmount(),lemonadeBox.getText(),1.75);
+                    } else {
+                        MenuItem item = new MenuItem(lemonadeBF.getIncAmount(), lemonadeBox.getText() + "," + lemonadeSize.getSelectedSize(), 1.75);
                         menuItemAr.add(item);
                     }
                 }
 
 
-
-
-
-                if(validItem){
+                if (validItem) {
+                    System.out.println(menuItemAr.size());
                     receipt.setMenuItemAr(menuItemAr);
                     cView.switchPage("MenuPage", cView);
                 }
@@ -303,11 +294,11 @@ public class DrinksPage {
         return panel;
     }
 
-    public boolean processChecked(JCheckBox checkBox, ButtonFactory bF){
-        if(checkBox.isSelected()){
+    public boolean processChecked(JCheckBox checkBox, ButtonFactory bF) {
+        if (checkBox.isSelected()) {
 
             String size = bF.getSelectedSize();
-            switch(size){
+            switch (size) {
                 case "small":
                     return true;
                 case "medium":

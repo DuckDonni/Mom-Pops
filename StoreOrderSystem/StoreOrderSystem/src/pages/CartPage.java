@@ -58,7 +58,7 @@ public class CartPage {
                 sidesPanel.add(makeSideCard(item));
             }
             else{
-
+                drinksPanel.add(makeDrinkCard(item));
             }
 
 
@@ -112,8 +112,8 @@ public class CartPage {
         if(crustSize.equalsIgnoreCase("extra")){
             crustSize = "extra large";
         }
-        JLabel sizeLabel = new JLabel("Size: " + crustSize + " |");
-        JLabel crustLabel = new JLabel("Crust: " + p.getCrustType() + " |");
+        JLabel sizeLabel = new JLabel("Size: " + crustSize);
+        JLabel crustLabel = new JLabel("Crust: " + p.getCrustType() );
         JLabel sauceLabel;
         if(p.getIsSauce()) {
             sauceLabel = new JLabel("Sauce: Tomato Based Marinara");
@@ -133,7 +133,10 @@ public class CartPage {
                 toppingString += t.getName() + ", ";
             }
         }
-        toppingString = toppingString.substring(0, toppingString.length()-2);
+        if(toppingString.length() >1){
+            toppingString = toppingString.substring(0, toppingString.length()-2);
+        }
+
         JTextArea toppings = new JTextArea("Toppings: " + toppingString);
         toppings.setLineWrap(true);
         toppings.setWrapStyleWord(true);
@@ -181,7 +184,8 @@ public class CartPage {
         dataPanel.add(nameLabel, "cell 0 0");
         dataPanel.add(quantityLabel, "cell 1 0");
         dataPanel.add(sizeLabel, " cell 0 1");
-        panel.add(priceLabel, "cell 1 0, align right");
+        panel.add(dataPanel, " cell 0 0, growx");
+        panel.add(priceLabel, "cell 1 0 1 2, align right");
 
 
 
