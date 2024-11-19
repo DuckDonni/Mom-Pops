@@ -108,7 +108,7 @@ public class DatabaseManager {
     }
 
     public Account validateCustomerAccount(String phone, String password) {
-        File file = new File("src/Database/Customers.json");
+        File file = new File("Database/Customers.json");
         Customer customer = null;
         try {
             List<Customer> customers;
