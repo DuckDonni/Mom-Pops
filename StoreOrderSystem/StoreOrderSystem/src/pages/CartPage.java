@@ -6,13 +6,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.util.*;
 import view.*;
 import model.*;
 public class CartPage {
     private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private CustomerView cView;
-    private static Receipt receipt;
+    private Receipt receipt;
     public CartPage(CustomerView custView) {
         this.cView = custView;
         receipt = cView.view.controller.getReceipt();
@@ -29,6 +30,20 @@ public class CartPage {
         // Create the content panel to scroll
         JPanel scrollBarPanel = new JPanel();
         scrollBarPanel.setLayout(new MigLayout("wrap 1", "[grow, fill]"));
+
+//        Pizza testP = new Pizza();
+//        testP.setCrustSize("large");
+//        testP.setCrustType("Pan");
+//        testP.setIsSauce(true);
+//        Topping c = new Topping("Cheese", "Whole");
+//        Topping pe = new Topping("Pepperoni", "Left");
+//        Topping tt = new Topping("Tomatoes", "Left");
+//        ArrayList<Topping> toppingAr = new ArrayList<>();
+//        toppingAr.add(c);
+//        toppingAr.add(pe);
+//        toppingAr.add(tt);
+//        testP.setToppingAr(toppingAr);
+//        scrollBarPanel.add(makeCard(testP));
         ArrayList<Pizza> pizzaAr = receipt.getPizzaAr();
         for (Pizza p : pizzaAr) {
             System.out.println(pizzaAr.size());
@@ -77,9 +92,12 @@ public class CartPage {
     public static JPanel makeCard(Pizza p) {
         JPanel panel = new JPanel(new MigLayout("insets 10, wrap 4", "[grow][grow][grow][60px]", "[]10[]"));
         panel.setBorder(BorderFactory.createLineBorder(Color.black));
-
-        JLabel sizeLabel = new JLabel("Size: " + p.getCrustSize());
-        JLabel crustLabel = new JLabel("Crust: " + p.getCrustSize());
+        String crustSize = p.getCrustSize();
+        if(crustSize.equalsIgnoreCase("extra")){
+            crustSize = "extra large";
+        }
+        JLabel sizeLabel = new JLabel("Size: " + crustSize + " |");
+        JLabel crustLabel = new JLabel("Crust: " + p.getCrustType() + " |");
         JLabel sauceLabel;
         if(p.getIsSauce()) {
             sauceLabel = new JLabel("Sauce: Tomato Based Marinara");
@@ -105,8 +123,10 @@ public class CartPage {
         toppings.setWrapStyleWord(true);
         toppings.setEditable(false); // Make it behave like a label
         toppings.setOpaque(false); // Match panel background
-
-        JLabel price = new JLabel("$");
+        DecimalFormat priceFormat = new DecimalFormat("#.00");
+        String formattedPrice = priceFormat.format(p.getPrice());
+        System.out.println("FP " + formattedPrice + " price " +p.getPrice());
+        JLabel price = new JLabel("$" + formattedPrice);
 
         // Add components to the panel
         panel.add(sizeLabel, "cell 0 0");

@@ -115,11 +115,11 @@ public class ButtonFactory {
 
             if (leftBtn != null && rightBtn != null && midBtn != null) {
                 if (model == leftBtn.getModel()) {
-                    return "left";
+                    return "Left";
                 } else if (model == midBtn.getModel()) {
-                    return "middle";
+                    return "Whole";
                 } else if (model == rightBtn.getModel()) {
-                    return "right";
+                    return "Right";
                 }
             }
         }

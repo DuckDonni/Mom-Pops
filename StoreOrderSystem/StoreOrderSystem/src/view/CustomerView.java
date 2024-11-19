@@ -2,7 +2,7 @@ package view;
 
 import net.miginfocom.swing.MigLayout;
 import pages.*;
-
+import model.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -77,6 +77,13 @@ public class CustomerView {
     }
 
     public static void switchPage(String pageName, CustomerView cView) {
+//        Receipt r = view.controller.getReceipt();
+//        if(r.getPizzaAr().size()>0){
+//            System.out.println(r.getPizzaAr().get(0).getToppingAr().get(0).getName());
+//        }
+//        else{
+//            System.out.println("receipt is empty");
+//        }
 
         contentPanel.removeAll();
         contentPanel.add(buildHomePage(cView), "HomePage");

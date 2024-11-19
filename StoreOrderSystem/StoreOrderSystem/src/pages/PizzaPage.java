@@ -225,15 +225,33 @@ public class PizzaPage {
                     System.out.println("enter sauce type");
                 }
 
-                processChecked(cheeseBox, cheeseSideBF, pizza);
-                processChecked(pepperoniBox, pepperoniSideBF, pizza);
-                processChecked(sausageBox, sausageSideBF, pizza);
-                processChecked(hamBox, hamSideBF, pizza);
-                processChecked(gPepperBox, gPepperSideBF, pizza);
-                processChecked(onionBox, onionSideBF, pizza);
-                processChecked(tomatoBox, tomatoSideBF, pizza);
-                processChecked(mushroomBox, mushroomSideBF, pizza);
-                processChecked(pineappleBox, pineappleSideBF, pizza);
+                if(!processChecked(cheeseBox, cheeseSideBF, pizza)){
+                    validPizza = false;
+                }
+                if(!processChecked(pepperoniBox, pepperoniSideBF, pizza)){
+                    validPizza = false;
+                }
+                if(!processChecked(sausageBox, sausageSideBF, pizza)){
+                    validPizza = false;
+                }
+                if(!processChecked(hamBox, hamSideBF, pizza)){
+                    validPizza = false;
+                }
+                if(!processChecked(gPepperBox, gPepperSideBF, pizza)){
+                    validPizza = false;
+                }
+                if(!processChecked(onionBox, onionSideBF, pizza)){
+                    validPizza = false;
+                }
+                if(!processChecked(tomatoBox, tomatoSideBF, pizza)){
+                    validPizza = false;
+                }
+                if(!processChecked(mushroomBox, mushroomSideBF, pizza)){
+                    validPizza = false;
+                }
+                if(!processChecked(pineappleBox, pineappleSideBF, pizza)){
+                    validPizza = false;
+                }
 
                 if(validPizza){
                     Receipt receipt = cView.view.controller.getReceipt();
@@ -241,6 +259,7 @@ public class PizzaPage {
                     pizzaAr.add(pizza);
                     receipt.setPizzaAr(pizzaAr);
                     cView.view.controller.setReceipt(receipt);
+                    cView.switchPage("MenuPage", cView);
                 }
 
 
@@ -316,13 +335,20 @@ public class PizzaPage {
         });
         return panel;
     }
-    public void processChecked(JCheckBox checkBox, ButtonFactory bF, Pizza pizza){
+    public boolean processChecked(JCheckBox checkBox, ButtonFactory bF, Pizza pizza){
         if(checkBox.isSelected()){
             ArrayList<Topping> toppingAr = pizza.getToppingAr();
             String side = bF.getSelectedSide();
+            if(side.equals("none")){
+                return false;
+            }
             Topping topping = new Topping(checkBox.getText(), side);
             toppingAr.add(topping);
             pizza.setToppingAr(toppingAr);
+
+
         }
+
+        return true;
     }
 }
