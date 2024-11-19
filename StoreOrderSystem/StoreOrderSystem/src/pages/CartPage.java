@@ -1,11 +1,10 @@
 package pages;
 
+import model.MenuItem;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.util.*;
 import view.*;
@@ -31,24 +30,41 @@ public class CartPage {
         JPanel scrollBarPanel = new JPanel();
         scrollBarPanel.setLayout(new MigLayout("wrap 1", "[grow, fill]"));
 
-//        Pizza testP = new Pizza();
-//        testP.setCrustSize("large");
-//        testP.setCrustType("Pan");
-//        testP.setIsSauce(true);
-//        Topping c = new Topping("Cheese", "Whole");
-//        Topping pe = new Topping("Pepperoni", "Left");
-//        Topping tt = new Topping("Tomatoes", "Left");
-//        ArrayList<Topping> toppingAr = new ArrayList<>();
-//        toppingAr.add(c);
-//        toppingAr.add(pe);
-//        toppingAr.add(tt);
-//        testP.setToppingAr(toppingAr);
-//        scrollBarPanel.add(makeCard(testP));
+
         ArrayList<Pizza> pizzaAr = receipt.getPizzaAr();
+        JLabel pizzaLabel = new JLabel("Pizza:");
+        scrollBarPanel.add(pizzaLabel,"cell 0 0");
+        JPanel pizzaPanel = new JPanel(new MigLayout("wrap 1", "[grow, fill]"));
         for (Pizza p : pizzaAr) {
             System.out.println(pizzaAr.size());
-            scrollBarPanel.add(makeCard(p), "growx");
+            pizzaPanel.add(makePizzaCard(p), "growx");
         }
+        scrollBarPanel.add(pizzaPanel, "cell 0 1, growx");
+
+        JLabel sidesLabel = new JLabel("Sides:");
+        scrollBarPanel.add(sidesLabel,"cell 0 2");
+        JPanel sidesPanel = new JPanel(new MigLayout("wrap 1", "[grow, fill]"));
+        scrollBarPanel.add(sidesPanel,"cell 0 3");
+
+        JLabel drinksLabel = new JLabel("Drinks:");
+        scrollBarPanel.add(drinksLabel,"cell 0 4");
+        JPanel drinksPanel = new JPanel(new MigLayout("wrap 1", "[grow, fill]"));
+        scrollBarPanel.add(drinksPanel,"cell 0 5");
+
+        ArrayList<MenuItem> menuItemAr = receipt.getMenuItemAr();
+        for(MenuItem item : menuItemAr){
+            String name = item.getName();
+            if(name.equalsIgnoreCase("bread sticks") || name.equalsIgnoreCase("bread stick bites") || name.equalsIgnoreCase("big chocolate chip cookie")){
+                sidesPanel.add(makeSideCard(item));
+            }
+            else{
+
+            }
+
+
+        }
+
+
 
         // Create JScrollPane for the content
         JScrollPane scrollPane = new JScrollPane(scrollBarPanel);
@@ -89,7 +105,7 @@ public class CartPage {
     }
 
 
-    public static JPanel makeCard(Pizza p) {
+    public static JPanel makePizzaCard(Pizza p) {
         JPanel panel = new JPanel(new MigLayout("insets 10, wrap 4", "[grow][grow][grow][60px]", "[]10[]"));
         panel.setBorder(BorderFactory.createLineBorder(Color.black));
         String crustSize = p.getCrustSize();
@@ -138,6 +154,39 @@ public class CartPage {
         return panel;
     }
 
+    public static JPanel makeSideCard(MenuItem item){
+        JPanel panel = new JPanel(new MigLayout());
+        panel.setBorder(BorderFactory.createLineBorder(Color.black));
+        JLabel nameLabel = new JLabel("Name: " + item.getName() + " ");
+        JLabel quantityLabel = new JLabel("(" + item.getQuantity() + ")");
+        JLabel priceLabel = new JLabel("Price: " + item.getPrice());
+        panel.add(nameLabel, "cell 0 0");
+        panel.add(quantityLabel, "cell 1 0");
+        panel.add(priceLabel, "cell 2 0, align right");
+
+        return panel;
+    }
+    public static JPanel makeDrinkCard(MenuItem item){
+        JPanel panel = new JPanel(new MigLayout());
+        panel.setBorder(BorderFactory.createLineBorder(Color.black));
+
+        String name = item.getName().split(",")[0];
+        String size = item.getName().split(",")[1];
+
+        JPanel dataPanel = new JPanel(new MigLayout());
+        JLabel nameLabel = new JLabel("Name: " + name + " ");
+        JLabel quantityLabel = new JLabel("(" + item.getQuantity() + ")");
+        JLabel priceLabel = new JLabel("Price: " + item.getPrice());
+        JLabel sizeLabel = new JLabel("Size: " + size);
+        dataPanel.add(nameLabel, "cell 0 0");
+        dataPanel.add(quantityLabel, "cell 1 0");
+        dataPanel.add(sizeLabel, " cell 0 1");
+        panel.add(priceLabel, "cell 1 0, align right");
+
+
+
+        return panel;
+    }
 
 
 }

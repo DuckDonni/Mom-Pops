@@ -43,7 +43,22 @@ public class Pizza{
                     mult = 1.5;
                     break;
             }
-            calcPrice += (toppingAr.size()-2) * mult;
+            boolean cheese = false;
+            for(Topping t : toppingAr){
+                if(t.getName().equals("Cheese")){
+                    cheese = true;
+                }
+            }
+            if(cheese && toppingAr.size() > 1){
+                calcPrice += (toppingAr.size()-2) * mult;
+            }
+            else{
+                if(toppingAr.size() >0){
+                    calcPrice += (toppingAr.size()-1) * mult;
+                }
+
+            }
+
             setPrice(calcPrice);
         }
     }

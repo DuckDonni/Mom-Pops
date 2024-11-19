@@ -5,6 +5,8 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class ButtonFactory {
     private int amount;
@@ -26,11 +28,83 @@ public class ButtonFactory {
         JButton incBtn = new JButton(">");
         JTextField amountField = new JTextField("" + amount, 3);
         amountField.setHorizontalAlignment(0);
+        amountField.setEditable(false);
+        amountField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(amountField.getText().contains("-")) {
+                    amountField.setText("0");
+                    amount = 0;
+                }
+                else if(amountField.getText().length() > 4) {
+                    amountField.setText("999");
+                    amount = 999;
+                }
+                else if(Integer.parseInt(amountField.getText()) >999) {
+                    amountField.setText("999");
+                    amount = 999;
+                }
+            }
 
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(amountField.getText().contains("-")) {
+                    amountField.setText("0");
+                    amount = 0;
+                }
+                else if(amountField.getText().length() > 4) {
+                    amountField.setText("999");
+                    amount = 999;
+                }
+                else if(Integer.parseInt(amountField.getText()) >999) {
+                    amountField.setText("999");
+                    amount = 999;
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if(amountField.getText().contains("-")) {
+                    amountField.setText("0");
+                    amount = 0;
+                }
+                else if(amountField.getText().length() > 4) {
+                    amountField.setText("999");
+                    amount = 999;
+                }
+                else if(Integer.parseInt(amountField.getText()) >999) {
+                    amountField.setText("999");
+                    amount = 999;
+                }
+            }
+        });
+        amountField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(amountField.getText().contains("-")) {
+                    amountField.setText("0");
+                    amount = 0;
+                }
+                else if(amountField.getText().length() > 4) {
+                    amountField.setText("999");
+                    amount = 999;
+                }
+            }
+        });
         incBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                amount = Integer.parseInt(amountField.getText()) + 1;
+                if(amount < 999){
+                    amount = Integer.parseInt(amountField.getText()) + 1;
+                }
+                if(amount > 999){
+                    amountField.setText("999");
+                    amount = 999;
+                }
+                if(amount < 0){
+                    amountField.setText("0");
+                    amount = 0;
+                }
                 amountField.setText("" + amount);
             }
         });
@@ -38,8 +112,16 @@ public class ButtonFactory {
             @Override
             public void actionPerformed(ActionEvent e) {
                 amount = Integer.parseInt(amountField.getText());
-                if (amount != 0) {
+                if (amount != 1) {
                     amount -= 1;
+                }
+                if(amount < 1){
+                    amountField.setText("0");
+                    amount = 0;
+                }
+                if(amount > 999){
+                    amountField.setText("999");
+                    amount = 999;
                 }
                 amountField.setText("" + amount);
             }
@@ -52,6 +134,7 @@ public class ButtonFactory {
     }
 
     public int getIncAmount() {
+
         return amount;
     }
 
@@ -62,9 +145,9 @@ public class ButtonFactory {
     public JPanel buildSizeButton() {
         JPanel panel = new JPanel(new MigLayout());
         sizeBtnGroup = new ButtonGroup();
-        JRadioButton smallBtn = new JRadioButton("S");
-        JRadioButton mediumBtn = new JRadioButton("M");
-        JRadioButton largeBtn = new JRadioButton("L");
+        smallBtn = new JRadioButton("S");
+        mediumBtn = new JRadioButton("M");
+        largeBtn = new JRadioButton("L");
         sizeBtnGroup.add(smallBtn);
         sizeBtnGroup.add(mediumBtn);
         sizeBtnGroup.add(largeBtn);

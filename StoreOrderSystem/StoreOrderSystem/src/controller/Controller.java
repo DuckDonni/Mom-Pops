@@ -45,7 +45,6 @@ public class Controller {
     }
     public void setReceipt(Receipt receipt) {
         this.receipt = receipt;
-        System.out.println(receipt.getPizzaAr().get(0).getCrustSize());
     }
 
     //updateCustomerAccount

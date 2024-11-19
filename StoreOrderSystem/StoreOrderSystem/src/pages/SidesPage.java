@@ -1,13 +1,13 @@
 package pages;
 
+import model.*;
 import net.miginfocom.swing.MigLayout;
-import view.ButtonFactory;
-import view.CustomerView;
+import view.*;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.*;
 
 public class SidesPage {
     private JPanel contentPanel;
@@ -69,6 +69,36 @@ public class SidesPage {
 
         panel.add(submitBtn, "cell 0 4");
         panel.add(cancelBtn, "cell 1 4");
+
+        submitBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean validForm = true;
+                Receipt receipt = cView.view.controller.getReceipt();
+                ArrayList<MenuItem> menuItemAr = receipt.getMenuItemAr();
+                if(bSticksBox.isSelected()){
+                    int quantity = bSticksIncBF.getIncAmount();
+
+                    MenuItem item = new MenuItem(quantity, "Bread Sticks", 4.00);
+                    menuItemAr.add(item);
+                }
+                if(bSBitesBox.isSelected()){
+                    int quantity = bSBitesIncBF.getIncAmount();
+                    MenuItem item = new MenuItem(quantity, "Bread Stick Bites", 2.00);
+                    menuItemAr.add(item);
+                }
+                if(cookieBox.isSelected()){
+                    int quantity = cookieIncBF.getIncAmount();
+                    MenuItem item = new MenuItem(quantity, "Big Chocolate Chip Cookie", 4.00);
+                    menuItemAr.add(item);
+                }
+                receipt.setMenuItemAr(menuItemAr);
+                cView.switchPage("MenuPage", cView);
+
+
+
+            }
+        });
 
         cancelBtn.addActionListener(new ActionListener() {
             @Override

@@ -1,13 +1,17 @@
 package pages;
 
+import model.*;
+import model.MenuItem;
 import net.miginfocom.swing.MigLayout;
-import view.ButtonFactory;
-import view.CustomerView;
+import view.*;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.management.MemoryNotificationInfo;
+import java.util.ArrayList;
 
 public class DrinksPage {
     private JPanel contentPanel;
@@ -74,38 +78,38 @@ public class DrinksPage {
 
 
         JPanel orangePanel = orangeBF.buildIncrementButton();
-        JPanel orangeSizePanel = dPepsiSize.buildSizeButton();
+        JPanel orangeSizePanel = orangeSize.buildSizeButton();
         panel.add(orangeBox, "cell 0 5");
         panel.add(orangePanel, "cell 1 5");
         panel.add(orangeSizePanel, "cell 0 6");
 
         JPanel dOrangePanel = dOrangeBF.buildIncrementButton();
-        JPanel dOrangeSizePanel = dPepsiSize.buildSizeButton();
+        JPanel dOrangeSizePanel = dOrangeSize.buildSizeButton();
         panel.add(dOrangeBox, "cell 0 7");
         panel.add(dOrangePanel, "cell 1 7");
         panel.add(dOrangeSizePanel, "cell 0 8");
 
 
         JPanel rBeerPanel = rBeerBF.buildIncrementButton();
-        JPanel rBeerSizePanel = dPepsiSize.buildSizeButton();
+        JPanel rBeerSizePanel = rBeerSize.buildSizeButton();
         panel.add(rBeerBox, "cell 2 1");
         panel.add(rBeerPanel, "cell 3 1");
         panel.add(rBeerSizePanel, "cell 2 2");
 
         JPanel dRBeerPanel = dRBeerBF.buildIncrementButton();
-        JPanel dRBeerSizePanel = dPepsiSize.buildSizeButton();
+        JPanel dRBeerSizePanel = dRBeerSize.buildSizeButton();
         panel.add(dRBeerBox, "cell 2 3");
         panel.add(dRBeerPanel, "cell 3 3");
         panel.add(dRBeerSizePanel, "cell 2 4");
 
         JPanel starryPanel = starryBF.buildIncrementButton();
-        JPanel starrySizePanel = dPepsiSize.buildSizeButton();
+        JPanel starrySizePanel = starrySize.buildSizeButton();
         panel.add(starryBox, "cell 2 5");
         panel.add(starryPanel, "cell 3 5");
         panel.add(starrySizePanel, "cell 2 6");
 
         JPanel lemonadePanel = lemonadeBF.buildIncrementButton();
-        JPanel lemonadeSizePanel = dPepsiSize.buildSizeButton();
+        JPanel lemonadeSizePanel = lemonadeSize.buildSizeButton();
         panel.add(lemonadeBox, "cell 2 7");
         panel.add(lemonadePanel, "cell 3 7");
         panel.add(lemonadeSizePanel, "cell 2 8");
@@ -137,6 +141,99 @@ public class DrinksPage {
         lemonadeSizePanel.setVisible(false);
 
 
+        submitBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean validItem = true;
+                Receipt receipt = cView.view.controller.getReceipt();
+                ArrayList<MenuItem> menuItemAr = receipt.getMenuItemAr();
+
+                if(pepsiBox.isSelected()){
+                    if(pepsiSize.getSelectedSize().equals("none")){
+                        validItem = false;
+                    }
+                    else{
+                        MenuItem item = new MenuItem(pepsiBF.getIncAmount(),pepsiBox.getText(),1.75);
+                        menuItemAr.add(item);
+                    }
+                }
+                if(dPepsiBox.isSelected()){
+                    if(dPepsiSize.getSelectedSize().equals("none")){
+                        validItem = false;
+                    }
+                    else{
+                        MenuItem item = new MenuItem(dPepsiBF.getIncAmount(),dPepsiBox.getText(),1.75);
+                        menuItemAr.add(item);
+                    }
+                }
+                if(orangeBox.isSelected()){
+                    if(orangeSize.getSelectedSize().equals("none")){
+                        validItem = false;
+                    }
+                    else{
+                        MenuItem item = new MenuItem(orangeBF.getIncAmount(),orangeBox.getText(),1.75);
+                        menuItemAr.add(item);
+                    }
+                }
+                if(dOrangeBox.isSelected()){
+                    if(dOrangeSize.getSelectedSize().equals("none")){
+                        validItem = false;
+                    }
+                    else{
+                        MenuItem item = new MenuItem(dOrangeBF.getIncAmount(),dOrangeBox.getText(),1.75);
+                        menuItemAr.add(item);
+                    }
+                }
+                if(rBeerBox.isSelected()){
+                    if(rBeerSize.getSelectedSize().equals("none")){
+                        validItem = false;
+                        System.out.println("test2");
+                    }
+                    else{
+                        System.out.println("test");
+                        MenuItem item = new MenuItem(rBeerBF.getIncAmount(),rBeerBox.getText(),1.75);
+                        menuItemAr.add(item);
+                    }
+                }
+                if(dRBeerBox.isSelected()){
+                    if(dRBeerSize.getSelectedSize().equals("none")){
+                        validItem = false;
+                    }
+                    else{
+                        MenuItem item = new MenuItem(dRBeerBF.getIncAmount(),dRBeerBox.getText(),1.75);
+                        menuItemAr.add(item);
+                    }
+                }
+                if(starryBox.isSelected()){
+                    if(starrySize.getSelectedSize().equals("none")){
+                        validItem = false;
+                    }
+                    else{
+                        MenuItem item = new MenuItem(starryBF.getIncAmount(),starryBox.getText(),1.75);
+                        menuItemAr.add(item);
+                    }
+                }
+                if(lemonadeBox.isSelected()){
+                    if(lemonadeSize.getSelectedSize().equals("none")){
+                        validItem = false;
+                    }
+                    else{
+                        MenuItem item = new MenuItem(lemonadeBF.getIncAmount(),lemonadeBox.getText(),1.75);
+                        menuItemAr.add(item);
+                    }
+                }
+
+
+
+
+
+                if(validItem){
+                    receipt.setMenuItemAr(menuItemAr);
+                    cView.switchPage("MenuPage", cView);
+                }
+
+            }
+        });
 
         // Action Listeners for button elements
         cancelBtn.addActionListener(new ActionListener() {
@@ -204,5 +301,26 @@ public class DrinksPage {
         });
 
         return panel;
+    }
+
+    public boolean processChecked(JCheckBox checkBox, ButtonFactory bF){
+        if(checkBox.isSelected()){
+
+            String size = bF.getSelectedSize();
+            switch(size){
+                case "small":
+                    return true;
+                case "medium":
+                    return true;
+                case "large":
+                    return true;
+                case "none":
+                    return false;
+            }
+
+
+        }
+
+        return true;
     }
 }

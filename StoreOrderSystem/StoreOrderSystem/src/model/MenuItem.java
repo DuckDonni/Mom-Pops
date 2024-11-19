@@ -17,15 +17,17 @@ public class MenuItem {
     public void calculatePrice(){
         String item = getName();
         switch(item){
-            case "bread sticks":
+            case "Bread Sticks":
                 setPrice(quantity * 4);
                 break;
-            case "bread stick bites":
+            case "Bread Stick Bites":
                 setPrice(quantity * 2);
                 break;
-            case "big chocolate chip cookie":
+            case "Big Chocolate Chip Cookie":
                 setPrice(quantity * 4);
                 break;
+            default:
+                setPrice(quantity * 1.75);
         }
     }
 
@@ -46,6 +48,7 @@ public class MenuItem {
     }
 
     public double getPrice(){
+        calculatePrice();
         return price;
     }
 
