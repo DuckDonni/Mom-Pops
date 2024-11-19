@@ -7,12 +7,25 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * A manager class responsible for handling operations related to
+ * employee and customer accounts stored in JSON files.
+ */
 public class DatabaseManager {
 
     ObjectMapper objectMapper = new ObjectMapper();
 
 
-    // employees never need to change their employee id
+    /**
+     * Updates or creates an employee account in the database.
+     *
+     * @param employeeID The unique ID of the employee.
+     * @param password The password to associate with the employee account.
+     * @param update Whether to update an existing account (true) or create a new one (false).
+     * @return {@code true} if the operation succeeded, {@code false} if the account already exists and {@code update} is {@code false}.
+     * @throws IOException If an I/O error occurs while reading or writing the database file.
+     */
     public boolean updateEmployeeAccount(String employeeID, String password, boolean update) throws IOException {
         File file = new File("Database/Employees.json");
 
@@ -47,7 +60,19 @@ public class DatabaseManager {
     }
 
 
-    // changed from documentation in order to allow customer to change their phone number
+    /**
+     * Updates or creates a customer account in the database.
+     *
+     * @param first The customer's first name.
+     * @param last The customer's last name.
+     * @param oldPhone The customer's old phone number (used for identification).
+     * @param newPhone The customer's new phone number.
+     * @param address The customer's address.
+     * @param password The customer's password.
+     * @param update Whether to update an existing account (true) or create a new one (false).
+     * @return {@code true} if the operation succeeded, {@code false} if the account already exists and {@code update} is {@code false}.
+     * @throws IOException If an I/O error occurs while reading or writing the database file.
+     */
     public boolean updateCustomerAccount(String first, String last, String oldPhone, String newPhone, String address,
                                       String password, boolean update) throws IOException {
         File file = new File("Database/Customers.json");
@@ -88,6 +113,13 @@ public class DatabaseManager {
     }
 
 
+    /**
+     * Validates an employee's credentials.
+     *
+     * @param employeeID The unique ID of the employee.
+     * @param password The password associated with the employee account.
+     * @return The {@link Employee} object if validation is successful, or {@code null} if the credentials are invalid.
+     */
     public Account validateEmployeeAccount(String employeeID, String password) {
         File file = new File("Database/Employees.json");
         System.out.println("File Found");
@@ -108,6 +140,14 @@ public class DatabaseManager {
         return employee;
     }
 
+
+    /**
+     * Validates a customer's credentials.
+     *
+     * @param phone The phone number associated with the customer's account.
+     * @param password The password associated with the customer's account.
+     * @return The {@link Customer} object if validation is successful, or {@code null} if the credentials are invalid.
+     */
     public Account validateCustomerAccount(String phone, String password) {
 
         File file = new File("Database/Customers.json");
