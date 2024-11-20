@@ -73,7 +73,12 @@ public class CustomerView {
     }
     public static void buildEditPizzaPage(CustomerView cView,Pizza pizza){
         Frame popupFrame = new JFrame();
+
+        popupFrame.setLayout(new MigLayout("fill", "[grow][right]", "[]20[grow]"));
         JPanel popupPanel = new PizzaPage(cView).returnPage(pizza);
+        popupFrame.setSize(screenSize.width, screenSize.height);
+        popupFrame.add(popupPanel);
+        popupFrame.setVisible(true);
     }
     public static JPanel buildDrinksPage(CustomerView cView){
         return new DrinksPage(cView).returnPage();

@@ -653,6 +653,9 @@ public class PizzaPage {
                 if(!processChecked(pineappleBox, pineappleSideBF, pizza)){
                     validPizza = false;
                 }
+                if(!processChecked(extraCheeseBox, extraCheeseSideBF, pizza)){
+                    validPizza = false;
+                }
 
                 if(validPizza){
                     Receipt receipt = cView.view.controller.getReceipt();

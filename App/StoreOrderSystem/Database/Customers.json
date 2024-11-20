@@ -19,8 +19,8 @@
   "password" : "password",
   "name" : "jonah smith"
 }, {
-  "address" : "123 test rd,,Test,GA,31548",
+  "address" : "123 Test Rd,,Atlanta,GA,31548",
   "phone" : "(123) 456 7890",
   "password" : "test",
-  "name" : "testA testA"
+  "name" : "John Doe"
 } ]

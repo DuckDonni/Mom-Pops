@@ -179,7 +179,24 @@ public class CartPage {
         customerPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 
         JPanel orderPanel = new JPanel(new MigLayout());
-        orderPanel.add(editOrderTimeBtn, "cell 0 0, wrap , align right");
+        String deliverCarry = "";
+        if(receipt.getIsDelivery()){
+            deliverCarry = "Delivery";
+        }
+        else{
+            deliverCarry = "Pickup";
+        }
+        JLabel deliveryCarryLabel = new JLabel(deliverCarry);
+        String time = "";
+        if(!receipt.getStringTime().isEmpty()) {
+            time = receipt.getStringTime().split(":")[0] + ":" + receipt.getStringTime().split(":")[1] + " " + receipt.getStringTime().split(":")[2];
+        }
+        JLabel timeLabel = new JLabel(time);
+
+        orderPanel.add(deliveryCarryLabel, "cell 0 0, wrap, align right");
+        orderPanel.add(editOrderTimeBtn, "cell 0 2, wrap , align right");
+        orderPanel.add(timeLabel, "cell 0 1, wrap, align right");
+
 
         orderPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 
@@ -300,7 +317,7 @@ public class CartPage {
             ArrayList<MenuItem> menuItemAr = new ArrayList<>();
             receipt.setPizzaAr(pizzaAr);
             receipt.setMenuItemAr(menuItemAr);
-
+            receipt.setPrice(0);
             cView.view.controller.setReceipt(receipt);
             cView.switchPage("CartPage", cView);
             PopupManager pm = new PopupManager(cView);
@@ -345,7 +362,7 @@ public class CartPage {
         toppings.setOpaque(false); // Match panel background
         DecimalFormat priceFormat = new DecimalFormat("#.00");
         String formattedPrice = priceFormat.format(p.getPrice());
-        System.out.println("FP " + formattedPrice + " price " + p.getPrice());
+        //System.out.println("FP " + formattedPrice + " price " + p.getPrice());
         JLabel price = new JLabel("$" + formattedPrice);
 
         JButton deleteBtn = new JButton("D");
@@ -357,7 +374,7 @@ public class CartPage {
         panel.add(sauceLabel, "cell 2 0");
         panel.add(price, "cell 3 0, align center");
         panel.add(deleteBtn, "cell 3 1, align center");
-        panel.add(editBtn, "cell 3 2, align center");
+        //panel.add(editBtn, "cell 3 2, align center");
         panel.add(toppings, "cell 0 1 3 1, growx"); // Spans 3 columns and grows horizontally
 
 
@@ -367,9 +384,9 @@ public class CartPage {
                 //cView.setShiftView(cView.buildEditPizzaPage(cView,p));
 
                 //cView.switchPage("shiftPanel", cView);
-                cView.switchPage("HomePage",cView);
-
-                cView.switchPage("shiftPanel", cView);
+                //cView.switchPage("HomePage",cView);
+                cView.buildEditPizzaPage(cView,p);
+                //cView.switchPage("shiftPanel", cView);
             }
         });
         deleteBtn.addActionListener(new ActionListener() {
