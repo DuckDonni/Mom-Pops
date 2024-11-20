@@ -54,9 +54,7 @@ public class Receipt {
             String minutes = breakup[1];
             String am_pm = breakup[2];
             Calendar cal = Calendar.getInstance();
-            Calendar temp = Calendar.getInstance();
-            cal.set(Calendar.HOUR, Integer.parseInt(hours));
-            cal.set(Calendar.MINUTE, Integer.parseInt(minutes));
+
 
 
             if(am_pm.equals("AM")){
@@ -65,6 +63,13 @@ public class Receipt {
             else{
                 cal.set(Calendar.AM_PM, Calendar.PM);
             }
+            int inc = 0;
+            if(am_pm.equals("PM")){
+                inc = 12;
+            }
+            cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hours)+inc);
+            cal.set(Calendar.MINUTE, Integer.parseInt(minutes));
+
             setDateTime(cal);
         }
 

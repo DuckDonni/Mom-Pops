@@ -411,7 +411,7 @@ public class PopupManager {
 
         Calendar currentTime = Calendar.getInstance();
 
-        System.out.println(time.getTime());
+        System.out.println("Good time " + time.getTime() + " Current time" + currentTime.getTime());
         if (currentTime.after(time)) {
             System.out.println("Triggers");
             asapOption.setSelected(true);

@@ -209,4 +209,17 @@ public class ButtonFactory {
         return "none";
     }
 
+    public void setSelectedSide(String side){
+        switch (side){
+            case "Left":
+                leftBtn.setSelected(true);
+                break;
+            case "Whole":
+                midBtn.setSelected(true);
+                break;
+            case "Right":
+                rightBtn.setSelected(true);
+                break;
+        }
+    }
 }

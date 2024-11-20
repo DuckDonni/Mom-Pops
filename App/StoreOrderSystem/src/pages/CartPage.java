@@ -349,6 +349,7 @@ public class CartPage {
         JLabel price = new JLabel("$" + formattedPrice);
 
         JButton deleteBtn = new JButton("D");
+        JButton editBtn = new JButton("E");
 
         // Add components to the panel
         panel.add(sizeLabel, "cell 0 0");
@@ -356,8 +357,21 @@ public class CartPage {
         panel.add(sauceLabel, "cell 2 0");
         panel.add(price, "cell 3 0, align center");
         panel.add(deleteBtn, "cell 3 1, align center");
+        panel.add(editBtn, "cell 3 2, align center");
         panel.add(toppings, "cell 0 1 3 1, growx"); // Spans 3 columns and grows horizontally
 
+
+        editBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //cView.setShiftView(cView.buildEditPizzaPage(cView,p));
+
+                //cView.switchPage("shiftPanel", cView);
+                cView.switchPage("HomePage",cView);
+
+                cView.switchPage("shiftPanel", cView);
+            }
+        });
         deleteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

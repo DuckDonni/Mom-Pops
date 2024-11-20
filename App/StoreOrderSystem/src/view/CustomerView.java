@@ -14,12 +14,14 @@ public class CustomerView {
     private static Dimension screenSize;
     public static JPanel contentPanel;
     public static View view;
+    public static JPanel shiftPanel;
     public static boolean isLoggedIn = false;
     public CustomerView(View view) {
         this.view = view;
         frame = new JFrame("Homepage Example");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        shiftPanel = buildHomePage(this);
         frame.setSize(screenSize.width, screenSize.height); // Set frame size to the screen's resolution
         // Establishes layout for miglayout
         frame.setLayout(new MigLayout("fill", "[grow][right]", "[]20[grow]"));
@@ -31,7 +33,9 @@ public class CustomerView {
         contentPanel.add(buildSidesPage(this), "SidesPage");
         contentPanel.add(buildCartPage(this), "CartPage");
         contentPanel.add(buildLoginPage(this), "LoginPage");
+        contentPanel.add(shiftPanel, "CurrentPanel");
         switchPage("HomePage", this);
+
         // Creates the navbar and passes the contentPanel to allow for page swapping
         //NavBar navbar = new NavBar(contentPanel);
         //frame.add(navbar.displayNavBar(), "cell 1 0, align right, growx");
@@ -67,7 +71,10 @@ public class CustomerView {
     public static JPanel buildPizzaPage(CustomerView cView){
         return new PizzaPage(cView).returnPage();
     }
-
+    public static void buildEditPizzaPage(CustomerView cView,Pizza pizza){
+        Frame popupFrame = new JFrame();
+        JPanel popupPanel = new PizzaPage(cView).returnPage(pizza);
+    }
     public static JPanel buildDrinksPage(CustomerView cView){
         return new DrinksPage(cView).returnPage();
     }
@@ -78,14 +85,6 @@ public class CustomerView {
 
 
     public static void switchPage(String pageName, CustomerView cView) {
-//        Receipt r = view.controller.getReceipt();
-//        if(r.getPizzaAr().size()>0){
-//            System.out.println(r.getPizzaAr().get(0).getToppingAr().get(0).getName());
-//        }
-//        else{
-//            System.out.println("receipt is empty");
-//        }
-
         contentPanel.removeAll();
         contentPanel.add(buildHomePage(cView), "HomePage");
         contentPanel.add(buildMenuPage(cView), "MenuPage");
@@ -94,6 +93,7 @@ public class CustomerView {
         contentPanel.add(buildPizzaPage(cView), "PizzaPage");
         contentPanel.add(buildDrinksPage(cView), "DrinksPage");
         contentPanel.add(buildSidesPage(cView), "SidesPage");
+        contentPanel.add(shiftPanel, "CurrentPanel");
         CardLayout cardLayout = (CardLayout) contentPanel.getLayout();
         cardLayout.show(contentPanel, pageName);
     }
@@ -118,5 +118,8 @@ public class CustomerView {
         frame.repaint();
     }
 
+    public void setShiftView(JPanel newPanel){
+        shiftPanel = newPanel;
+    }
 
 }

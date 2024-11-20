@@ -40,8 +40,8 @@ public class LoginPage {
 
         JLabel signupPrompt = new JLabel("Don't have an account?");
         JButton signupBtn = new JButton("Sign up");
-        //loginPanel.add(signupPrompt, "cell 0 5, alignx center");
-        //loginPanel.add(signupBtn, "cell 0 6, alignx center");
+        loginPanel.add(signupPrompt, "cell 0 5, alignx center");
+        loginPanel.add(signupBtn, "cell 0 6, alignx center");
 
         // Signup Page Panel
         JPanel signupPanel = new JPanel(new MigLayout());
@@ -76,7 +76,7 @@ public class LoginPage {
         JLabel zipLabel = new JLabel("Zip Code");
         JTextField zipField = new JTextField(8);
 
-
+        JButton signUpSubmitBtn = new JButton("Create Account");
         JPanel signupLPanel = new JPanel(new MigLayout());
         JPanel signupRPanel = new JPanel(new MigLayout());
         signupLPanel.add(firstNameLabel, "cell 0 0, growx");
@@ -100,6 +100,10 @@ public class LoginPage {
         signupRPanel.add(zipLabel, "cell 3 2, growx");
         signupRPanel.add(zipField, "cell 3 3, growx");
 
+        signupPanel.add(signUpSubmitBtn, "cell 0 2, alignx center");
+        JLabel accountExistLabel = new JLabel("Account already exist");
+        signupPanel.add(accountExistLabel, "cell 0 3, alignx center");
+        accountExistLabel.setVisible(false);
         JLabel signupHeader = new JLabel("Sign Up");
         signupHeader.setFont(new Font(signupHeader.getFont().getName(), Font.BOLD, 36));
 
@@ -107,13 +111,77 @@ public class LoginPage {
         signupPanel.add(signupLPanel, "cell 0 1, growx");
         signupPanel.add(signupRPanel, "cell 1 1, growx");
 
+        JLabel backToLoginLabel = new JLabel("Already have an account?");
         JButton backToLoginBtn = new JButton("Back to Login");
-        signupPanel.add(backToLoginBtn, "cell 0 20, alignx center");
+        signupPanel.add(backToLoginLabel, "cell 0 4, alignx center");
+        signupPanel.add(backToLoginBtn, "cell 0 5, alignx center");
 
         // Adding panels to CardLayout
         contentPanel.add(loginPanel, "LoginPage");
         contentPanel.add(signupPanel, "SignupPage");
 
+        signUpSubmitBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean isValid = true;
+                if(firstNameField.getText().isEmpty() || lastNameField.getText().isEmpty()){
+                    isValid = false;
+                }
+                if(phoneField.getText().length() != 10){
+                    isValid = false;
+                }
+                if(!passwordSignupField.getText().equals(confirmPasswordField.getText())){
+                    isValid = false;
+                }
+                if(addressField.getText().isEmpty()){
+                    isValid = false;
+                }
+                if(cityField.getText().isEmpty()){
+                    isValid = false;
+                }
+                if(stateField.getText().isEmpty()){
+                    isValid = false;
+                }
+                if(zipField.getText().isEmpty()){
+                    isValid = false;
+                }
+
+
+                if(isValid){
+                    //String first, String last, String oldPhone, String newPhone,String address, String password, boolean update
+                    String fName = firstNameField.getText();
+                    String lName = lastNameField.getText();
+                    String phoneNumber = phoneField.getText();
+                    String password = passwordSignupField.getText();
+                    String address = addressField.getText();
+                    String aptNumber = aptField.getText();
+                    String city = cityField.getText();
+                    String state = stateField.getText();
+                    String zip = zipField.getText();
+                    String fullAddress = address +","+aptNumber+","+city+","+state+","+zip;
+                    phoneNumber = "(" + phoneNumber.substring(0, 3) +") " + phoneNumber.substring(3, 6)+" " + phoneNumber.substring(6);
+                    try{
+                        boolean isCreated = cView.view.controller.updateCustomerAccount(fName,lName,phoneNumber,phoneNumber, fullAddress, password,false);
+                        if(isCreated){
+                            accountExistLabel.setVisible(false);
+                            cView.view.controller.verifyLogin(phoneNumber,password);
+                            Receipt receipt = cView.view.controller.getReceipt();
+                            Account user = cView.view.controller.getCurrentUser();
+                            receipt.setCustomerName(((Customer) user).getName());
+                            receipt.setPhoneNumber(((Customer) user).getPhone());
+                            receipt.setAddress(((Customer) user).getAddress());
+                            cView.view.swapView(1);
+                            cView.switchPage("HomePage",cView);
+                        }
+                        else{
+                            accountExistLabel.setVisible(true);
+                        }
+                    }catch(Exception exception){
+                        System.out.println(exception.getMessage());
+                    }
+                }
+            }
+        });
         loginSubmitBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
