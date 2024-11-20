@@ -17,7 +17,6 @@ public class Controller {
         model = new Model();
         receipt = new Receipt();
         currentUser = null;
-        System.out.println("running");
         controller.buildView();
 
 //

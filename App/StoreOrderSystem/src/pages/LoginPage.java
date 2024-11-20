@@ -1,5 +1,6 @@
 package pages;
 
+import model.*;
 import net.miginfocom.swing.MigLayout;
 import view.CustomerView;
 
@@ -120,21 +121,27 @@ public class LoginPage {
                 if(phoneNumberField.getText().length() == 10) {
                     phoneIdBox = "(" + phoneNumberField.getText().substring(0, 3) + ") " + phoneNumberField.getText().substring(3, 6) + " " + phoneNumberField.getText().substring(6);
                 }
-                System.out.println(phoneIdBox);
                 String passwordBox = passwordField.getText();
 
                 int accountType = cView.view.controller.verifyLogin(phoneIdBox, passwordBox);
-                System.out.println(accountType);
                 if(accountType == 0) {
 
+
+                    Receipt receipt = cView.view.controller.getReceipt();
+                    Account user = cView.view.controller.getCurrentUser();
+                    if(user instanceof Customer){
+                        receipt.setCustomerName(((Customer) user).getName());
+                        receipt.setPhoneNumber(((Customer) user).getPhone());
+                        receipt.setAddress(((Customer) user).getAddress());
+                    }
+
                     cView.isLoggedIn = true;
-                    cView.view.swapView(0);
-                    cView.getFrame().dispose();
+                    cView.view.swapView(1);
                     cView.switchPage("HomePage",cView);
                 }
                 if(accountType == 1) {
                     cView.isLoggedIn = true;
-                    cView.view.swapView(0);
+                    cView.view.swapView(1);
                     cView.switchPage("HomePage",cView);
                 }
             }

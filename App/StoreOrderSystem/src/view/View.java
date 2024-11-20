@@ -15,12 +15,13 @@ public class View {
     public void swapView(int option) {
 
         if (option == 0) {
-            customerView = new CustomerView(this);
-            staffView.getFrame().setVisible(false); // Hide staff view
             customerView.getFrame().setVisible(true); // Show customer view
+            customerView.updateNavBar(0);
+
+
         } else if (option == 1) {
-            customerView.getFrame().setVisible(false); // Hide customer view
-            staffView.getFrame().setVisible(true); // Show staff view
+            customerView.getFrame().setVisible(true); // Hide customer view
+            customerView.updateNavBar(1);
         }
     }
 

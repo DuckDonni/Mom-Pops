@@ -1,8 +1,6 @@
 package model;
 
-import java.awt.*;
 import java.util.*;
-import java.util.ArrayList;
 
 /**
  * Represents a receipt for a customer's order at a pizzeria.
@@ -13,7 +11,7 @@ public class Receipt {
     private String customerName;
     private String phoneNumber;
     private String payment;
-    private Date date;
+    private Calendar date; // Changed from Date to Calendar
     private Boolean isDelivery;
     private double price;
     private ArrayList<Pizza> pizzaAr;
@@ -29,7 +27,7 @@ public class Receipt {
         customerName = "";
         phoneNumber = "";
         payment = "";
-        date = new Date();
+        date = Calendar.getInstance(); // Default to current time
         isDelivery = false;
         price = 0.0;
         pizzaAr = new ArrayList<>();
@@ -49,134 +47,80 @@ public class Receipt {
         }
     }
 
-    /**
-     * Gets the customer's address.
-     * @return the address of the customer.
-     */
+    // Getters and Setters for all attributes
     public String getAddress() {
         return address;
     }
 
-    /**
-     * Sets the customer's address.
-     * @param address the address of the customer.
-     */
     public void setAddress(String address) {
         this.address = address;
     }
 
-    /**
-     * Gets the customer's name.
-     * @return the name of the customer.
-     */
     public String getCustomerName() {
         return customerName;
     }
 
-    /**
-     * Sets the customer's name.
-     * @param customerName the name of the customer.
-     */
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
-    }
-
-    /**
-     * Gets the date and time of the receipt.
-     * @return the date of the receipt.
-     */
-    public Date getDateTime() {
-        return date;
-    }
-
-    /**
-     * Sets the date and time of the receipt.
-     * @param date the date to set.
-     */
-    public void setDateTime(Date date) {
-        this.date = date;
-    }
-
-    /**
-     * Gets the delivery status of the order.
-     * @return true if the order is for delivery, false otherwise.
-     */
-    public Boolean getIsDelivery() {
-        return isDelivery;
-    }
-
-    /**
-     * Sets the delivery status of the order.
-     * @param isDelivery true if the order is for delivery, false otherwise.
-     */
-    public void setIsDelivery(Boolean isDelivery) {
-        this.isDelivery = isDelivery;
-    }
-
-    /**
-     * Gets the total price of the order.
-     * @return the total price of the order.
-     */
-    public double getPrice() {
-        return price;
-    }
-
-    /**
-     * Sets the total price of the order.
-     * @param price the price to set.
-     */
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    /**
-     * Gets the list of pizzas in the order.
-     * @return an ArrayList of Pizza objects.
-     */
-    public ArrayList<Pizza> getPizzaAr() {
-        return pizzaAr;
-    }
-
-    /**
-     * Sets the list of pizzas in the order.
-     * Also recalculates the total price.
-     * @param pizzaAr an ArrayList of Pizza objects.
-     */
-    public void setPizzaAr(ArrayList<Pizza> pizzaAr) {
-        this.pizzaAr = pizzaAr;
-        calculatePrice();
-    }
-
-    /**
-     * Gets the list of menu items in the order.
-     * @return an ArrayList of MenuItem objects.
-     */
-    public ArrayList<MenuItem> getMenuItemAr() {
-        return menuItemAr;
-    }
-
-    /**
-     * Sets the list of menu items in the order.
-     * Also recalculates the total price.
-     * @param menuItemAr an ArrayList of MenuItem objects.
-     */
-    public void setMenuItemAr(ArrayList<MenuItem> menuItemAr) {
-        this.menuItemAr = menuItemAr;
-        calculatePrice();
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
+
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getPayment(){
+    public String getPayment() {
         return payment;
     }
-    public void setPayment(String payment){
+
+    public void setPayment(String payment) {
         this.payment = payment;
+    }
+
+    public Boolean getIsDelivery() {
+        return isDelivery;
+    }
+
+    public void setIsDelivery(Boolean isDelivery) {
+        this.isDelivery = isDelivery;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public ArrayList<Pizza> getPizzaAr() {
+        return pizzaAr;
+    }
+
+    public void setPizzaAr(ArrayList<Pizza> pizzaAr) {
+        this.pizzaAr = pizzaAr;
+        calculatePrice();
+    }
+
+    public ArrayList<MenuItem> getMenuItemAr() {
+        return menuItemAr;
+    }
+
+    public void setMenuItemAr(ArrayList<MenuItem> menuItemAr) {
+        this.menuItemAr = menuItemAr;
+        calculatePrice();
+    }
+
+    // Use Calendar to get and set the receipt date
+    public Calendar getDateTime() {
+        return date;
+    }
+
+    public void setDateTime(Calendar date) {
+        this.date = date;
     }
 
 }

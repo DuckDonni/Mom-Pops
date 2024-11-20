@@ -21,7 +21,6 @@ public class CustomerView {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setSize(screenSize.width, screenSize.height); // Set frame size to the screen's resolution
-        System.out.println(isLoggedIn);
         // Establishes layout for miglayout
         frame.setLayout(new MigLayout("fill", "[grow][right]", "[]20[grow]"));
         contentPanel = new JPanel(new CardLayout());
@@ -34,8 +33,8 @@ public class CustomerView {
         contentPanel.add(buildLoginPage(this), "LoginPage");
         switchPage("HomePage", this);
         // Creates the navbar and passes the contentPanel to allow for page swapping
-        NavBar navbar = new NavBar(contentPanel);
-        frame.add(navbar.displayNavBar(), "cell 1 0, align right, growx");
+        //NavBar navbar = new NavBar(contentPanel);
+        //frame.add(navbar.displayNavBar(), "cell 1 0, align right, growx");
 
 
         // Displays the panel in the main frame
@@ -77,6 +76,7 @@ public class CustomerView {
         return new SidesPage(cView).returnPage();
     }
 
+
     public static void switchPage(String pageName, CustomerView cView) {
 //        Receipt r = view.controller.getReceipt();
 //        if(r.getPizzaAr().size()>0){
@@ -94,8 +94,29 @@ public class CustomerView {
         contentPanel.add(buildPizzaPage(cView), "PizzaPage");
         contentPanel.add(buildDrinksPage(cView), "DrinksPage");
         contentPanel.add(buildSidesPage(cView), "SidesPage");
-
         CardLayout cardLayout = (CardLayout) contentPanel.getLayout();
         cardLayout.show(contentPanel, pageName);
     }
+    public void updateNavBar(int type) {
+
+        // Remove the current navbar from the frame
+        for (Component component : frame.getContentPane().getComponents()) {
+            if (component instanceof JPanel && "navbar".equals(component.getName())) {
+                frame.getContentPane().remove(component);
+                break;
+            }
+        }
+
+        // Create a new NavBar based on the type
+        NavBar navbar = new NavBar(contentPanel, type, this);
+        JPanel updatedNavBar = navbar.displayNavBar();
+        updatedNavBar.setName("navbar"); // Mark it for easy identification
+        frame.add(updatedNavBar, "cell 1 0, align right, growx");
+
+        // Revalidate and repaint the frame to apply changes
+        frame.revalidate();
+        frame.repaint();
+    }
+
+
 }

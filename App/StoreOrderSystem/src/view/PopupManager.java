@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
 import model.*;
-
+import pages.*;
 public class PopupManager {
 
     private JFrame frame;
@@ -377,9 +377,9 @@ public class PopupManager {
         return frame;
     }
 
-    public JFrame buildEditOrderTime(boolean isDelivery, Date time){
+    public JFrame buildEditOrderTime(boolean isDelivery, Calendar time){
         frame.getContentPane().removeAll();
-
+        Receipt receipt = cView.view.controller.getReceipt();
         JPanel panel = new JPanel(new MigLayout());
         JLabel title = new JLabel("Order Details");
         panel.add(title,"cell 0 0");
@@ -417,9 +417,9 @@ public class PopupManager {
         timeBtnGroup.add(timeOption);
 
 
-        Date currentTime = new Date();
+        Calendar currentTime = Calendar.getInstance();
         System.out.println();
-        if(currentTime.getTime() > time.getTime()){
+        if(currentTime.after(time)){
             asapOption.setSelected(true);
             timeOption.setSelected(false);
         }
@@ -455,16 +455,28 @@ public class PopupManager {
 
         if(timeOption.isSelected()){
             timePanel.setVisible(true);
-            if(time.getHours()>=12 && time.getHours()!= 24){
+
+            if(time.AM_PM == Calendar.PM){
                 amOption.setSelected(false);
                 pmOption.setSelected(true);
-                prefTimeField.setText((time.getHours()-12)+ ":" + time.getMinutes());
+                prefTimeField.setText(time.HOUR + ":" + time.MINUTE);
             }
             else{
                 amOption.setSelected(true);
                 pmOption.setSelected(false);
-                prefTimeField.setText(time.getHours() + ":" + time.getMinutes());
+                prefTimeField.setText(time.HOUR + ":" + time.MINUTE);
             }
+
+//            if(time.HOUR_OF_DAY()>12 && time.getHours()< 25){
+//                amOption.setSelected(false);
+//                pmOption.setSelected(true);
+//                prefTimeField.setText((time.getHours()-12)+ ":" + time.getMinutes());
+//            }
+//            else{
+//                amOption.setSelected(true);
+//                pmOption.setSelected(false);
+//                prefTimeField.setText(time.getHours() + ":" + time.getMinutes());
+//            }
         }
 
 
@@ -484,6 +496,61 @@ public class PopupManager {
         JButton submitBtn = new JButton("Submit");
         panel.add(submitBtn, "cell 1 4, span 2, center");
 
+
+        submitBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean isValid = true;
+
+                Calendar cal = Calendar.getInstance();
+                if(deliverOption.isSelected()){
+                    receipt.setIsDelivery(true);
+                }
+                else{
+                    receipt.setIsDelivery(false);
+                }
+
+                if(timeOption.isSelected()){
+                    String prefTime = prefTimeField.getText();
+
+                    if(prefTime.length()>5 || prefTime.length()<3 || !prefTime.contains(":")){
+                        isValid = false;
+                    }
+
+                    try{
+                        if(!amOption.isSelected() && !pmOption.isSelected()){
+                            isValid = false;
+                        }else{
+                            cal.set(Calendar.HOUR, Integer.parseInt(prefTime.split(":")[0]));
+                            cal.set(Calendar.MINUTE, Integer.parseInt(prefTime.split(":")[1]));
+                            if(amOption.isSelected()){
+                                cal.set(Calendar.AM_PM,Calendar.AM);
+                            }
+                            else{
+                                cal.set(Calendar.AM_PM,Calendar.PM);
+                            }
+
+                        }
+
+                    }catch(Exception exception){
+                        isValid = false;
+                        System.out.println(exception.getMessage());
+                    }
+
+
+
+                }
+
+                if(isValid){
+
+                    receipt.setDateTime(cal);
+                    cView.view.controller.setReceipt(receipt);
+                    cView.switchPage("CartPage",cView);
+                    frame.dispose();
+                }
+
+            }
+        });
 
         asapOption.addActionListener(new ActionListener() {
             @Override
@@ -725,6 +792,57 @@ public class PopupManager {
     }
 
     public JFrame overrideCode(){
+        JPanel panel = new JPanel(new MigLayout());
+        JLabel header = new JLabel("Override Code");
+        JLabel prompt1 = new JLabel("Call the store at (770) 555 - 1212");
+        JLabel prompt2 = new JLabel("and request an override code");
+
+        JTextField overrideField = new JTextField(20);
+
+        panel.add(header, "cell 0 0, align left");
+        panel.add(prompt1, "cell 1 1, align center");
+        panel.add(prompt2, "cell 1 2, align center");
+        panel.add(overrideField, "cell 0 3,span 2, align center");
+        JButton submitBtn = new JButton("Submit");
+        JButton cancelBtn = new JButton("Cancel");
+
+        submitBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(overrideField.getText().equals("123456")){
+                    CartPage.submitOrder();
+                }
+            }
+        });
+        cancelBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+            }
+        });
+        frame.add(panel);
+        frame.setVisible(true);
+        return frame;
+    }
+
+    public JFrame submitPopup(){
+        JPanel panel = new JPanel(new MigLayout());
+        JLabel notice = new JLabel("Your order has been placed!");
+
+        JButton okayBtn = new JButton("Okay");
+
+        panel.add(notice, "cell 0 0, center ");
+        panel.add(okayBtn, "cell 0 1, center");
+
+        okayBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+            }
+        });
+
+        frame.add(panel);
+        frame.setVisible(true);
         return frame;
     }
 
