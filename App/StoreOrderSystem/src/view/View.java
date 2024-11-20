@@ -15,6 +15,7 @@ public class View {
     public void swapView(int option) {
 
         if (option == 0) {
+            customerView = new CustomerView(this);
             staffView.getFrame().setVisible(false); // Hide staff view
             customerView.getFrame().setVisible(true); // Show customer view
         } else if (option == 1) {

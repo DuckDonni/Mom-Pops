@@ -57,7 +57,7 @@ public class NavBar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 CardLayout cl = (CardLayout) contentPanel.getLayout();
-                cl.show(contentPanel, "pages.CartPage");
+                cl.show(contentPanel, "CartPage");
             }
         });
         return guestPanel;

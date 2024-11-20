@@ -11,6 +11,8 @@ import java.util.ArrayList;
 public class Receipt {
     private String address;
     private String customerName;
+    private String phoneNumber;
+    private String payment;
     private Date date;
     private Boolean isDelivery;
     private double price;
@@ -25,6 +27,8 @@ public class Receipt {
     public Receipt() {
         address = "";
         customerName = "";
+        phoneNumber = "";
+        payment = "";
         date = new Date();
         isDelivery = false;
         price = 0.0;
@@ -160,4 +164,19 @@ public class Receipt {
         this.menuItemAr = menuItemAr;
         calculatePrice();
     }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getPayment(){
+        return payment;
+    }
+    public void setPayment(String payment){
+        this.payment = payment;
+    }
+
 }

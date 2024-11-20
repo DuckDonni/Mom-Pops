@@ -14,13 +14,14 @@ public class CustomerView {
     private static Dimension screenSize;
     public static JPanel contentPanel;
     public static View view;
+    public static boolean isLoggedIn = false;
     public CustomerView(View view) {
         this.view = view;
         frame = new JFrame("Homepage Example");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setSize(screenSize.width, screenSize.height); // Set frame size to the screen's resolution
-
+        System.out.println(isLoggedIn);
         // Establishes layout for miglayout
         frame.setLayout(new MigLayout("fill", "[grow][right]", "[]20[grow]"));
         contentPanel = new JPanel(new CardLayout());
@@ -89,7 +90,7 @@ public class CustomerView {
         contentPanel.add(buildHomePage(cView), "HomePage");
         contentPanel.add(buildMenuPage(cView), "MenuPage");
         contentPanel.add(buildLoginPage(cView), "LoginPage");
-        contentPanel.add(buildCartPage(cView), "pages.CartPage");
+        contentPanel.add(buildCartPage(cView), "CartPage");
         contentPanel.add(buildPizzaPage(cView), "PizzaPage");
         contentPanel.add(buildDrinksPage(cView), "DrinksPage");
         contentPanel.add(buildSidesPage(cView), "SidesPage");

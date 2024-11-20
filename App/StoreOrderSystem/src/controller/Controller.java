@@ -20,10 +20,10 @@ public class Controller {
         System.out.println("running");
         controller.buildView();
 
-
-        System.out.println(verifyLogin("(904) 548 8186", "1472"));
-
-        System.out.println(currentUser.getClass());
+//
+//        System.out.println(verifyLogin("(904) 548 8186", "1472"));
+//
+//        System.out.println(currentUser.getClass());
     }
 
     public void buildView() {

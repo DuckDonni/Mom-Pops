@@ -89,7 +89,7 @@ public class DatabaseManager {
 
 
     public Account validateEmployeeAccount(String employeeID, String password) {
-        File file = new File("src/Database/Employees.json");
+        File file = new File("Database/Employees.json");
         Employee employee = null;
         try {
             List<Employee> employees;
@@ -115,7 +115,6 @@ public class DatabaseManager {
             customers = objectMapper.readValue(file, new TypeReference<ArrayList<Customer>>() {});
 
             for(Customer cust : customers) {
-                System.out.println(cust.getPhone());
                 if(cust.getPhone().equals(phone) && cust.getPassword().equals(password)) {
                     customer = cust;
                 }

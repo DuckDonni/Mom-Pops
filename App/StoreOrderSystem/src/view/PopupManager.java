@@ -5,15 +5,17 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
+import model.*;
 
 public class PopupManager {
 
     private JFrame frame;
-
-    public PopupManager() {
+    private CustomerView cView;
+    public PopupManager(CustomerView cView) {
         frame = new JFrame();
         frame.setSize(350, 400);
         frame.setLocationRelativeTo(null);
+        this.cView = cView;
     }
 
     public JFrame buildEditCustInfo() {
@@ -41,6 +43,9 @@ public class PopupManager {
         JLabel statePrompt = new JLabel("State:");
         JTextField stateField = new JTextField(3);
 
+        JLabel cityPrompt = new JLabel("City:");
+        JTextField cityField = new JTextField(4);
+
         JLabel phoneNumberPrompt = new JLabel("Phone Number:");
         JTextField phoneNumberField = new JTextField(12);
 
@@ -63,22 +68,93 @@ public class PopupManager {
         panel.add(statePrompt, "cell 1 5, alignx left");
         panel.add(stateField, "cell 1 6, growx");
 
-        panel.add(phoneNumberPrompt, "cell 2 5, alignx left");
-        panel.add(phoneNumberField, "cell 2 6, growx");
+        panel.add(cityPrompt, "cell 2 5, alignx left");
+        panel.add(cityField, "cell 2 6, growx");
+
+        panel.add(phoneNumberPrompt, "cell 0 7, alignx left");
+        panel.add(phoneNumberField, "cell 0 8, growx");
 
         JButton submitBtn = new JButton("Submit");
-        panel.add(submitBtn, "cell 1 7, center");
+        panel.add(submitBtn, "cell 0 9, alignx center");
+
+        JButton cancelBtn = new JButton("Cancel");
+        panel.add(cancelBtn, "cell 1 9, alignx center");
+
+        submitBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                Receipt receipt = cView.view.controller.getReceipt();
+                String customerName = fNameField.getText() + " " + lNameField.getText();
+
+                receipt.setCustomerName(customerName);
+
+                String address = "";
+                boolean validInformation = true;
+
+                if(addressField.getText().contains(",") || addressField.getText().isEmpty()) {
+                    validInformation = false;
+                }
+                else{
+                    address += addressField.getText() +",";
+                }
+                if(bldRoomField.getText().contains(",")){
+                    validInformation = false;
+                }
+                else{
+                    address+= bldRoomField.getText() +",";
+                }
+                if(stateField.getText().contains(",") || stateField.getText().isEmpty()){
+                    validInformation = false;
+                }
+                else{
+                    address+= stateField.getText() +",";
+                }
+                if(cityField.getText().contains(",") || cityField.getText().isEmpty()){
+                    validInformation = false;
+                }
+                else{
+                    address+= cityField.getText() +",";
+                }
+                if(zipField.getText().contains(",") || zipField.getText().isEmpty()){
+                    validInformation = false;
+                }
+                else{
+                    address+= zipField.getText() +",";
+                }
+                if(phoneNumberField.getText().length() != 10){
+                    validInformation = false;
+                }
+
+                if(validInformation) {
+                    receipt.setAddress(address);
+                    receipt.setPhoneNumber(phoneNumberField.getText());
+                    cView.view.controller.setReceipt(receipt);
+                    cView.switchPage("CartPage", cView);
+                    frame.dispose();
+                }
+
+            }
+        });
+        cancelBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+            }
+        });
+
         frame.add(panel);
         frame.setVisible(true);
         return frame;
     }
+
     public JFrame buildEditCustInfo(String fName,String lName, String address, String phoneNumber) {
         frame.getContentPane().removeAll();
         frame.setTitle("Edit Profile Information");
         JPanel panel = new JPanel();
         JLabel title = new JLabel("Customer Information");
         panel.add(title,"cell 0 0");
-        // Address will be broke up as (street address, bld number, state, zip)
+        // Address will be broke up as (street address, bld number, state,city, zip)
         String[] addressBreakup = address.split(",");
 
         panel.setLayout(new MigLayout("fillx", "[grow,fill][grow,fill][grow,fill]", "[][][][][][][]"));
@@ -90,16 +166,32 @@ public class PopupManager {
         JTextField lNameField = new JTextField(lName,10);
 
         JLabel addressPrompt = new JLabel("Address:");
-        JTextField addressField = new JTextField(addressBreakup[0],15);
-
+        JTextField addressField;
         JLabel bldRoomPrompt = new JLabel("Bld/Room #:");
-        JTextField bldRoomField = new JTextField(addressBreakup[1], 5);
-
+        JTextField bldRoomField;
         JLabel zipPrompt = new JLabel("Zip Code:");
-        JTextField zipField = new JTextField(addressBreakup[2], 5);
-
+        JTextField zipField;
         JLabel statePrompt = new JLabel("State:");
-        JTextField stateField = new JTextField(addressBreakup[3],3);
+        JTextField stateField;
+        JLabel cityPrompt = new JLabel("City:");
+        JTextField cityField;
+
+
+        if(addressBreakup.length==5){
+            addressField = new JTextField(addressBreakup[0],15);
+            bldRoomField = new JTextField(addressBreakup[1], 5);
+            zipField = new JTextField(addressBreakup[2], 5);
+            stateField = new JTextField(addressBreakup[3],3);
+            cityField = new JTextField(addressBreakup[4],4);
+        }
+        else{
+            addressField = new JTextField("",15);
+            bldRoomField = new JTextField("", 5);
+            zipField = new JTextField("", 5);
+            stateField = new JTextField("",3);
+            cityField = new JTextField("",4);
+        }
+
 
         JLabel phoneNumberPrompt = new JLabel("Phone Number:");
         JTextField phoneNumberField = new JTextField(phoneNumber, 12);
@@ -123,11 +215,72 @@ public class PopupManager {
         panel.add(statePrompt, "cell 1 5, alignx left");
         panel.add(stateField, "cell 1 6, growx");
 
-        panel.add(phoneNumberPrompt, "cell 2 5, alignx left");
-        panel.add(phoneNumberField, "cell 2 6, growx");
+        // Move city here
+        panel.add(cityPrompt, "cell 2 5, alignx left");
+        panel.add(cityField, "cell 2 6, growx");
+
+        panel.add(phoneNumberPrompt, "cell 0 7, alignx left");
+        panel.add(phoneNumberField, "cell 0 8, growx");
 
         JButton submitBtn = new JButton("Submit");
-        panel.add(submitBtn, "cell 1 7, center");
+        panel.add(submitBtn, "cell 1 9, center");
+
+        submitBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                Receipt receipt = cView.view.controller.getReceipt();
+                String customerName = fNameField.getText() + " " + lNameField.getText();
+
+                receipt.setCustomerName(customerName);
+
+                String address = "";
+                boolean validInformation = true;
+
+                if(addressField.getText().contains(",") || addressField.getText().isEmpty()) {
+                    validInformation = false;
+                }
+                else{
+                    address += addressField.getText() +",";
+                }
+                if(bldRoomField.getText().contains(",")){
+                    validInformation = false;
+                }
+                else{
+                    address+= bldRoomField.getText() +",";
+                }
+                if(stateField.getText().contains(",") || stateField.getText().isEmpty()){
+                    validInformation = false;
+                }
+                else{
+                    address+= stateField.getText() +",";
+                }
+                if(cityField.getText().contains(",") || cityField.getText().isEmpty()){
+                    validInformation = false;
+                }
+                else{
+                    address+= cityField.getText() +",";
+                }
+                if(zipField.getText().contains(",") || zipField.getText().isEmpty()){
+                    validInformation = false;
+                }
+                else{
+                    address+= zipField.getText() +",";
+                }
+                if(phoneNumberField.getText().length() != 10){
+                    validInformation = false;
+                }
+
+                if(validInformation) {
+                    receipt.setAddress(address);
+                    receipt.setPhoneNumber(phoneNumberField.getText());
+                    cView.view.controller.setReceipt(receipt);
+                    cView.switchPage("CartPage", cView);
+                    frame.dispose();
+                }
+
+            }
+        });
 
         frame.add(panel);
         frame.setVisible(true);
@@ -422,8 +575,24 @@ public class PopupManager {
         return frame;
     }
 
-    public JFrame buildEditPayment(String cardNum, String csv, String expDate, String cardHolderName, String cardPaymentType, boolean isCard){
+    public JFrame buildEditPayment(String cardNum, String csv, String expDate, String cardHolderName, String cardPaymentType){
         frame.getContentPane().removeAll();
+        Receipt receipt = cView.view.controller.getReceipt();
+        String[] paymentConc = new String[5];
+        paymentConc[0] = cardNum;
+        paymentConc[1] = csv;
+        paymentConc[2] = expDate;
+        paymentConc[3] = cardHolderName;
+        paymentConc[4] = cardPaymentType;
+
+        if(cardPaymentType.equals("cash")){
+            cardNum = "";
+            csv = "";
+            expDate = "";
+            cardHolderName = "";
+            cardPaymentType = "";
+        }
+
         JPanel panel = new JPanel(new MigLayout("wrap 4")); // wrap to 4 columns for the payment method row
         JLabel title = new JLabel("Payment");
         panel.add(title, "span"); // title spans all columns and is centered
@@ -475,37 +644,89 @@ public class PopupManager {
         JButton submitBtn = new JButton("Submit");
         panel.add(submitBtn, "cell 0 3, span 4, center");
 
-        if(isCard){
-            cardPanel.setVisible(true);
-            cardOption.setSelected(true);
-            cashOption.setSelected(false);
-        }
-        else{
+        if(paymentConc[4].equalsIgnoreCase("cash")){
             cardPanel.setVisible(false);
             cardOption.setSelected(false);
             cashOption.setSelected(true);
+        }
+        else{
+            cardPanel.setVisible(true);
+            cardOption.setSelected(true);
+            cashOption.setSelected(false);
         }
 
         cardOption.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardPanel.setVisible(true);
+                paymentConc[4] = "";
             }
         });
         cashOption.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardPanel.setVisible(false);
+                paymentConc[4] = "cash";
             }
         });
 
+        submitBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean isValid = true;
+                if(!paymentConc[4].equals("cash")){
+                    if((cardNumField.getText().length() <15 || cardNumField.getText().length() > 16)){
+                        isValid = false;
+                    }
+                    if(cardTypeField.getText().isEmpty()){
+                        isValid = false;
+                    }
+                    if(cardholderField.getText().isEmpty()){
+                        isValid = false;
+                    }
+                    if(cardTypeField.getText().isEmpty()){
+                        isValid = false;
+                    }
+                    if(csvField.getText().length() <3 || csvField.getText().length() > 4){
+                        isValid = false;
+                    }
+                    if(expField.getText().isEmpty()){
+                        isValid = false;
+                    } else if (expField.getText().length() == 5) {
+                        if(expField.getText().charAt(2) != '/'){
+                            isValid = false;
+                        }
+                    }
+                    else {
+                        isValid = false;
+                    }
+                }
 
+
+
+                if(isValid){
+
+                    if(paymentConc[4].equals("cash")){
+                        receipt.setPayment("a"+","+"a"+","+"a"+","+"a"+","+paymentConc[4]);
+                    }
+                    else{
+                        System.out.println(cardNumField.getText()+","+csvField.getText()+","+expField.getText()+","+cardholderField.getText()+","+cardTypeField.getText());
+                        receipt.setPayment(cardNumField.getText()+","+csvField.getText()+","+expField.getText()+","+cardholderField.getText()+","+cardTypeField.getText());
+                    }
+                    cView.view.controller.setReceipt(receipt);
+                    cView.switchPage("CartPage", cView);
+                    frame.dispose();
+                }
+            }
+        });
         frame.add(panel);
         frame.setVisible(true);
         return frame;
     }
 
-
+    public JFrame overrideCode(){
+        return frame;
+    }
 
 
 }

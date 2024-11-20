@@ -5,6 +5,8 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.util.*;
 import view.*;
@@ -19,7 +21,7 @@ public class CartPage {
     }
 
     public JPanel returnPage() {
-        PopupManager popupManager = new PopupManager();
+        PopupManager popupManager = new PopupManager(cView);
         JPanel panel = new JPanel();
         panel.setLayout(new MigLayout());
 
@@ -78,14 +80,93 @@ public class CartPage {
         JButton editOrderTimeBtn = new JButton("Edit Order Info");
         JButton editPayment = new JButton("Edit Payment");
 
-        editCustBtn.addActionListener(e -> popupManager.buildEditCustInfo());
-        editOrderTimeBtn.addActionListener(e -> popupManager.buildEditOrderTime());
-        editPayment.addActionListener(e -> popupManager.buildEditPayment());
+        String custName = receipt.getCustomerName();
+        String custFirstName = "";
+        String custLastName = "";
+        if(!custName.isEmpty()){
+            custFirstName = custName.split(" ")[0];
+            custLastName = custName.split(" ")[1];
+        }
+
+        String custFName = custFirstName;
+        String custLName = custLastName;
+        editCustBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                popupManager.buildEditCustInfo(custFName, custLName, receipt.getAddress(), receipt.getPhoneNumber());
+            }
+        });
+        editOrderTimeBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                popupManager.buildEditOrderTime(receipt.getIsDelivery(), receipt.getDateTime());
+            }
+        });
+        editPayment.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String[] paymentBreakup = receipt.getPayment().split(",");
+                String cardNum = "";
+                String csv = "";
+                String expDate = "";
+                String cardHolderName = "";
+                String cardPaymentType = "";
+
+                if(paymentBreakup.length ==5){
+                    System.out.println("5");
+                    cardNum = paymentBreakup[0];
+                    csv = paymentBreakup[1];
+                    expDate = paymentBreakup[2];
+                    cardHolderName = paymentBreakup[3];
+                    cardPaymentType = paymentBreakup[4];
+                }
+                System.out.println("card: "+cardPaymentType);
+                popupManager.buildEditPayment(cardNum, csv, expDate, cardHolderName, cardPaymentType);
+            }
+        });
 
         JPanel rightPanel = new JPanel(new MigLayout());
 
         JPanel customerPanel = new JPanel(new MigLayout());
-        customerPanel.add(editCustBtn);
+        // Address will be broke up as (street address, bld number, state,city, zip)
+        String[] addressBreakup = receipt.getAddress().split(",");
+        String address = "";
+        String bldNumber = "";
+        String state = "";
+        String city = "";
+        String zip = "";
+        if(addressBreakup.length==5) {
+            address = addressBreakup[0];
+            bldNumber = addressBreakup[1];
+            state = addressBreakup[2];
+            city = addressBreakup[3];
+            zip = addressBreakup[4];
+        }
+
+        JLabel addressLabel = new JLabel(address);
+        JLabel bldNumberLabel;
+        if(bldNumber.isEmpty()){
+            bldNumberLabel = new JLabel(bldNumber);
+        }
+        else{
+            bldNumberLabel = new JLabel("- " + bldNumber);
+        }
+
+        JLabel stateLabel = new JLabel(state);
+        JLabel cityLabel = new JLabel(city);
+        JLabel zipLabel = new JLabel(zip);
+
+        JLabel custNameLabel = new JLabel(receipt.getCustomerName());
+
+
+        customerPanel.add(editCustBtn, "cell 0 0");
+        customerPanel.add(custNameLabel, "cell 0 1");
+        customerPanel.add(addressLabel, "cell 0 2");
+        customerPanel.add(bldNumberLabel, "cell 1 2");
+        customerPanel.add(cityLabel, "cell 0 3");
+        customerPanel.add(stateLabel, "cell 1 3");
+        customerPanel.add(zipLabel, "cell 2 3");
+
 
         JPanel orderPanel = new JPanel(new MigLayout());
         orderPanel.add(editOrderTimeBtn);
@@ -93,9 +174,15 @@ public class CartPage {
         JPanel paymentPanel = new JPanel(new MigLayout());
         paymentPanel.add(editPayment);
 
+
+
+
         rightPanel.add(customerPanel, "wrap, align right");
         rightPanel.add(orderPanel, "wrap, align right");
         rightPanel.add(paymentPanel, "wrap, align right");
+
+
+
 
         // Add buttons and scroll pane to main panel
         panel.add(rightPanel, "east");
@@ -156,7 +243,6 @@ public class CartPage {
 
         return panel;
     }
-
     public static JPanel makeSideCard(MenuItem item){
         JPanel panel = new JPanel(new MigLayout());
         panel.setBorder(BorderFactory.createLineBorder(Color.black));

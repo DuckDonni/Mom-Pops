@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 
 public class LoginPage {
     private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    private CustomerView cView;
+    private static CustomerView cView;
     public LoginPage(CustomerView cView) {
         this.cView = cView;
     }
@@ -34,8 +34,8 @@ public class LoginPage {
         loginPanel.add(passwordLabel, "cell 0 2, growx");
         loginPanel.add(passwordField, "cell 0 3, growx");
 
-        JButton submitBtn = new JButton("Submit");
-        loginPanel.add(submitBtn, "cell 0 4, alignx center");
+        JButton loginSubmitBtn = new JButton("Submit");
+        loginPanel.add(loginSubmitBtn, "cell 0 4, alignx center");
 
         JLabel signupPrompt = new JLabel("Don't have an account?");
         JButton signupBtn = new JButton("Sign up");
@@ -112,6 +112,33 @@ public class LoginPage {
         // Adding panels to CardLayout
         contentPanel.add(loginPanel, "LoginPage");
         contentPanel.add(signupPanel, "SignupPage");
+
+        loginSubmitBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String phoneIdBox = phoneNumberField.getText();
+                if(phoneNumberField.getText().length() == 10) {
+                    phoneIdBox = "(" + phoneNumberField.getText().substring(0, 3) + ") " + phoneNumberField.getText().substring(3, 6) + " " + phoneNumberField.getText().substring(6);
+                }
+                System.out.println(phoneIdBox);
+                String passwordBox = passwordField.getText();
+
+                int accountType = cView.view.controller.verifyLogin(phoneIdBox, passwordBox);
+                System.out.println(accountType);
+                if(accountType == 0) {
+
+                    cView.isLoggedIn = true;
+                    cView.view.swapView(0);
+                    cView.getFrame().dispose();
+                    cView.switchPage("HomePage",cView);
+                }
+                if(accountType == 1) {
+                    cView.isLoggedIn = true;
+                    cView.view.swapView(0);
+                    cView.switchPage("HomePage",cView);
+                }
+            }
+        });
 
         // Button actions
         signupBtn.addActionListener(new ActionListener() {
