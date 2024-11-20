@@ -400,17 +400,21 @@ public class CartPage {
     }
 
     public static JPanel makeSideCard(MenuItem item) {
-        JPanel panel = new JPanel(new MigLayout());
+        JPanel panel = new JPanel(new MigLayout("insets 10", "[grow][grow][60px]", "[]10[]"));
         panel.setBorder(BorderFactory.createLineBorder(Color.black));
+
         JLabel nameLabel = new JLabel("Name: " + item.getName() + " ");
         JLabel quantityLabel = new JLabel("(" + item.getQuantity() + ")");
         JLabel priceLabel = new JLabel("Price: " + item.getPrice());
+
+        // Align price label to the right
         panel.add(nameLabel, "cell 0 0");
         panel.add(quantityLabel, "cell 1 0");
         panel.add(priceLabel, "cell 2 0, align right");
 
         JButton deleteBtn = new JButton("D");
         panel.add(deleteBtn, "cell 2 1 , align center");
+
         deleteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -422,26 +426,32 @@ public class CartPage {
         return panel;
     }
 
+
     public static JPanel makeDrinkCard(MenuItem item) {
-        JPanel panel = new JPanel(new MigLayout());
+        JPanel panel = new JPanel(new MigLayout("insets 10, wrap 3", "[grow][grow][60px]"));  // Adjust layout for right-aligned price
         panel.setBorder(BorderFactory.createLineBorder(Color.black));
 
         String name = item.getName().split(",")[0];
         String size = item.getName().split(",")[1];
 
-        JPanel dataPanel = new JPanel(new MigLayout());
         JLabel nameLabel = new JLabel("Name: " + name + " ");
         JLabel quantityLabel = new JLabel("(" + item.getQuantity() + ")");
-        JLabel priceLabel = new JLabel("Price: " + item.getPrice());
         JLabel sizeLabel = new JLabel("Size: " + size);
-        dataPanel.add(nameLabel, "cell 0 0");
-        dataPanel.add(quantityLabel, "cell 1 0");
-        dataPanel.add(sizeLabel, " cell 0 1");
-        panel.add(dataPanel, " cell 0 0, growx");
-        panel.add(priceLabel, "cell 1 0, align right");
 
+        // Add name, quantity, and size to the panel (in the first two columns)
+        panel.add(nameLabel, "cell 0 0");
+        panel.add(quantityLabel, "cell 1 0");
+        panel.add(sizeLabel, "cell 0 1, span 2 1");  // Makes size span both columns
+
+        // Add price label to the third column and align it to the right
+        JLabel priceLabel = new JLabel("Price: " + item.getPrice());
+        panel.add(priceLabel, "cell 2 0, align right");  // Align the price to the right
+
+        // Add delete button below the price
         JButton deleteBtn = new JButton("D");
-        panel.add(deleteBtn, "cell 1 1 , align center");
+        panel.add(deleteBtn, "cell 2 1, align center");
+
+        // Add action listener to the delete button
         deleteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -449,8 +459,11 @@ public class CartPage {
                 cView.switchPage("CartPage", cView);
             }
         });
+
         return panel;
     }
+
+
 
 
 }
