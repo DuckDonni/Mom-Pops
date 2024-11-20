@@ -16,7 +16,7 @@ public class Receipt {
     private double price;
     private ArrayList<Pizza> pizzaAr;
     private ArrayList<MenuItem> menuItemAr;
-
+    private String stringTime;
     /**
      * Constructs a Receipt with default values.
      * Address, customer name, and delivery status are initialized to default values.
@@ -27,6 +27,7 @@ public class Receipt {
         customerName = "";
         phoneNumber = "";
         payment = "";
+        stringTime = "";
         date = Calendar.getInstance(); // Default to current time
         isDelivery = false;
         price = 0.0;
@@ -45,6 +46,28 @@ public class Receipt {
         for (Pizza pizza : pizzaAr) {
             price += pizza.getPrice();
         }
+    }
+    public void calculateTime(){
+        String[] breakup = stringTime.split(":");
+        if (breakup.length==3) {
+            String hours = breakup[0];
+            String minutes = breakup[1];
+            String am_pm = breakup[2];
+            Calendar cal = Calendar.getInstance();
+            Calendar temp = Calendar.getInstance();
+            cal.set(Calendar.HOUR, Integer.parseInt(hours));
+            cal.set(Calendar.MINUTE, Integer.parseInt(minutes));
+
+
+            if(am_pm.equals("AM")){
+                cal.set(Calendar.AM_PM, Calendar.AM);
+            }
+            else{
+                cal.set(Calendar.AM_PM, Calendar.PM);
+            }
+            setDateTime(cal);
+        }
+
     }
 
     // Getters and Setters for all attributes
@@ -121,6 +144,14 @@ public class Receipt {
 
     public void setDateTime(Calendar date) {
         this.date = date;
+    }
+
+    public String getStringTime(){
+        return stringTime;
+    }
+    public void setStringTime(String stringTime){
+        this.stringTime = stringTime;
+        calculateTime();
     }
 
 }

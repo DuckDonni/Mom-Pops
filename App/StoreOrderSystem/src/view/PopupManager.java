@@ -1,16 +1,20 @@
 package view;
 
 import net.miginfocom.swing.MigLayout;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
+
 import model.*;
 import pages.*;
+
 public class PopupManager {
 
     private JFrame frame;
     private CustomerView cView;
+
     public PopupManager(CustomerView cView) {
         frame = new JFrame();
         frame.setSize(350, 400);
@@ -92,41 +96,36 @@ public class PopupManager {
                 String address = "";
                 boolean validInformation = true;
 
-                if(addressField.getText().contains(",") || addressField.getText().isEmpty()) {
+                if (addressField.getText().contains(",") || addressField.getText().isEmpty()) {
                     validInformation = false;
+                } else {
+                    address += addressField.getText() + ",";
                 }
-                else{
-                    address += addressField.getText() +",";
-                }
-                if(bldRoomField.getText().contains(",")){
+                if (bldRoomField.getText().contains(",")) {
                     validInformation = false;
+                } else {
+                    address += bldRoomField.getText() + ",";
                 }
-                else{
-                    address+= bldRoomField.getText() +",";
-                }
-                if(stateField.getText().contains(",") || stateField.getText().isEmpty()){
+                if (stateField.getText().contains(",") || stateField.getText().isEmpty()) {
                     validInformation = false;
+                } else {
+                    address += stateField.getText() + ",";
                 }
-                else{
-                    address+= stateField.getText() +",";
-                }
-                if(cityField.getText().contains(",") || cityField.getText().isEmpty()){
+                if (cityField.getText().contains(",") || cityField.getText().isEmpty()) {
                     validInformation = false;
+                } else {
+                    address += cityField.getText() + ",";
                 }
-                else{
-                    address+= cityField.getText() +",";
-                }
-                if(zipField.getText().contains(",") || zipField.getText().isEmpty()){
+                if (zipField.getText().contains(",") || zipField.getText().isEmpty()) {
                     validInformation = false;
+                } else {
+                    address += zipField.getText() + ",";
                 }
-                else{
-                    address+= zipField.getText() +",";
-                }
-                if(phoneNumberField.getText().length() != 10){
+                if (phoneNumberField.getText().length() != 10) {
                     validInformation = false;
                 }
 
-                if(validInformation) {
+                if (validInformation) {
                     receipt.setAddress(address);
                     receipt.setPhoneNumber(phoneNumberField.getText());
                     cView.view.controller.setReceipt(receipt);
@@ -148,22 +147,22 @@ public class PopupManager {
         return frame;
     }
 
-    public JFrame buildEditCustInfo(String fName,String lName, String address, String phoneNumber) {
+    public JFrame buildEditCustInfo(String fName, String lName, String address, String phoneNumber) {
         frame.getContentPane().removeAll();
         frame.setTitle("Edit Profile Information");
         JPanel panel = new JPanel();
         JLabel title = new JLabel("Customer Information");
-        panel.add(title,"cell 0 0");
+        panel.add(title, "cell 0 0");
         // Address will be broke up as (street address, bld number, state,city, zip)
         String[] addressBreakup = address.split(",");
 
         panel.setLayout(new MigLayout("fillx", "[grow,fill][grow,fill][grow,fill]", "[][][][][][][]"));
 
         JLabel fNamePrompt = new JLabel("First Name:");
-        JTextField fNameField = new JTextField(fName,10);
+        JTextField fNameField = new JTextField(fName, 10);
 
         JLabel lNamePrompt = new JLabel("Last Name:");
-        JTextField lNameField = new JTextField(lName,10);
+        JTextField lNameField = new JTextField(lName, 10);
 
         JLabel addressPrompt = new JLabel("Address:");
         JTextField addressField;
@@ -177,19 +176,18 @@ public class PopupManager {
         JTextField cityField;
 
 
-        if(addressBreakup.length==5){
-            addressField = new JTextField(addressBreakup[0],15);
+        if (addressBreakup.length == 5) {
+            addressField = new JTextField(addressBreakup[0], 15);
             bldRoomField = new JTextField(addressBreakup[1], 5);
             zipField = new JTextField(addressBreakup[2], 5);
-            stateField = new JTextField(addressBreakup[3],3);
-            cityField = new JTextField(addressBreakup[4],4);
-        }
-        else{
-            addressField = new JTextField("",15);
+            stateField = new JTextField(addressBreakup[3], 3);
+            cityField = new JTextField(addressBreakup[4], 4);
+        } else {
+            addressField = new JTextField("", 15);
             bldRoomField = new JTextField("", 5);
             zipField = new JTextField("", 5);
-            stateField = new JTextField("",3);
-            cityField = new JTextField("",4);
+            stateField = new JTextField("", 3);
+            cityField = new JTextField("", 4);
         }
 
 
@@ -237,41 +235,36 @@ public class PopupManager {
                 String address = "";
                 boolean validInformation = true;
 
-                if(addressField.getText().contains(",") || addressField.getText().isEmpty()) {
+                if (addressField.getText().contains(",") || addressField.getText().isEmpty()) {
                     validInformation = false;
+                } else {
+                    address += addressField.getText() + ",";
                 }
-                else{
-                    address += addressField.getText() +",";
-                }
-                if(bldRoomField.getText().contains(",")){
+                if (bldRoomField.getText().contains(",")) {
                     validInformation = false;
+                } else {
+                    address += bldRoomField.getText() + ",";
                 }
-                else{
-                    address+= bldRoomField.getText() +",";
-                }
-                if(stateField.getText().contains(",") || stateField.getText().isEmpty()){
+                if (stateField.getText().contains(",") || stateField.getText().isEmpty()) {
                     validInformation = false;
+                } else {
+                    address += stateField.getText() + ",";
                 }
-                else{
-                    address+= stateField.getText() +",";
-                }
-                if(cityField.getText().contains(",") || cityField.getText().isEmpty()){
+                if (cityField.getText().contains(",") || cityField.getText().isEmpty()) {
                     validInformation = false;
+                } else {
+                    address += cityField.getText() + ",";
                 }
-                else{
-                    address+= cityField.getText() +",";
-                }
-                if(zipField.getText().contains(",") || zipField.getText().isEmpty()){
+                if (zipField.getText().contains(",") || zipField.getText().isEmpty()) {
                     validInformation = false;
+                } else {
+                    address += zipField.getText() + ",";
                 }
-                else{
-                    address+= zipField.getText() +",";
-                }
-                if(phoneNumberField.getText().length() != 10){
+                if (phoneNumberField.getText().length() != 10) {
                     validInformation = false;
                 }
 
-                if(validInformation) {
+                if (validInformation) {
                     receipt.setAddress(address);
                     receipt.setPhoneNumber(phoneNumberField.getText());
                     cView.view.controller.setReceipt(receipt);
@@ -377,12 +370,12 @@ public class PopupManager {
         return frame;
     }
 
-    public JFrame buildEditOrderTime(boolean isDelivery, Calendar time){
+    public JFrame buildEditOrderTime(boolean isDelivery, Calendar time) {
         frame.getContentPane().removeAll();
         Receipt receipt = cView.view.controller.getReceipt();
         JPanel panel = new JPanel(new MigLayout());
         JLabel title = new JLabel("Order Details");
-        panel.add(title,"cell 0 0");
+        panel.add(title, "cell 0 0");
         JLabel pickupPrompt = new JLabel("Pickup");
         JRadioButton pickupOption = new JRadioButton();
 
@@ -393,11 +386,10 @@ public class PopupManager {
         deliveryBtnGroup.add(pickupOption);
         deliveryBtnGroup.add(deliverOption);
 
-        if(isDelivery){
+        if (isDelivery) {
             deliverOption.setSelected(true);
             pickupOption.setSelected(false);
-        }
-        else{
+        } else {
             pickupOption.setSelected(true);
             deliverOption.setSelected(false);
         }
@@ -418,12 +410,13 @@ public class PopupManager {
 
 
         Calendar currentTime = Calendar.getInstance();
-        System.out.println();
-        if(currentTime.after(time)){
+
+        System.out.println(time.getTime());
+        if (currentTime.after(time)) {
+            System.out.println("Triggers");
             asapOption.setSelected(true);
             timeOption.setSelected(false);
-        }
-        else{
+        } else {
             asapOption.setSelected(false);
             timeOption.setSelected(true);
         }
@@ -453,20 +446,20 @@ public class PopupManager {
         amPmBtnGroup.add(amOption);
         amPmBtnGroup.add(pmOption);
 
-        if(timeOption.isSelected()){
+        String[] storeTimeBreakup = receipt.getStringTime().split(":");
+        if (timeOption.isSelected()) {
             timePanel.setVisible(true);
-
-            if(time.AM_PM == Calendar.PM){
-                amOption.setSelected(false);
-                pmOption.setSelected(true);
-                prefTimeField.setText(time.HOUR + ":" + time.MINUTE);
+            if (storeTimeBreakup.length == 3) {
+                if (storeTimeBreakup[2].equals("PM")) {
+                    amOption.setSelected(false);
+                    pmOption.setSelected(true);
+                    prefTimeField.setText(storeTimeBreakup[0] + ":" + storeTimeBreakup[1]);
+                } else {
+                    amOption.setSelected(true);
+                    pmOption.setSelected(false);
+                    prefTimeField.setText(storeTimeBreakup[0] + ":" + storeTimeBreakup[1]);
+                }
             }
-            else{
-                amOption.setSelected(true);
-                pmOption.setSelected(false);
-                prefTimeField.setText(time.HOUR + ":" + time.MINUTE);
-            }
-
 //            if(time.HOUR_OF_DAY()>12 && time.getHours()< 25){
 //                amOption.setSelected(false);
 //                pmOption.setSelected(true);
@@ -478,7 +471,6 @@ public class PopupManager {
 //                prefTimeField.setText(time.getHours() + ":" + time.getMinutes());
 //            }
         }
-
 
 
         // Stack the AM and PM radio buttons vertically in `timeBtnPanel`
@@ -503,49 +495,54 @@ public class PopupManager {
                 boolean isValid = true;
 
                 Calendar cal = Calendar.getInstance();
-                if(deliverOption.isSelected()){
+                if (deliverOption.isSelected()) {
                     receipt.setIsDelivery(true);
-                }
-                else{
+                } else {
                     receipt.setIsDelivery(false);
                 }
 
-                if(timeOption.isSelected()){
+                if (timeOption.isSelected()) {
                     String prefTime = prefTimeField.getText();
 
-                    if(prefTime.length()>5 || prefTime.length()<3 || !prefTime.contains(":")){
+                    if (prefTime.length() > 5 || prefTime.length() < 3 || !prefTime.contains(":")) {
                         isValid = false;
                     }
 
-                    try{
-                        if(!amOption.isSelected() && !pmOption.isSelected()){
-                            isValid = false;
-                        }else{
-                            cal.set(Calendar.HOUR, Integer.parseInt(prefTime.split(":")[0]));
-                            cal.set(Calendar.MINUTE, Integer.parseInt(prefTime.split(":")[1]));
-                            if(amOption.isSelected()){
-                                cal.set(Calendar.AM_PM,Calendar.AM);
-                            }
-                            else{
-                                cal.set(Calendar.AM_PM,Calendar.PM);
-                            }
-
-                        }
-
-                    }catch(Exception exception){
-                        isValid = false;
-                        System.out.println(exception.getMessage());
-                    }
-
+//                    try{
+//                        if(!amOption.isSelected() && !pmOption.isSelected()){
+//                            isValid = false;
+//                        }else{
+//                            cal.set(Calendar.HOUR, Integer.parseInt(prefTime.split(":")[0]));
+//                            cal.set(Calendar.MINUTE, Integer.parseInt(prefTime.split(":")[1]));
+//                            if(amOption.isSelected()){
+//                                cal.set(Calendar.AM_PM,Calendar.AM);
+//                            }
+//                            else{
+//                                cal.set(Calendar.AM_PM,Calendar.PM);
+//                            }
+//
+//                        }
+//
+//                    }catch(Exception exception){
+//                        isValid = false;
+//                        System.out.println(exception.getMessage());
+//                    }
 
 
                 }
 
-                if(isValid){
-
-                    receipt.setDateTime(cal);
+                if (isValid) {
+                    String am_pm;
+                    if (amOption.isSelected()) {
+                        am_pm = "AM";
+                    } else {
+                        am_pm = "PM";
+                    }
+                    String stringTime = prefTimeField.getText() + ":" + am_pm;
+                    System.out.println("Stored " + stringTime);
+                    receipt.setStringTime(stringTime);
                     cView.view.controller.setReceipt(receipt);
-                    cView.switchPage("CartPage",cView);
+                    cView.switchPage("CartPage", cView);
                     frame.dispose();
                 }
 
@@ -642,7 +639,7 @@ public class PopupManager {
         return frame;
     }
 
-    public JFrame buildEditPayment(String cardNum, String csv, String expDate, String cardHolderName, String cardPaymentType){
+    public JFrame buildEditPayment(String cardNum, String csv, String expDate, String cardHolderName, String cardPaymentType) {
         frame.getContentPane().removeAll();
         Receipt receipt = cView.view.controller.getReceipt();
         String[] paymentConc = new String[5];
@@ -652,7 +649,7 @@ public class PopupManager {
         paymentConc[3] = cardHolderName;
         paymentConc[4] = cardPaymentType;
 
-        if(cardPaymentType.equals("cash")){
+        if (cardPaymentType.equals("cash")) {
             cardNum = "";
             csv = "";
             expDate = "";
@@ -681,13 +678,13 @@ public class PopupManager {
 
         JPanel cardPanel = new JPanel(new MigLayout("wrap 2, fillx")); // wrap to 2 columns within the card panel
         JLabel cardNumPrompt = new JLabel("Card Number");
-        JTextField cardNumField = new JTextField(cardNum,15); // specify preferred width
+        JTextField cardNumField = new JTextField(cardNum, 15); // specify preferred width
 
         JLabel csvPrompt = new JLabel("CSV");
         JTextField csvField = new JTextField(csv, 10); // specify preferred width
 
         JLabel expPrompt = new JLabel("Exp Date");
-        JTextField expField = new JTextField(expDate,10);
+        JTextField expField = new JTextField(expDate, 10);
 
         JLabel cardholderPrompt = new JLabel("Cardholder Name");
         JTextField cardholderField = new JTextField(cardHolderName, 15);
@@ -711,12 +708,11 @@ public class PopupManager {
         JButton submitBtn = new JButton("Submit");
         panel.add(submitBtn, "cell 0 3, span 4, center");
 
-        if(paymentConc[4].equalsIgnoreCase("cash")){
+        if (paymentConc[4].equalsIgnoreCase("cash")) {
             cardPanel.setVisible(false);
             cardOption.setSelected(false);
             cashOption.setSelected(true);
-        }
-        else{
+        } else {
             cardPanel.setVisible(true);
             cardOption.setSelected(true);
             cashOption.setSelected(false);
@@ -741,44 +737,41 @@ public class PopupManager {
             @Override
             public void actionPerformed(ActionEvent e) {
                 boolean isValid = true;
-                if(!paymentConc[4].equals("cash")){
-                    if((cardNumField.getText().length() <15 || cardNumField.getText().length() > 16)){
+                if (!paymentConc[4].equals("cash")) {
+                    if ((cardNumField.getText().length() < 15 || cardNumField.getText().length() > 16)) {
                         isValid = false;
                     }
-                    if(cardTypeField.getText().isEmpty()){
+                    if (cardTypeField.getText().isEmpty()) {
                         isValid = false;
                     }
-                    if(cardholderField.getText().isEmpty()){
+                    if (cardholderField.getText().isEmpty()) {
                         isValid = false;
                     }
-                    if(cardTypeField.getText().isEmpty()){
+                    if (cardTypeField.getText().isEmpty()) {
                         isValid = false;
                     }
-                    if(csvField.getText().length() <3 || csvField.getText().length() > 4){
+                    if (csvField.getText().length() < 3 || csvField.getText().length() > 4) {
                         isValid = false;
                     }
-                    if(expField.getText().isEmpty()){
+                    if (expField.getText().isEmpty()) {
                         isValid = false;
                     } else if (expField.getText().length() == 5) {
-                        if(expField.getText().charAt(2) != '/'){
+                        if (expField.getText().charAt(2) != '/') {
                             isValid = false;
                         }
-                    }
-                    else {
+                    } else {
                         isValid = false;
                     }
                 }
 
 
+                if (isValid) {
 
-                if(isValid){
-
-                    if(paymentConc[4].equals("cash")){
-                        receipt.setPayment("a"+","+"a"+","+"a"+","+"a"+","+paymentConc[4]);
-                    }
-                    else{
-                        System.out.println(cardNumField.getText()+","+csvField.getText()+","+expField.getText()+","+cardholderField.getText()+","+cardTypeField.getText());
-                        receipt.setPayment(cardNumField.getText()+","+csvField.getText()+","+expField.getText()+","+cardholderField.getText()+","+cardTypeField.getText());
+                    if (paymentConc[4].equals("cash")) {
+                        receipt.setPayment("a" + "," + "a" + "," + "a" + "," + "a" + "," + paymentConc[4]);
+                    } else {
+                        System.out.println(cardNumField.getText() + "," + csvField.getText() + "," + expField.getText() + "," + cardholderField.getText() + "," + cardTypeField.getText());
+                        receipt.setPayment(cardNumField.getText() + "," + csvField.getText() + "," + expField.getText() + "," + cardholderField.getText() + "," + cardTypeField.getText());
                     }
                     cView.view.controller.setReceipt(receipt);
                     cView.switchPage("CartPage", cView);
@@ -791,7 +784,7 @@ public class PopupManager {
         return frame;
     }
 
-    public JFrame overrideCode(){
+    public JFrame overrideCode() {
         JPanel panel = new JPanel(new MigLayout());
         JLabel header = new JLabel("Override Code");
         JLabel prompt1 = new JLabel("Call the store at (770) 555 - 1212");
@@ -809,7 +802,7 @@ public class PopupManager {
         submitBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(overrideField.getText().equals("123456")){
+                if (overrideField.getText().equals("123456")) {
                     CartPage.submitOrder();
                 }
             }
@@ -825,7 +818,7 @@ public class PopupManager {
         return frame;
     }
 
-    public JFrame submitPopup(){
+    public JFrame submitPopup() {
         JPanel panel = new JPanel(new MigLayout());
         JLabel notice = new JLabel("Your order has been placed!");
 
