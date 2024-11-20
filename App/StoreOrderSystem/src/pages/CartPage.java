@@ -156,26 +156,57 @@ public class CartPage {
         }
 
         JLabel stateLabel = new JLabel(state);
-        JLabel cityLabel = new JLabel(city);
+        JLabel cityLabel = new JLabel("");
+        if(city.isEmpty()) {
+            cityLabel = new JLabel(city);
+        }
+        else{
+            cityLabel = new JLabel(city +", ");
+        }
         JLabel zipLabel = new JLabel(zip);
 
         JLabel custNameLabel = new JLabel(receipt.getCustomerName());
 
 
-        customerPanel.add(editCustBtn, "cell 0 0, align right");
-        customerPanel.add(custNameLabel, "cell 0 1");
-        customerPanel.add(addressLabel, "cell 0 2");
-        customerPanel.add(bldNumberLabel, "cell 1 2");
-        customerPanel.add(cityLabel, "cell 0 3");
-        customerPanel.add(stateLabel, "cell 1 3");
-        customerPanel.add(zipLabel, "cell 2 3");
+        customerPanel.add(editCustBtn, "cell 0 3,wrap, align right");
+        customerPanel.add(custNameLabel, "cell 0 0");
+        customerPanel.add(addressLabel, "cell 0 1");
+        customerPanel.add(bldNumberLabel, "cell 1 1");
+        customerPanel.add(cityLabel, "cell 0 2");
+        customerPanel.add(stateLabel, "cell 0 2");
+        customerPanel.add(zipLabel, "cell 0 2");
 
+        customerPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 
         JPanel orderPanel = new JPanel(new MigLayout());
-        orderPanel.add(editOrderTimeBtn, "cell 0 0 , align right");
+        orderPanel.add(editOrderTimeBtn, "cell 0 0, wrap , align right");
+
+        orderPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 
         JPanel paymentPanel = new JPanel(new MigLayout());
-        paymentPanel.add(editPayment, "cell 0 0 , align right");
+        paymentPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        paymentPanel.add(editPayment, "cell 0 4 ,wrap, align right");
+        String[] paymentBreakup = receipt.getPayment().split(",");
+        if(paymentBreakup.length == 5) {
+            JLabel cardNumberLabel = new JLabel("");
+            JLabel cardHolderNameLabel = new JLabel(paymentBreakup[3]);
+            if(paymentBreakup[0].length() > 5) {
+                cardNumberLabel.setText("Ending with " + paymentBreakup[0].substring(paymentBreakup[0].length() - 4));
+            }
+            JLabel paymentTypeLabel = new JLabel(paymentBreakup[4]);
+            if(paymentTypeLabel.getText().equals("cash")){
+                paymentPanel.add(paymentTypeLabel, "cell 0 0 , align right");
+            }
+        else{
+                paymentPanel.add(cardNumberLabel, "cell 0 0 , align right");
+                paymentPanel.add(cardHolderNameLabel, "cell 0 1 , align right");
+                paymentPanel.add(paymentTypeLabel, "cell 0 2 , align right");
+            }
+        }
+
+
+
+
 
 
         rightPanel.add(customerPanel, "wrap,growx,  align right");

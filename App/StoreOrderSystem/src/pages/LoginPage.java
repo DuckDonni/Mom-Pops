@@ -40,8 +40,8 @@ public class LoginPage {
 
         JLabel signupPrompt = new JLabel("Don't have an account?");
         JButton signupBtn = new JButton("Sign up");
-        loginPanel.add(signupPrompt, "cell 0 5, alignx center");
-        loginPanel.add(signupBtn, "cell 0 6, alignx center");
+        //loginPanel.add(signupPrompt, "cell 0 5, alignx center");
+        //loginPanel.add(signupBtn, "cell 0 6, alignx center");
 
         // Signup Page Panel
         JPanel signupPanel = new JPanel(new MigLayout());
