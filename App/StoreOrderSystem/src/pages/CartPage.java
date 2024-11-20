@@ -393,6 +393,7 @@ public class CartPage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 receipt.getPizzaAr().remove(p);
+                receipt.calculatePrice();
                 cView.view.controller.setReceipt(receipt);
                 cView.switchPage("CartPage", cView);
             }
@@ -420,7 +421,7 @@ public class CartPage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 receipt.getMenuItemAr().remove(item);
-
+                receipt.calculatePrice();
                 cView.view.controller.setReceipt(receipt);
                 cView.switchPage("CartPage", cView);
             }
