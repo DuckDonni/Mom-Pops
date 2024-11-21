@@ -253,6 +253,9 @@ public class PizzaPage {
                 if(!processChecked(pineappleBox, pineappleSideBF, pizza)){
                     validPizza = false;
                 }
+                if(!processChecked(extraCheeseBox, extraCheeseSideBF, pizza)){
+                    validPizza = false;
+                }
 
                 if(validPizza){
                     Receipt receipt = cView.view.controller.getReceipt();
@@ -502,42 +505,52 @@ public class PizzaPage {
                 case "Cheese":
                     cheeseBox.setSelected(true);
                     cheeseSideBF.setSelectedSide(side);
+                    cheeseSideBtn.setVisible(true);
                     break;
                 case "Pepperoni":
                     pepperoniBox.setSelected(true);
                     pepperoniSideBF.setSelectedSide(side);
+                    pepperoniSideBtn.setVisible(true);
                     break;
                 case "Sausage":
                     sausageBox.setSelected(true);
                     sausageSideBF.setSelectedSide(side);
+                    sausageSideBtn.setVisible(true);
                     break;
                 case "Ham":
                     hamBox.setSelected(true);
                     hamSideBF.setSelectedSide(side);
+                    hamSideBtn.setVisible(true);
                     break;
                 case "Green Pepper":
                     gPepperBox.setSelected(true);
                     gPepperSideBF.setSelectedSide(side);
+                    gPepperSideBtn.setVisible(true);
                     break;
                 case "Onion":
                     onionBox.setSelected(true);
                     onionSideBF.setSelectedSide(side);
+                    onionSideBtn.setVisible(true);
                     break;
                 case "Tomato":
                     tomatoBox.setSelected(true);
                     tomatoSideBF.setSelectedSide(side);
+                    tomatoSideBtn.setVisible(true);
                     break;
                 case "Mushroom":
                     mushroomBox.setSelected(true);
                     mushroomSideBF.setSelectedSide(side);
+                    mushroomSideBtn.setVisible(true);
                     break;
                 case "Pineapple":
                     pineappleBox.setSelected(true);
                     pineappleSideBF.setSelectedSide(side);
+                    pineappleSideBtn.setVisible(true);
                     break;
                 case "Extra Cheese":
                     extraCheeseBox.setSelected(true);
                     extraCheeseSideBF.setSelectedSide(side);
+                    extraCheeseSideBtn.setVisible(true);
                     break;
             }
         }
@@ -660,10 +673,12 @@ public class PizzaPage {
                 if(validPizza){
                     Receipt receipt = cView.view.controller.getReceipt();
                     ArrayList<Pizza> pizzaAr = receipt.getPizzaAr();
+                    pizzaAr.remove(p);
                     pizzaAr.add(pizza);
                     receipt.setPizzaAr(pizzaAr);
-                    cView.view.controller.setReceipt(receipt);
-                    cView.switchPage("MenuPage", cView);
+                    cView.editableFrame.dispose();
+                    cView.switchPage("CartPage",cView);
+
                 }
 
 

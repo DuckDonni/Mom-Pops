@@ -15,6 +15,8 @@ public class CustomerView {
     public static JPanel contentPanel;
     public static View view;
     public static JPanel shiftPanel;
+    public static JFrame editableFrame;
+
     public static boolean isLoggedIn = false;
     public CustomerView(View view) {
         this.view = view;
@@ -72,14 +74,15 @@ public class CustomerView {
         return new PizzaPage(cView).returnPage();
     }
     public static void buildEditPizzaPage(CustomerView cView,Pizza pizza){
-        Frame popupFrame = new JFrame();
+        editableFrame = new JFrame();
 
-        popupFrame.setLayout(new MigLayout("fill", "[grow][right]", "[]20[grow]"));
+        editableFrame.setLayout(new MigLayout("fill", "[grow][right]", "[]20[grow]"));
         JPanel popupPanel = new PizzaPage(cView).returnPage(pizza);
-        popupFrame.setSize(screenSize.width, screenSize.height);
-        popupFrame.add(popupPanel);
-        popupFrame.setVisible(true);
+        editableFrame.setSize(screenSize.width, screenSize.height);
+        editableFrame.add(popupPanel);
+        editableFrame.setVisible(true);
     }
+
     public static JPanel buildDrinksPage(CustomerView cView){
         return new DrinksPage(cView).returnPage();
     }

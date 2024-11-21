@@ -49,7 +49,8 @@ public class Receipt {
     }
     public void calculateTime(){
         String[] breakup = stringTime.split(":");
-        if (breakup.length==3) {
+
+        if (breakup.length==3 && !breakup[2].equals("ASAP")) {
             String hours = breakup[0];
             String minutes = breakup[1];
             String am_pm = breakup[2];

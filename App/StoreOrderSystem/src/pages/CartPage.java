@@ -73,7 +73,7 @@ public class CartPage {
 
         // Create JScrollPane for the content
         JScrollPane scrollPane = new JScrollPane(scrollBarPanel);
-        scrollPane.setPreferredSize(new Dimension((int) (screenSize.width * .35), (int) (screenSize.height * 0.7)));
+        scrollPane.setPreferredSize(new Dimension((int) (screenSize.width * .45), (int) (screenSize.height * 0.7)));
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
@@ -189,7 +189,11 @@ public class CartPage {
         JLabel deliveryCarryLabel = new JLabel(deliverCarry);
         String time = "";
         if(!receipt.getStringTime().isEmpty()) {
-            time = receipt.getStringTime().split(":")[0] + ":" + receipt.getStringTime().split(":")[1] + " " + receipt.getStringTime().split(":")[2];
+            if(receipt.getStringTime().split(":")[2].equals("ASAP")){
+                time = "ASAP";
+            }else {
+                time = receipt.getStringTime().split(":")[0] + ":" + receipt.getStringTime().split(":")[1] + " " + receipt.getStringTime().split(":")[2];
+            }
         }
         JLabel timeLabel = new JLabel(time);
 
@@ -374,7 +378,7 @@ public class CartPage {
         panel.add(sauceLabel, "cell 2 0");
         panel.add(price, "cell 3 0, align center");
         panel.add(deleteBtn, "cell 3 1, align center");
-        //panel.add(editBtn, "cell 3 2, align center");
+        panel.add(editBtn, "cell 3 2, align center");
         panel.add(toppings, "cell 0 1 3 1, growx"); // Spans 3 columns and grows horizontally
 
 
@@ -386,6 +390,7 @@ public class CartPage {
                 //cView.switchPage("shiftPanel", cView);
                 //cView.switchPage("HomePage",cView);
                 cView.buildEditPizzaPage(cView,p);
+
                 //cView.switchPage("shiftPanel", cView);
             }
         });
