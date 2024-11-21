@@ -23,4 +23,9 @@
   "phone" : "(123) 456 7890",
   "password" : "test",
   "name" : "John Doe"
+}, {
+  "address" : "160 Paulk Street,,Kingsland,GA,36301",
+  "phone" : "(123) 567 8907",
+  "password" : "chance",
+  "name" : "Jonah Smith"
 } ]
